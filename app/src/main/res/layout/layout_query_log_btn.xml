@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              android:padding="5dp">
+
+
+    <Button
+        android:id="@+id/btn_query_safe_pat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_btn_orange_blue"
+        android:text="查询最新安全巡查日志"
+        android:textColor="@color/colorWhite"/>
+
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/btn_query_pro_safe"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/selector_btn_orange_blue"
+        android:text="查询最新生产安全日志"
+        android:textColor="@color/colorWhite"/>
+
+</LinearLayout>

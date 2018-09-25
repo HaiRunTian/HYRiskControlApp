@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/layoutTop"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@color/colorLoginDefault">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="主页"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus1"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/layoutBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp">
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/viewPager"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/radioButton1"
+                style="@style/RadioButton_small"/>
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                style="@style/RadioButton_small"/>
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                style="@style/RadioButton_small"/>
+
+            <RadioButton
+                android:id="@+id/radioButton4"
+                style="@style/RadioButton_small"/>
+
+        </RadioGroup>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutMiddle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/imgvLogAdmin"
+                style="@style/Fuction_button"
+                android:src="@mipmap/ic_logo"/>
+
+
+            <ImageView
+                android:id="@+id/patrolSignIn"
+                style="@style/Fuction_button"
+                android:src="@mipmap/ic_logo"/>
+
+            <!--<ImageView-->
+            <!--android:id="@+id/imgvSystemSetting"-->
+            <!--style="@style/Fuction_button"-->
+            <!--android:src="@drawable/selector_setting"/>-->
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/separate_line_h"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
+
+        <RadioGroup
+            android:id="@+id/radioGroupBottom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rdbtHome"
+                style="@style/RadioButton_bottom"
+                android:drawableTop="@drawable/selector_radiobutton_home"
+                android:text="主页"/>
+
+            <RadioButton
+                android:id="@+id/rdbtMap"
+                style="@style/RadioButton_bottom"
+                android:drawableTop="@drawable/selector_radiobutton_map"
+                android:text="地图"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:padding="20dp"
+        android:background="@color/colorLightGrey">
+        <Button
+            android:id="@+id/btnTakePicture"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/selector_btn_orange_blue"
+            android:text="拍照"/>
+        <Button
+            android:id="@+id/btnPickFromAlbum"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/selector_btn_orange_blue"
+            android:layout_marginTop="10dp"
+            android:text="从相册选择"/>
+        <Button
+            android:id="@+id/btnViewPicture"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:textColor="@color/colorWhite"
+            android:background="@drawable/selector_btn_orange_blue"
+            android:layout_marginTop="10dp"
+            android:visibility="gone"
+            android:text="查看照片"/>
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:textColor="@color/colorMiddleGrey"
+            android:layout_marginTop="10dp"
+            android:text="取消"/>
+    </LinearLayout>
+
+</RelativeLayout>

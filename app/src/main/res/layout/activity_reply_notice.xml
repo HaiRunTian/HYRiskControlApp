@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/TitleBarStyleLeftText2"
+
+            android:drawableLeft="@mipmap/ic_btn_return"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="回复通知"/>
+    </RelativeLayout>
+
+</LinearLayout>

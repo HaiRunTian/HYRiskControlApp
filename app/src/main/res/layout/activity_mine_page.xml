@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearUserAdmin"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/linerPane"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorLightGrey"
+        android:orientation="vertical">
+
+
+        <RelativeLayout
+            android:id="@+id/linearUserProfileTop"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:background="@mipmap/ic_man_bg_man"
+            android:orientation="vertical"
+            android:padding="1dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/imgvUserProfileHead"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:src="@mipmap/ic_activity_home_actionbar_left1"/>
+
+                <TextView
+                    android:id="@+id/tvUserName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/textsize_big"/>
+            </LinearLayout>
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearUserProfileMiddle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/linearUserProfile"
+                style="@style/HomeLinearLeft">
+
+                <TextView
+                    style="@style/HomeLinearLeftItemText"
+                    android:drawableLeft="@mipmap/ic_useradmin_profile_32px"
+                    android:text="@string/string_userprofile"/>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearUserProfileMiddle2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/linearOffLineMapDownload"-->
+                <!--style="@style/HomeLinearLeft">-->
+
+                <!--<TextView-->
+                    <!--style="@style/HomeLinearLeftItemText"-->
+                    <!--android:drawableLeft="@mipmap/ic_map_download"-->
+                    <!--android:text="离线地图下载"/>-->
+
+            <!--</LinearLayout>-->
+
+            <LinearLayout
+                android:id="@+id/linearSystemConfigSetting"
+                style="@style/HomeLinearLeft"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    style="@style/HomeLinearLeftItemText"
+                    android:drawableLeft="@mipmap/ic_settings"
+                    android:text="系统推荐配置"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearDevelopmentInfo"
+                style="@style/HomeLinearLeft"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    style="@style/HomeLinearLeftItemText"
+                    android:drawableLeft="@mipmap/ic_development_info"
+                    android:text="开发单位信息"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearUpdateOnline"
+                style="@style/HomeLinearLeft"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    style="@style/HomeLinearLeftItemText"
+                    android:drawableLeft="@mipmap/ic_update"
+                    android:text="在线升级"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:id="@+id/linearAboutApp"
+                style="@style/HomeLinearLeft"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    style="@style/HomeLinearLeftItemText"
+                    android:drawableLeft="@mipmap/ic_about"
+                    android:text="关于软件"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/linearQRcode"
+                style="@style/HomeLinearLeft"
+                android:layout_marginTop="2dp">
+
+                <TextView
+                    style="@style/HomeLinearLeftItemText"
+                    android:drawableLeft="@mipmap/ic_qrcode1"
+                    android:text="二维码下载"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/linearLogOut"
+            style="@style/HomeLinearLeft"
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                style="@style/HomeLinearLeftItemText"
+                android:drawableLeft="@mipmap/ic_logout"
+                android:text="@string/string_logout"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</ScrollView>

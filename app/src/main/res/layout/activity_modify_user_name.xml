@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorLightGrey">
+
+    <RelativeLayout
+        android:id="@+id/modifyUserNameTop"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_gradient_color_blue"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/tvProfileNameBack"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/string_back"
+            android:gravity="center"
+            android:drawableLeft="@mipmap/ic_back2_32px"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            android:text="@string/string_modifyUserName_title"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <EditText
+            android:id="@+id/edtModifyUserName"
+            style="@style/ModifyPassWordEditTextStyle"
+            android:hint="@string/string_modifyUserName_Hint"
+            android:inputType="text"/>
+
+        <Button
+            android:id="@+id/btSaveName"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_btn_orange_blue"
+            android:text="@string/string_save"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus1"/>
+
+
+    </LinearLayout>
+
+</LinearLayout> 

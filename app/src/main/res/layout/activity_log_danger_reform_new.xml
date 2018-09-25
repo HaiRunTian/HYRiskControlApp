@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            style="@style/TitleBarStyleLeftText2"
+            />
+
+        <TextView
+            android:id="@+id/tvTitles"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="新建隐患整改通知"/>
+
+    </RelativeLayout>
+
+
+
+    <ScrollView
+        android:layout_below="@id/titleBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:id="@+id/linearCustomContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <include layout="@layout/layout_notify_id"></include>
+            <include layout="@layout/layout_check_unit"></include>
+            <include layout="@layout/layout_be_check_unit"></include>
+            <include layout="@layout/layout_section"></include>
+            <include layout="@layout/layout_check_date"></include>
+            <include layout="@layout/layout_check_man_disable"></include>
+            <include layout="@layout/layout_check_deadline"></include>
+            <include layout="@layout/layout_addpic_area"></include>
+            <include layout="@layout/layout_check_content"></include>
+            <include layout="@layout/layout_check_find_problem"></include>
+            <include layout="@layout/layout_reform_method_require"></include>
+            <!--<include layout="@layout/layout_recorder2"></include>-->
+            <include layout="@layout/layout_supervisor"></include>;
+            <include layout="@layout/layout_construction"></include>;
+            <include layout="@layout/layout_copy"></include>;
+            <include layout="@layout/layout_submit_or_draft_btn"></include>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="80dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+</RelativeLayout>

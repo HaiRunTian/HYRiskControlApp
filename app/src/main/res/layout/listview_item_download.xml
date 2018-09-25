@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:descendantFocusability="beforeDescendants"
+             android:paddingLeft="10dp"
+             android:paddingRight="10dp">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selector_list_view_item_card"
+        android:descendantFocusability="afterDescendants"
+        android:orientation="horizontal"
+        android:paddingBottom="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="15dp"><!-- 给每个item增加background -->
+
+
+        <ImageView
+            android:id="@+id/imgHead"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@mipmap/ic_word_72px"/>
+
+        <TextView
+            android:id="@+id/tvTieleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_toRightOf="@id/imgHead"
+            android:lines="2"
+            android:paddingLeft="10dp"
+            android:text=""
+            android:textSize="@dimen/textsize_title"/>
+
+        <TextView
+            android:id="@+id/tvFileSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvTieleName"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/imgHead"
+            android:paddingLeft="10dp"
+            android:text=""
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/textsize_small"/>
+
+        <TextView
+            android:id="@+id/tvfrom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTieleName"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/tvFileSize"
+            android:paddingLeft="2dp"
+            android:text=""
+            android:textColor="@color/colorGray"
+            android:textSize="@dimen/textsize_small"/>
+
+        <TextView
+
+            android:id="@+id/tvformName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tvTieleName"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/tvfrom"
+            android:text=""
+            android:textColor="@color/colorBlue"
+            android:textSize="@dimen/textsize_small"/>
+
+
+        <TextView
+            android:id="@+id/tvtime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="45dp"
+            android:paddingLeft="3dp"
+            android:text=""
+            android:textColor="@color/colorGray"/>
+
+
+    </RelativeLayout>
+
+
+</FrameLayout>

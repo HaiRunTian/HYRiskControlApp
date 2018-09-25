@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/TitleBarStyleLeftText2"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            />
+
+        <TextView
+            android:id="@+id/tvTitles"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="隐患整改通知"/>
+
+        <TextView
+            android:id="@+id/tvReply"
+            style="@style/TitleBarStyleRightText"
+            android:text="回复"/>
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/titleBarLayout">
+
+        <LinearLayout
+            android:id="@+id/linearCustomContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <include layout="@layout/layout_logid_disable"></include>
+
+            <include layout="@layout/layout_check_unit_disable"></include>
+
+            <include layout="@layout/layout_be_check_unit_disable"></include>
+
+            <include layout="@layout/layout_section_disable"></include>
+
+            <include layout="@layout/layout_check_date"></include>
+
+            <include layout="@layout/layout_check_man_disable"></include>
+
+            <include layout="@layout/layout_check_deadline"></include>
+
+            <include layout="@layout/layout_addpic_area_not_btn"></include>
+
+            <include layout="@layout/layout_check_content_disable"></include>
+
+            <include layout="@layout/layout_check_find_problem_disable"></include>
+
+            <include layout="@layout/layout_reform_method_require_disable"></include>
+
+            <include layout="@layout/layout_recorder2"></include>
+
+            <!--<include layout="@layout/layout_submit_btn"></include>-->
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</RelativeLayout>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/customNewLogLayout"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorLightGrey">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_gradient_color_blue"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/tvCustomTitleBarBack"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/string_back"
+            android:gravity="center"
+            android:drawableLeft="@mipmap/ic_back2_32px"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            />
+        <TextView
+            android:id="@+id/tvCustomTitleBarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            android:text="新建安全日志"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearCustomContentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <TextView
+                android:id="@+id/tvCustomLayoutType"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_riskType"/>
+            <Spinner
+                android:id="@+id/spCustomLayoutType"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:entries="@array/riskType">
+            </Spinner>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tvCustomLayoutStationID"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_stakeNum"/>
+
+            <Spinner
+                android:id="@+id/spCustomLayoutStationID"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </Spinner>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tvCustomLayoutWeather"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_newLogWeather"/>
+
+            <Spinner
+                android:id="@+id/spCustomLayoutWeather"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:entries="@array/weatherType">
+            </Spinner>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp">
+
+            <!--<TextView-->
+                <!--android:id="@+id/tvCustomLayoutOfficer"-->
+                <!--style="@style/CustomLayoutLeftText"-->
+                <!--android:text="@string/string_newLogOfficer"/>-->
+
+            <!--<EditText-->
+                <!--android:id="@+id/edtCustomLayoutOfficer"-->
+                <!--style="@style/CustomLayoutEditText"-->
+                <!--android:textSize="@dimen/textsize_big"/>-->
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tvCustomLayoutDateTime"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_newLogCreatedTime"/>
+
+            <EditText
+                android:id="@+id/edtCustomLayoutDateTime"
+                style="@style/CustomLayoutEditText"
+                android:textSize="@dimen/textsize_big"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/imgvCustomLayoutAddPic"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_add"/>
+
+            <TextView
+                android:id="@+id/tvCustomLayoutHint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="5dp"
+                android:gravity="center_vertical"
+                android:text="请拍摄现场照片\n包含周边环境"
+                android:textColor="@color/colorGrey"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/edtCustomLayoutContent"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:padding="5dp"
+                android:gravity="left"
+                android:background="#DBDBDB"
+                android:hint="安全隐患情况描述,不得超过160字"/>
+
+            <Button
+                android:id="@+id/btCustomLayoutCommit"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:textColor="@color/colorWhite"
+                android:text="提交"
+                android:background="@drawable/selector_btn_orange_blue"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

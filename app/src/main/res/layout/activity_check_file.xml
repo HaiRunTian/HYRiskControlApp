@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvClose"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            />
+
+        <TextView
+            android:id="@+id/tvTitles"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="选择文件"
+            />
+
+        <TextView
+            android:id="@+id/tvSubmit"
+            style="@style/TitleBarStyleRightText"
+            android:background="@mipmap/ic_submit2"/>
+    </RelativeLayout>
+
+
+
+
+    <ListView
+        android:id="@+id/lv_file"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </ListView>
+
+
+</LinearLayout>

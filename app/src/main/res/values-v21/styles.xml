@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomLayoutEditText1">
+
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:textColor">@drawable/selector_edt_textcolor</item>
+        <item name="android:colorControlActivated">@color/colorLightGreen</item>
+        <item name="android:colorControlNormal">@color/colorLightGrey</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textSize">@dimen/textsize_title</item>
+        <item name="android:textColorHint">@color/colorSmokeGray</item>
+        <!--<item name="android:focusable">false</item>-->
+        <!--<item name="android:enabled">false</item>-->
+
+
+    </style>
+
+    <style name="CustomLayoutEditText1_disable">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:textColor">@drawable/selector_edt_textcolor</item>
+        <item name="android:colorControlActivated">@color/colorLightGreen</item>
+        <item name="android:colorControlNormal">@color/colorLightGrey</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:focusable">false</item>
+        <item name="android:textSize">@dimen/textsize_title</item>
+        <item name="android:textColorHint">@color/colorSmokeGray</item>
+    </style>
+
+    <style name="edt_login" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:colorControlNormal">@color/colorLoginDefault</item>
+        <item name="android:colorControlActivated">@color/colorDarkGreen</item>
+    </style>
+</resources>

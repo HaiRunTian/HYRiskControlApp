@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorBlack">#000000</color>
+    <color name="colorGrey">#A2B5CD</color>
+    <color name="colorMiddleGrey">#778899</color>
+    <color name="colorMiddleGrey2">#515151</color>
+    <color name="colorLightGrey">#F2F2F2</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorLoginBtBg">#FFFFFF</color>
+    <color name="colorLoginBgStart">#006699</color>
+    <color name="colorLoginBgEnd">#003366</color>
+    <color name="colorFontDefault">#FFFFFF</color>
+    <color name="colorLightBlue">#ADD8E6</color>
+    <color name="colorLightBlue2">#BBFFFF</color>
+    <color name="colorOrange">#EE9572</color>
+    <color name="colorSmokeGray">#DBDBDB</color>
+    <color name="colorCyan">#00FFFF</color>
+    <color name="colorDarkGreen">#9BCD9B</color>
+    <color name="colorLightGreen">#B4EEB4</color>
+    <color name="colorGreen">#00FFFF</color>
+    <color name="colorBlue">#000080</color>
+    <color name="colorGray">#696969</color>
+    <color name="colorWhiteGrey">#C4C4C4</color>
+    <color name="colorWhiteGrey1">#EBEBEB</color>
+    <color name="colorRed">#FFFF0000</color>
+    <color name="colorlightRed">#CD919E</color>
+    <color name="colorLoginDefault">#80b3f1</color>
+    <color name="colorLoginBtnDefault">#cfe2fa</color>
+</resources>

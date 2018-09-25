@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="30dp"
+              android:layout_marginTop="10dp"
+              android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvProjectRole"
+        style="@style/CustomLayoutLeftText"
+        android:text="@string/string_submitter"/>
+
+    <!--<RadioGroup-->
+        <!--android:id="@+id/radioGroup"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:orientation="horizontal">-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/rdbtnOwner"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="业主方"/>-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/rdbtnSupervisor"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="监理方"/>-->
+
+        <!--<RadioButton-->
+            <!--android:id="@+id/rdbtnconstructor"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="施工方"/>-->
+
+    <!--</RadioGroup>-->
+
+    <CheckBox
+        android:id="@+id/cbOwner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="业主方"/>
+
+    <CheckBox
+        android:id="@+id/cbSupervisor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="监理方"/>
+
+    <CheckBox
+        android:id="@+id/cbConstructor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="施工方"/>
+
+</LinearLayout>

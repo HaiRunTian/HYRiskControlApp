@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tvLogID"
+        style="@style/CustomLayoutLeftText"
+        android:text="@string/string_recheck_man"/>
+
+    <EditText
+        android:id="@+id/edtLogReCheckMan"
+        style="@style/CustomLayoutEditText1"
+        android:hint="请输入复核人"/>
+
+
+</LinearLayout>

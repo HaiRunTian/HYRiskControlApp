@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center_horizontal"
+              android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/item_riskQuery"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="风险源查询"
+        android:drawableLeft="@mipmap/ic_query_32px"
+        android:background="@drawable/selector_linear_grey_lightblue"
+        android:textSize="16sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#BDBDBD" />
+
+    <TextView
+        android:id="@+id/item_patrolSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center"
+        android:padding="12dp"
+        android:text="巡查签到"
+        android:background="@drawable/selector_linear_grey_lightblue"
+        android:drawableLeft="@mipmap/ic_activity_home_actionbar_right"
+        android:textSize="16sp" />
+
+</LinearLayout>

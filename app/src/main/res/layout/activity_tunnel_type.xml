@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/customNewLogLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/ic_btn_return"
+            />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="隧道"
+            />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleBarLayout"
+        android:layout_marginBottom="100dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <include layout="@layout/layout_risksource_item_top_disable"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvTunnelName"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_tunnelName"/>
+
+                <EditText
+                    android:id="@+id/edtTunnelName"
+                    style="@style/CustomLayoutEditText1_disable"
+                    android:focusable="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvForm"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_form"/>
+
+                <EditText
+                    android:id="@+id/edtForm"
+                    style="@style/CustomLayoutEditText1_disable"
+                    android:focusable="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvTunnelLength"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_tunnelLength"/>
+
+                <EditText
+                    android:id="@+id/edtTunnelLength"
+                    style="@style/CustomLayoutEditText1_disable"
+                    android:focusable="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvDesignSpeed"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_designSpeed"/>
+
+                <EditText
+                    android:id="@+id/edtDesignSpeed"
+                    style="@style/CustomLayoutEditText1_disable"
+                    android:focusable="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvClearHeight"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_clearHeight"/>
+
+                <EditText
+                    android:id="@+id/edtClearHeight"
+                    style="@style/CustomLayoutEditText1_disable"
+                    android:focusable="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvClearWidth"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_clearWidth"/>
+
+                <EditText
+                    android:id="@+id/edtClearWidth"
+                    style="@style/CustomLayoutEditText1_disable"
+                    android:focusable="false"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvRiskIdentity"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_RiskIdentity"/>
+
+                <EditText
+                    android:id="@+id/edtRiskIdentity"
+                    style="@style/CustomLayoutEditText1_disable"
+                    android:focusable="false"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_risksource_item_bottom_disable"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <include layout="@layout/separate_line_h"></include>
+
+        <include layout="@layout/layout_risk_item_bottom"></include>
+
+    </LinearLayout>
+
+</RelativeLayout>

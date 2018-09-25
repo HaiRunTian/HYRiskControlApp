@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/TitleBarStyleLeftText2"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            />
+
+        <TextView
+            android:id="@+id/tvTitles"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="隐患整改通知回复单"/>
+
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/titleBarLayout">
+
+
+
+    <LinearLayout
+        android:id="@+id/linearCustomContentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/titleBarLayout"
+        android:layout_marginEnd="20dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <include layout="@layout/layout_logid_disable"></include>
+
+        <include layout="@layout/layout_notifyid_disable"></include>
+
+        <include layout="@layout/layout_check_unit_disable"></include>
+
+        <include layout="@layout/layout_be_check_unit_disable"></include>
+
+        <include layout="@layout/layout_check_date"></include>
+
+        <include layout="@layout/layout_reform_man_disable"></include>
+
+        <include layout="@layout/layout_addpic_area_not_btn"></include>
+
+        <include layout="@layout/layout_reform_condition_disable"></include>
+
+        <include layout="@layout/layout_re_check_disable"></include>
+
+
+        <include layout="@layout/layout_recheck_man_disable"></include>
+
+        <include layout="@layout/layout_check_opinion"></include>
+
+        <include layout="@layout/layout_check_opinion_owner"></include>
+
+        <!--<include layout="@layout/layout_owner"></include>-->
+
+        <!--<include layout="@layout/layout_pass_reject_btn"></include>-->
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="120dp"></View>
+        <!--<include layout="@layout/layout_submit_btn"/>-->
+    </LinearLayout>
+
+    </ScrollView>
+    <!--<ImageView-->
+        <!--android:id="@+id/imgSupe"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:background="@null"-->
+        <!--android:rotation="315"-->
+        <!--android:layout_below="@+id/titleBarLayout"-->
+        <!--android:src="@mipmap/supervisor_pass"-->
+        <!--android:visibility="visible"/>-->
+
+    <!--<ImageView-->
+        <!--android:id="@+id/imgOwner"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_below="@+id/imgSupe"-->
+        <!--android:layout_marginRight="10dp"-->
+        <!--android:layout_marginTop="20dp"-->
+        <!--android:background="@null"-->
+        <!--android:rotation="315"-->
+        <!--android:src="@mipmap/owner_pass"-->
+        <!--android:visibility="visible"/>-->
+
+
+</RelativeLayout>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorLightGrey"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            style="@style/TitleBarStyleLeftText"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:text="系统参数设置"
+            style="@style/TitleBarStyleMiddleText"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/linearParamItemGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="20dp"
+        android:layout_below="@id/titleBarLayout">
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:background="@drawable/pic_input_bg">
+
+            <TextView
+                style="@style/SysParamTextViewStyle"
+                android:text="新消息通知"/>
+
+            <Switch
+                android:id="@+id/swtich_MessageAlert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:layout_marginRight="20dp"
+                android:layout_centerInParent="true"
+                android:layout_alignParentRight="true"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/pic_input_bg">
+
+            <TextView
+                style="@style/SysParamTextViewStyle"
+                android:text="清除缓存"/>
+
+            <Button
+                android:id="@+id/btnClearChache"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/selector_btn_lightblue_darkblue"
+                android:text="清除"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/pic_input_bg">
+
+            <TextView
+                style="@style/SysParamTextViewStyle"
+                android:text="清除图片"/>
+
+            <Button
+                android:id="@+id/btnClearPicChache"
+                android:layout_width="60dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/selector_btn_lightblue_darkblue"
+                android:text="清除"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

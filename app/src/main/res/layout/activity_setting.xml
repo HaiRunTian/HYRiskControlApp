@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/colorLightGrey">
+
+    <RelativeLayout
+        android:id="@+id/settingsTop"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvSettingsBack"
+
+            style="@style/TitleBarStyleLeftText2"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            />
+        <TextView
+            android:text="@string/string_settings"
+            style="@style/TitleBarStyleMiddleText"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/offLineMapDownload"
+        android:layout_height="50dp"
+        style="@style/UserProfileItemStyle"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="离线地图下载"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/textsize_big_plus1"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/systemConfigSetting"
+        android:layout_height="50dp"
+        style="@style/UserProfileItemStyle"
+        android:layout_marginTop="0.8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="系统参数设置"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/textsize_big_plus1"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/developmentInfo"
+        android:layout_height="50dp"
+        style="@style/UserProfileItemStyle"
+        android:layout_marginTop="0.8dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开发单位信息"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/textsize_big_plus1"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/aboutApp"
+        android:layout_height="50dp"
+        style="@style/UserProfileItemStyle"
+        android:layout_marginTop="0.8dp">
+
+        <TextView
+            android:id="@+id/tvChargeMan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关于软件"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="@dimen/textsize_big_plus1"/>
+
+
+    </RelativeLayout>
+
+
+</LinearLayout>

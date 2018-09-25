@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="200dp"
+        android:layout_height="300dp"
+        android:orientation="vertical"
+        android:layout_centerInParent="true">
+        <CheckBox
+            android:id="@+id/cbHeadPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="头像图片文件"/>
+        <CheckBox
+            android:id="@+id/cbProSafePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="生产安全日志图片"/>
+        <CheckBox
+            android:id="@+id/cbSafePatrolPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="安全巡查日志图片"/>
+        <CheckBox
+            android:id="@+id/cbRiskSourcePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="风险源详情图片"/>
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/queryRiskSourceLayout"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorLightGrey">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_gradient_color_blue"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/tvQueryRiskSourceBack"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/string_back"
+            android:gravity="center"
+            android:drawableLeft="@mipmap/ic_back2_32px"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            />
+        <TextView
+            android:id="@+id/tvQueryRiskSourceTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            android:text="风险源查询"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <EditText
+                android:id="@+id/edtQueryRiskSource"
+                style="@style/CustomLayoutEditText"
+                android:drawableLeft="@mipmap/ic_search_48px"
+                android:layout_marginRight="5dp"
+                android:hint="输入查询的风险源桩号"/>
+
+            <Button
+                android:id="@+id/btQueryRiskSource"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_btn_orange_blue"
+                android:text="查询"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/textsize_big"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorLightBlue">
+
+        </ListView>
+
+    </LinearLayout>
+
+</LinearLayout>

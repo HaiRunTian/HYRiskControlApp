@@ -1,0 +1,372 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+          package="tianchi.com.risksourcecontrol">
+
+    <!-- 这个权限用于调用系统摄像头 -->
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <!-- 这个权限用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 这个权限用于访问GPS定位 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- 用于读取手机当前的状态 -->
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!-- 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <!-- 读取扩展存储，向扩展卡读取数据 -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- 访问网络，网络定位需要上网 -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- SD卡读取权限，用户写入离线定位数据 -->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <!-- <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" /> -->
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <!-- <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" /> -->
+    <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
+    <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
+    <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
+    <uses-permission android:name="android.permission.VIBRATE"/>
+
+    <application
+        android:name=".base.AppInitialization"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_logo"
+        android:label="@string/app_name"
+        android:persistent="true"
+        android:supportsRtl="true"
+        android:theme="@style/MyAppTheme">
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_provider_paths"/>
+        </provider>
+
+        <!-- 百度地图key值 -->
+        <!--android:value="MRwBndYP25C1mdiAt4KhICg1WqHgRKhT">-->
+        <!--<meta-data-->
+            <!--android:name="com.baidu.lbsapi.API_KEY"-->
+            <!--android:value="ecejY9NDGqfFKjZszlL38oszKPb7dlDY">-->
+        <!--</meta-data>-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="MRwBndYP25C1mdiAt4KhICg1WqHgRKhT">
+        </meta-data>
+        <!-- 百度地图定位服务 -->
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote"/>
+
+        <!-- 测试用的主窗体 -->
+        <activity android:name=".activitiy.MainActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+            <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+            <!-- </intent-filter> -->
+        </activity>
+
+        <!-- 登录 -->
+        <activity
+            android:name=".activitiy.LoginActivity"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <!-- 活动基窗体 -->
+        <!-- <activity android:name=".base.BaseActivity"/> -->
+        <!-- 首页 -->
+        <activity android:name=".activitiy.HomeActivity"/>
+        <!-- 首页底层布局 -->
+        <activity
+            android:name=".activitiy.DrawerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="standard"/>
+
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN"/> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+        <!-- </intent-filter> -->
+
+        <!-- 修改密码 -->
+        <!-- 用户资料 -->
+        <activity android:name=".activitiy.user.UserProfileActivity"/>
+
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN"/>-->
+
+
+        <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+        <!--</intent-filter>-->
+
+        <!-- 修改用户头像 -->
+        <activitye
+            android:name=".activitiy.user.ModifyUserHeadActivity"
+            android:theme="@style/DialogActivity"/>
+        <!-- 修改用户姓名 -->
+        <!-- 修改用户电话号码 -->
+        <!-- 修改用户设置 -->
+        <activity android:name=".activitiy.mine.SettingActivity"/>
+        <!-- 新建安全日志 -->
+        <activity android:name=".activitiy.log.NewSafetyLogActivity"/>
+
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+        <!-- </intent-filter> -->
+
+        <!-- 新建巡查日志 -->
+        <activity
+            android:name=".activitiy.log.NewPatrolActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+        <!-- </intent-filter> -->
+
+        <!-- 新建整改日志 -->
+        <activity
+            android:name=".activitiy.log.NewReformActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN"/> -->
+
+
+        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
+        <!-- </intent-filter> -->
+
+        <!-- 查询安全日志 -->
+        <activity android:name=".activitiy.log.QuerySafetyLogActivity"/>
+        <!-- 查询巡查日志 -->
+        <activity android:name=".activitiy.log.QueryPatrolLogActivity"/>
+        <!-- 查询整改日志 -->
+        <activity android:name=".activitiy.log.QueryReformLogActivity"/>
+        <!-- 查询风险源 -->
+        <!-- 离线地图下载 -->
+        <activity android:name=".activitiy.mine.OfflineMapDownloadActivity"/>
+        <!-- 单位信息 -->
+        <activity android:name=".activitiy.mine.DevelopmentInfoActivity"/>
+        <!-- 关于 -->
+        <activity android:name=".activitiy.mine.AboutActivity"/>
+        <!-- 交底查询 -->
+        <activity android:name=".activitiy.QueryDisclosureActivity"/>
+        <!-- 风险源列表窗口 -->
+        <activity
+            android:name=".activitiy.risksource.RiskResultListActivity"
+            android:theme="@style/RIsklistViewDialog"/>
+        <!-- 测试用的 -->
+
+        <activity android:name=".test.testActivity"/>
+
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN"></action> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER"></category> -->
+        <!-- </intent-filter> -->
+
+
+        <!--<activity android:name=".test.testActivity"/>-->
+        <!-- <intent-filter> -->
+        <!-- <action android:name="android.intent.action.MAIN"></action> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER"></category> -->
+        <!-- </intent-filter> -->
+
+
+        <!-- 通知 -->
+        <activity android:name=".activitiy.message.NotificationActivity"/>
+        <!-- 巡查签到 -->
+        <activity android:name=".activitiy.PatrolSignInActivity"/>
+        <!-- 安全日志详情 -->
+        <activity android:name=".activitiy.log.SafetyLogInfoActivity"/>
+        <!-- 巡查日志详情 -->
+        <activity android:name=".activitiy.log.PatrolLogInfoActivity"/>
+        <!-- 整改日志详情 -->
+        <activity android:name=".activitiy.log.ReformLogInfoActivity"/>
+
+        <!-- 高边坡高填低浅类风险源详情 -->
+        <activity
+            android:name=".activitiy.risksource.HighLowTypeRiskActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan|stateHidden"/>
+
+        <!-- 土类类风险源详情 -->
+        <activity
+            android:name=".activitiy.risksource.SoilTypeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan|stateHidden"/>
+
+        <!-- 桥梁类风险源详情 -->
+        <activity
+            android:name=".activitiy.risksource.BridgeTypeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan|stateHidden"/>
+
+        <!-- 隧道类风险源详情 -->
+        <activity
+            android:name=".activitiy.risksource.TunnelTypeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan|stateHidden"/>
+
+        <!-- 取弃土场类风险源详情 -->
+        <activity
+            android:name=".activitiy.risksource.TakingSoilFieldTypeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan|stateHidden"/>
+
+        <!-- 日志列表页面 -->
+        <activity
+            android:name=".activitiy.log.LogResultListActivity"
+            android:theme="@style/RIsklistViewDialog"/>
+
+        <!-- “我的”面板 -->
+        <activity android:name=".activitiy.mine.MinePageActivity">
+
+            <!-- <intent-filter> -->
+            <!-- <action android:name="android.intent.action.MAIN"></action> -->
+            <!-- <category android:name="android.intent.category.LAUNCHER"></category> -->
+            <!-- </intent-filter> -->
+        </activity>
+
+        <!-- 系统设置 -->
+        <activity android:name=".activitiy.mine.SysParamActivity"/>
+
+
+        <!-- 清除图片缓存选项 -->
+        <!--<activity-->
+        <!--android:name=".activitiy.ChacheAdminActivity"/>-->
+        <!--&lt;!&ndash;清除图片缓存选项&ndash;&gt;-->
+        <activity
+            android:name=".activitiy.mine.ChacheAdminActivity"
+            android:theme="@style/RIsklistViewDialog"/>
+
+        <activity
+            android:name=".activitiy.message.AddNoticeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan">
+        </activity>
+        <activity
+            android:name=".activitiy.message.ReceiveNoticeListActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
+        <activity
+            android:name=".activitiy.message.SendNoticeListActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
+
+        <activity
+            android:name=".activitiy.risksourceformap.BridgeTypeformMapActivity"
+            android:theme="@style/RIsklistViewDialog2"/>
+
+        <activity
+            android:name=".activitiy.risksourceformap.SoilTypeFormActivity"
+            android:theme="@style/RIsklistViewDialog2"/>
+
+        <activity
+            android:name=".activitiy.risksourceformap.HighLowTypeRiskForMapActivity"
+            android:theme="@style/RIsklistViewDialog2"/>
+
+
+        <activity
+            android:name=".activitiy.risksourceformap.TakingSoilFieldTypeFromActivity"
+            android:theme="@style/RIsklistViewDialog2"/>
+
+
+        <activity
+            android:name=".activitiy.risksourceformap.TunnelTypeFromActivity"
+            android:theme="@style/RIsklistViewDialog2"/>
+
+
+        <activity android:name=".activitiy.risksourceformap.RiskQueryActivity"/>
+
+        <!--二维码-->
+        <activity android:name=".activitiy.mine.QRCodeActivity"/>
+
+        <!--人员列表-->
+        <activity android:name=".activitiy.user.RelationshipListActivity"/>
+        <!--<intent-filter>-->
+        <!--<action android:name="android.intent.action.MAIN"></action>-->
+        <!--<category android:name="android.intent.category.LAUNCHER"></category>-->
+        <!--</intent-filter>-->
+
+
+        <activity android:name=".activitiy.message.SendNoticeActivity"/>
+
+        <activity
+            android:name=".activitiy.message.ReceiveNoticeActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+
+        <activity android:name=".activitiy.message.CheckFileActivity"/>
+
+        <activity android:name=".activitiy.message.ReplyNoticeActivity"/>
+
+        <activity android:name=".activitiy.mine.ConfigurationActivity"/>
+
+        <!--整改通知单-->
+        <activity
+            android:name=".activitiy.notice.NewRectifyNotifyInfoActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+        <!--整改通知单列表-->
+        <activity android:name=".activitiy.notice.MyselfRectifyNotifyListActivity"/>
+        <!--查看通知类-->
+        <activity android:name=".activitiy.notice.ReadRectifyNotifyInfoActivity"/>
+        <!--整改通知回复类-->
+        <activity
+            android:name=".activitiy.notice.NewRectifyReplyInfoActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+        <!--查询通知-->
+        <activity
+            android:name=".activitiy.notice.QueryRectifyNotiyActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan"/>
+        <!--整改通知单未读已读列表-->
+        <activity android:name=".activitiy.notice.MyselfRectifyReplyListActivity"/>
+
+        <activity android:name=".activitiy.notice.RectifyNotifyListActivity"/>
+
+        <activity android:name=".activitiy.notice.ReadRectifyReplyInfoActivity"/>
+
+        <activity android:name=".activitiy.notice.RectifyReplyListActivity"/>
+        <!--草稿列表-->
+        <activity android:name=".activitiy.notice.DraftNotifyListActivity"/>
+        <!--已审核通知单列表-->
+        <activity android:name=".activitiy.notice.CheckedListActivity"/>
+        <!--已审核通知单列表-->
+        <activity android:name=".activitiy.notice.WaitCheckListActivity"/>
+        <!--用户列表-->
+        <activity android:name=".activitiy.user.UsersListActivity"/>
+        <!--查看草稿类-->
+        <activity android:name=".activitiy.notice.ReadDraftNotifyInfoActivity"/>
+        <activity android:name=".activitiy.notice.ReadDraftNotifyInfoActivity2"/>
+        <!--未读信息列表-->
+        <activity android:name=".activitiy.notice.UnreadMsgListActivity"/>
+        <!--已审核通知单-->
+        <activity android:name=".activitiy.notice.ReadReplyInfoHasCheckActivity"/>
+        <!--个人发起的通知单列别-->
+        <activity android:name=".activitiy.notice.myself.MyselfSendNotifyListActivity"/>
+        <!--个人回复的通知单列表-->
+        <activity android:name=".activitiy.notice.myself.MyselfSendReplyListActivity"/>
+        <!--查看个人发起的整改通知单界面-->
+        <activity android:name=".activitiy.notice.myself.ReadMyselfNotifyInfoActivity"/>
+        <!--查看个人回复的整改回复单界面-->
+        <activity android:name=".activitiy.notice.myself.ReadMyselfReplyInfoActivity"/>
+        <!--查看回复单内容，无审核功能-->
+        <activity android:name=".activitiy.notice.SeeReplyInfoActivity"/>
+
+    </application>
+
+</manifest>

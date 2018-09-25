@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:background="@color/colorLightGrey">
+
+    <RelativeLayout
+        android:id="@+id/modifyPasswordTop"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvProfileBack"
+
+            android:drawableLeft="@mipmap/ic_btn_return"
+            style="@style/TitleBarStyleLeftText2"/>
+
+        <TextView
+            style="@style/TitleBarStyleMiddleText"
+            android:text="@string/string_user_profile_title"/>
+
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_centerInParent="true"
+            android:layout_alignParentRight="true"
+            android:textColor="@color/colorWhite"
+            android:text="修改"/>
+
+        <CheckBox
+            android:id="@+id/cbEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_toLeftOf="@id/tvEdit"
+            style="@style/CheckBoxStyle"
+            android:textColor="@color/colorWhite"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:id="@+id/userProfileHead"
+                android:layout_height="80dp"
+                android:layout_marginTop="10dp"
+                style="@style/UserProfileItemStyle">
+
+                <ImageView
+                    android:id="@+id/imgvUserProfileHead"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:src="@mipmap/ic_activity_home_actionbar_left2_64px"/>
+
+                <ImageView
+                    android:id="@+id/arrow1"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@mipmap/ic_right_arrow_32px"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+
+                <TextView
+                    android:id="@+id/tvHead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="修改头像"
+                    android:textColor="#C4C4C4"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@id/arrow1"
+                    android:layout_marginRight="10dp"
+                    android:clickable="true"
+                    android:enabled="false"
+                    android:textSize="@dimen/textsize_title"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userProfileAccount"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="10dp"
+                android:clickable="false">
+
+                <TextView
+                    style="@style/ModifyUserProfileText"
+                    android:text="账号："/>
+
+                <EditText
+                    android:id="@+id/edtReformAccount"
+                    style="@style/ModifyUserProfileEdittext"
+                    android:enabled="false"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userProfileName"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="0.8dp">
+
+                <TextView
+                    style="@style/ModifyUserProfileText"
+                    android:text="姓名："/>
+                <!--<ImageView-->
+                <!--android:id="@+id/arrow2"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:src="@mipmap/ic_right_arrow_32px"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentRight="true"/>-->
+                <EditText
+                    android:id="@+id/edtName"
+                    android:hint="请输入姓名"
+                    android:enabled="false"
+                    style="@style/ModifyUserProfileEdittext"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userProfileProjectRole"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="0.8dp">
+
+                <TextView
+                    style="@style/ModifyUserProfileText"
+                    android:text="项目职务："/>
+                <!--<ImageView-->
+                <!--android:id="@+id/arrow2"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:src="@mipmap/ic_right_arrow_32px"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentRight="true"/>-->
+                <!--<EditText-->
+                    <!--android:id="@+id/edtProjectRole"-->
+                    <!--android:hint="请录入你的职务"-->
+                    <!--android:enabled="false"-->
+                    <!--style="@style/ModifyUserProfileEdittext"/>-->
+                <Spinner
+                    android:id="@+id/spProjectRole"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/selector_spinner"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dp"
+                    android:entries="@array/project_roles"
+                    android:layout_alignParentRight="true">
+
+                </Spinner>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userProfilePhone"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="0.8dp">
+
+                <TextView
+                    style="@style/ModifyUserProfileText"
+                    android:text="手机号码："/>
+
+                <EditText
+                    android:id="@+id/edtPhone"
+                    style="@style/ModifyUserProfileEdittext"
+                    android:inputType="numberDecimal"
+                    android:enabled="false"
+                    android:singleLine="true"
+                    android:hint="请输入手机号码"/>
+                <!--<ImageView-->
+                <!--android:id="@+id/arrow5"-->
+                <!--android:layout_width="20dp"-->
+                <!--android:layout_height="20dp"-->
+                <!--android:src="@mipmap/ic_right_arrow_32px"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentRight="true"/>-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/tvPhone"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="12345678910"-->
+                <!--android:textColor="@color/colorMiddleGrey"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_toLeftOf="@id/arrow5"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:textSize="@dimen/textsize_big_plus1"/>-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userProfileEmail"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="0.8dp"
+                android:clickable="false">
+
+                <TextView
+                    android:id="@+id/tvEmail"
+                    style="@style/ModifyUserProfileText"
+                    android:text="E-mail："/>
+
+                <EditText
+                    android:id="@+id/edtEmail"
+                    android:enabled="false"
+                    android:inputType="textEmailAddress"
+                    android:singleLine="true"
+                    style="@style/ModifyUserProfileEdittext"
+                    android:hint="请输入E-mail"
+                    android:layout_alignBaseline="@+id/tvEmail"
+                    android:layout_alignBottom="@+id/tvEmail"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginRight="13dp"
+                    android:layout_marginEnd="13dp"/>
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="xxx@163.com"-->
+                <!--android:textColor="@color/colorMiddleGrey"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:textSize="@dimen/textsize_big_plus1"/>-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userProfileQQ"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="0.8dp"
+                android:clickable="false">
+
+                <TextView
+                    style="@style/ModifyUserProfileText"
+                    android:text="Q Q："/>
+
+                <EditText
+                    android:id="@+id/edtQQ"
+                    android:enabled="false"
+                    android:inputType="numberDecimal"
+                    style="@style/ModifyUserProfileEdittext"
+                    android:singleLine="true"
+                    android:hint="请输入Q Q"/>
+                <!--<TextView-->
+                <!--android:id="@+id/tvQQ"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerVertical="true"-->
+                <!--android:layout_marginRight="10dp"-->
+                <!--android:layout_alignParentRight="true"-->
+                <!--android:text="123456"-->
+                <!--android:textColor="@color/colorMiddleGrey"-->
+                <!--android:textSize="@dimen/textsize_big_plus1"/>-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userProfileBirthday"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="0.8dp"
+                android:clickable="false">
+
+                <TextView
+                    style="@style/ModifyUserProfileText"
+                    android:text="出生日期："/>
+
+                <TextView
+                    android:id="@+id/tvBirthday"
+                    android:hint="选择出生日期"
+                    android:enabled="false"
+                    android:singleLine="true"
+                    android:textColor="#C4C4C4"
+                    style="@style/ModifyUserProfileEdittext"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userProfileRegDate"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="0.8dp"
+                android:clickable="false">
+
+                <TextView
+                    style="@style/ModifyUserProfileText"
+                    android:text="注册日期："
+                    android:id="@+id/textView3"/>
+
+                <EditText
+                    android:id="@+id/edtRegDate"
+                    style="@style/ModifyUserProfileEdittext"
+                    android:hint="选择注册日期"
+                    android:enabled="false"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userProfileAddress"
+                android:layout_height="90dp"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="0.8dp"
+                android:clickable="false">
+
+                <TextView
+                    android:id="@+id/tvAddressText"
+                    style="@style/ModifyUserProfileText"
+                    android:text="联系地址："/>
+
+                <EditText
+                    android:id="@+id/edtAddress"
+                    android:layout_toRightOf="@id/tvAddressText"
+                    style="@style/ModifyUserProfileEdittext"
+                    android:hint="输入联系地址"
+                    android:enabled="false"
+                    android:padding="5dp"
+                    android:scrollbars="vertical"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/userModifyPassword"
+                style="@style/UserProfileItemStyle"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    style="@style/ModifyUserProfileText"
+                    android:text="修改密码"/>
+
+                <CheckBox
+                    android:id="@+id/cbModifyPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:layout_marginRight="5dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerInParent="true"
+                    android:textColor="@color/colorMiddleGrey"
+                    style="@style/CheckBoxStyle"/>
+
+                <TextView
+                    android:id="@+id/tvModifyPwd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_toLeftOf="@id/cbModifyPassword"
+                    android:textColor="#C4C4C4"
+                    android:text="修改密码"/>
+                <!--<ImageView-->
+                    <!--android:layout_width="20dp"-->
+                    <!--android:layout_height="20dp"-->
+                    <!--android:src="@mipmap/ic_right_arrow_32px"-->
+                    <!--android:layout_centerVertical="true"-->
+                    <!--android:layout_alignParentRight="true"/>-->
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutModifyPwd"
+                style="@style/UserProfileItemStylePwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:visibility="gone"
+                android:paddingBottom="10dp">
+                <!--旧密码-->
+                <TextView
+                    android:id="@+id/tvOldPassWord"
+                    style="@style/ModifyUserProfileText2"
+                    android:text="旧密码："/>
+
+                <EditText
+                    android:id="@+id/edtOldPassWord"
+                    style="@style/ModifyUserProfileEdittext2"
+                    android:inputType="textPassword"
+                    android:hint="@string/string_modifyPassWord_Old"/>
+                <!--新密码-->
+                <TextView
+                    android:id="@+id/tvNewPassword"
+                    style="@style/ModifyUserProfileText2"
+                    android:layout_below="@id/tvOldPassWord"
+                    android:text="新密码："/>
+
+                <EditText
+                    android:id="@+id/edtNewPassWord"
+                    style="@style/ModifyUserProfileEdittext2"
+                    android:inputType="textPassword"
+                    android:layout_below="@id/edtOldPassWord"
+                    android:hint="@string/string_modifyPassWord_New"/>
+                <!--确认密码-->
+                <TextView
+                    android:id="@+id/tvReNewPassWord"
+                    style="@style/ModifyUserProfileText2"
+                    android:layout_below="@id/tvNewPassword"
+                    android:text="再次确认："/>
+
+                <EditText
+                    android:id="@+id/edtReNewPassWord"
+                    style="@style/ModifyUserProfileEdittext2"
+                    android:inputType="textPassword"
+                    android:layout_below="@id/edtNewPassWord"
+                    android:hint="@string/string_modifyPassWord_ReNew"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+</LinearLayout>

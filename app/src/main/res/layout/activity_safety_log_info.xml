@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/customNewLogLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+    <!--android:background="@color/colorLightGrey"-->
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            style="@style/TitleBarStyleLeftText2"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:text="生产安全日志"
+            style="@style/TitleBarStyleMiddleText"/>
+
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dp"
+            android:visibility="invisible"
+            android:background="@mipmap/ic_edit"/>
+
+        <TextView
+            android:id="@+id/tvSubmit"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_toLeftOf="@id/tvEdit"
+            android:layout_centerVertical="true"
+            android:visibility="invisible"
+            android:background="@mipmap/ic_submit2"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/titleBarLayout">
+
+        <LinearLayout
+            android:id="@+id/linearCustomContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="10dp">
+
+            <include layout="@layout/layout_logid_disable"></include>
+
+            <include layout="@layout/layout_section_disable"></include>
+
+            <include layout="@layout/layout_risktype_disable"></include>
+
+            <include layout="@layout/layout_stakenum_disable"></include>
+
+            <include layout="@layout/layout_weather_disable"></include>
+
+            <include layout="@layout/layout_emegency_disable"></include>
+
+            <include layout="@layout/layout_recorder_disable"></include>
+
+            <include layout="@layout/layout_project_role"></include>
+            <include layout="@layout/layout_check_deadline"></include>
+
+            <include layout="@layout/layout_build_charger_disable"></include>
+
+            <!--<include layout="@layout/layout_picture_disable"></include>-->
+
+            <include layout="@layout/layout_showpic_area"></include>
+
+            <include layout="@layout/layout_detail_disable"></include>
+
+            <!--<include layout="@layout/layout_log_item_push_button"/>-->
+
+
+            <EditText
+                android:id="@+id/edttDetails"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/colorLightGrey"
+                android:gravity="left"
+                android:hint="建议：写入整改建议"
+                android:padding="5dp"
+                android:textSize="@dimen/textsize_text"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

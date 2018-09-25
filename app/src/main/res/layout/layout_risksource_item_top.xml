@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/customNewLogLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+    <!--android:background="@color/colorLightGrey"-->
+
+    <LinearLayout
+        android:id="@+id/linearCustomContentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/layoutSimd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvSmID"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_smID"/>
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edtSmID"
+                style="@style/CustomLayoutEditText1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp">
+
+            <TextView
+
+                android:id="@+id/tvSeriesNum"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_SeriesNum"/>
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edtSeriesNum"
+                style="@style/CustomLayoutEditText1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp">
+
+            <TextView
+
+                android:id="@+id/tvSection"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_Section"/>
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edtSection"
+                style="@style/CustomLayoutEditText1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp">
+
+            <TextView
+                android:id="@+id/tvStakeNum"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_startEndStakeNum"/>
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edtStakeNum"
+                style="@style/CustomLayoutEditText1"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

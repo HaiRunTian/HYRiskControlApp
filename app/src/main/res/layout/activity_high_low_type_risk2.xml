@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/customNewLogLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+    <!--android:background="@color/colorLightGrey"-->
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <Button
+            android:layout_centerInParent="true"
+            android:id="@+id/btnBack"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:background="@mipmap/ic_btn_return"
+            />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TitleBarStyleMiddleText"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/tvActionbarRight"
+            style="@style/HomeActionBarComponentText"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:background="@mipmap/ic_btn_new_log2"
+            android:textSize="@dimen/textsize_small1"/>
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/titleBarLayout"
+        android:layout_marginBottom="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_risksource_item_top_disable"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvSlopeType"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_SlopeType"/>
+
+                <EditText
+                    android:focusable="false"
+                    android:id="@+id/edtSlopeType"
+                    style="@style/CustomLayoutEditText1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvSlopeMaxHeight"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_slopeMaxHeight"/>
+
+                <EditText
+                    android:focusable="false"
+                    android:id="@+id/edtSlopeMaxHeight"
+                    style="@style/CustomLayoutEditText1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvSlopeLength"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_slopeLength"/>
+
+                <EditText
+                    android:focusable="false"
+                    android:id="@+id/edtSlopeLength"
+                    style="@style/CustomLayoutEditText1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvSeries"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_series"/>
+
+                <EditText
+                    android:focusable="false"
+                    android:id="@+id/edtSeries"
+                    style="@style/CustomLayoutEditText1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvProtectionMethod"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_protectionMethod"/>
+
+                <EditText
+                    android:id="@+id/edtProtectionMethod"
+                    style="@style/CustomLayoutEditText1_disable"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp">
+
+                <TextView
+                    android:id="@+id/tvRiskIdentity"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_RiskIdentity"/>
+
+                <EditText
+                    android:focusable="false"
+                    android:id="@+id/edtRiskIdentity"
+                    style="@style/CustomLayoutEditText1"/>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_risksource_item_bottom_disable"/>
+
+            <include layout="@layout/layout_query_log_btn"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layoutBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true">
+
+        <include layout="@layout/separate_line_h"></include>
+
+        <include layout="@layout/layout_risk_item_bottom"></include>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_marginTop="10dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+    <TextView
+        android:id="@+id/tvLeader"
+        style="@style/CustomLayoutLeftText"
+        android:text="@string/string_be_check_unit"/>
+
+    <EditText
+        android:id="@+id/edtLeader"
+        style="@style/CustomLayoutEditTextDisable"
+        android:textSize="@dimen/textsize_big"/>
+</LinearLayout>

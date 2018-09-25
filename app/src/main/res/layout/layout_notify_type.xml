@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="30dp"
+              android:layout_marginTop="10dp"
+              android:orientation="horizontal">
+
+    <TextView
+        android:id="@+id/tvProjectRole"
+        style="@style/CustomLayoutLeftText"
+        android:text="@string/string_logtype"/>
+
+    <RadioGroup
+        android:id="@+id/radioGroup2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/rdbsend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="下达整改通知"/>
+
+        <RadioButton
+            android:id="@+id/rdbtnreply"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="回复整改通知"/>
+
+
+
+    </RadioGroup>
+
+    <!--<CheckBox-->
+    <!--android:id="@+id/cbAll"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="全部"/>-->
+
+    <!--<CheckBox-->
+    <!--android:id="@+id/cbSend"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="已发送"/>-->
+
+    <!--<CheckBox-->
+    <!--android:id="@+id/cbDelete"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="已删除"/>-->
+
+    <!--<CheckBox-->
+    <!--android:id="@+id/cbDraft"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    android:text="草稿"/>
+
+</LinearLayout>

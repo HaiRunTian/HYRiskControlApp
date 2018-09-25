@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/customReformLayout"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:focusable="true"
+              android:focusableInTouchMode="true">
+    <!--android:background="@color/colorLightGrey"-->
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvQueryReformBack"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            style="@style/TitleBarStyleLeftText2"
+            />
+        <TextView
+            android:id="@+id/tvQueryReformTitle"
+            android:text="风险源整改日志浏览"
+            style="@style/TitleBarStyleMiddleText"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="日志搜索条件"
+            android:textColor="@color/colorMiddleGrey2"
+            android:textSize="@dimen/textsize_big"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="vertical">
+            <!--android:background="@drawable/shape_circlecorner_white"-->
+
+            <include layout="@layout/layout_logid"></include>
+
+            <include layout="@layout/layout_riskid"></include>
+
+            <!--<include layout="@layout/separate_line_h"></include>-->
+
+            <include layout="@layout/layout_risktype"></include>
+
+            <!--<include layout="@layout/separate_line_h"></include>-->
+
+            <include layout="@layout/layout_stakenum"></include>
+
+            <!--<include layout="@layout/separate_line_h"></include>-->
+            <include layout="@layout/layout_recorder"></include>
+
+            <include layout="@layout/layout_startdate"></include>
+
+            <!--<include layout="@layout/separate_line_h"></include>-->
+
+            <include layout="@layout/layout_enddate"></include>
+
+            <!--<include layout="@layout/separate_line_h"></include>-->
+
+
+            <!--<include layout="@layout/separate_line_h"></include>-->
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_query_btn"></include>
+
+</LinearLayout>

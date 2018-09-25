@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                             android:layout_width="match_parent"
+                             android:layout_height="60dp"
+                             android:layout_marginTop="10dp">
+<Button
+    android:id="@+id/btnAddPic"
+    android:layout_width="60dp"
+    android:layout_height="match_parent"
+    android:background="@mipmap/ic_add"/>
+
+<TextView
+    android:id="@+id/tvAddPicHint"
+    android:layout_width="0dp"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="5dp"
+    android:layout_weight="1"
+    android:gravity="center_vertical"
+    android:text="附件上传\n(长按清除照片)"
+    android:textColor="@color/colorGrey"/>
+
+</LinearLayout>

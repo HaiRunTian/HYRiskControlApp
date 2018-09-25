@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/customNewReformLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+    <!--android:background="@color/colorLightGrey"-->
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            style="@style/TitleBarStyleLeftText2"
+            />
+
+        <TextView
+            android:id="@+id/tvTitles"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="新建整改日志"/>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="40dp"
+        android:layout_below="@id/titleBarLayout">
+
+        <LinearLayout
+            android:id="@+id/linearCustomContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <include layout="@layout/layout_logid"></include>
+
+            <include layout="@layout/layout_riskid"></include>
+
+            <include layout="@layout/layout_risktype"></include>
+
+            <include layout="@layout/layout_section"></include>
+
+            <include layout="@layout/layout_stakenum"></include>
+
+            <include layout="@layout/layout_changed_user"></include>
+
+            <include layout="@layout/layout_title"></include>
+
+            <include layout="@layout/layout_recorder"></include>
+
+            <include layout="@layout/layout_builde_charger"></include>
+
+            <include layout="@layout/layout_takepic_remind_date"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="245dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edtRiskDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorLightGrey"
+                    android:gravity="left"
+                    android:hint="风险源整改内容,不得超过160字"
+                    android:textSize="@dimen/textsize_title"
+                    android:padding="5dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp">
+
+        <include layout="@layout/layout_submit_btn"></include>
+
+    </LinearLayout>
+
+</RelativeLayout>

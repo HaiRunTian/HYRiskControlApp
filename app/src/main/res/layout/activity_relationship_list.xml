@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/TitleBarStyleLeftText2"
+            android:background="@mipmap/ic_btn_return"/>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="人员名单"/>
+
+        <TextView
+            android:id="@+id/tvSubmit"
+            style="@style/TitleBarStyleRightText"
+            android:background="@mipmap/ic_submit2"/>
+    </RelativeLayout>
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
+
+        <RadioButton
+            android:id="@+id/rdbOwner"
+            style="@style/RadioGroupStyle"
+            android:text="业主方"/>
+
+        <RadioButton
+            android:id="@+id/rdbSupervisor"
+            style="@style/RadioGroupStyle"
+            android:text="监理方"/>
+
+        <RadioButton
+            android:id="@+id/rdbConstruction"
+            style="@style/RadioGroupStyle"
+            android:text="施工方"/>
+
+    </RadioGroup>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/colorLightGrey"/>
+
+    <fragment
+        android:id="@+id/fragment"
+        android:name="tianchi.com.risksourcecontrol.fragment.FragmentNone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        tools:layout="@layout/fragment_listview_owner">
+
+    </fragment>
+
+</LinearLayout>

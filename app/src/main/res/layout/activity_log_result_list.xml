@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_gradient_color_blue"
+        android:paddingLeft="10dp">
+
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/ic_btn_return"
+            />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/shape_gradient_color_blue"
+            android:gravity="center"
+            android:text="日志列表"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"/>
+    </RelativeLayout>
+
+
+    <ListView
+        android:id="@+id/lvLogResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@null"
+        android:dividerHeight="8dp"
+        android:layoutAnimation="@anim/anim_layout"
+        android:listSelector="@android:color/transparent">
+    </ListView>
+
+</LinearLayout> 

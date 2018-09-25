@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_gravity="center"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:background="@color/colorLightGrey">
+
+        <AutoCompleteTextView
+            android:id="@+id/autoTvAccount"
+            android:hint="输入推送的账号"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/shape_circlecorner_white"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnPushLog"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:layout_height="40dp"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/shape_btn_circlecorner_orange"
+                android:text="推送"/>
+
+            <Button
+                android:id="@+id/btnCancel"
+                android:layout_marginTop="5dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="40dp"
+                android:layout_marginLeft="5dp"
+                android:textColor="@color/colorWhite"
+                android:background="@drawable/shape_btn_circlecorner_orange"
+                android:text="取消"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</RelativeLayout>

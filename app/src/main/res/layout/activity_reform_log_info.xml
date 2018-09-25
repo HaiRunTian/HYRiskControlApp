@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/customNewLogLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+    <!--   android:background="@color/colorLightGrey"-->
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            style="@style/TitleBarStyleLeftText2"
+            />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:text="风险源整改日志"
+            style="@style/TitleBarStyleMiddleText"
+            />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/titleBarLayout">
+
+        <LinearLayout
+            android:id="@+id/linearCustomContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:padding="10dp">
+
+            <include layout="@layout/layout_logid_disable"></include>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:layout_marginTop="10dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvSection"-->
+                    <!--style="@style/CustomLayoutLeftText"-->
+                    <!--android:text="@string/string_Section"/>-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edtSection"-->
+                    <!--android:enabled="false"-->
+                    <!--style="@style/CustomLayoutEditText"/>-->
+
+
+            <!--</LinearLayout>-->
+
+            <include layout="@layout/layout_risktype_disable"></include>
+
+            <include layout="@layout/layout_stakenum_disable"></include>
+
+            <include layout="@layout/layout_reform_account_disable"></include>
+
+            <include layout="@layout/layout_title_disable"></include>
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:layout_marginTop="10dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvWeather"-->
+                    <!--style="@style/CustomLayoutLeftText"-->
+                    <!--android:text="@string/string_newLogWeather"/>-->
+                <!--<EditText-->
+                    <!--android:id="@+id/edtWeather"-->
+                    <!--android:enabled="false"-->
+                    <!--style="@style/CustomLayoutEditText"/>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:layout_marginTop="10dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvEmergency"-->
+                    <!--style="@style/CustomLayoutLeftText"-->
+                    <!--android:text="@string/string_emergency"/>-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edtEmergency"-->
+                    <!--style="@style/CustomLayoutEditText"-->
+                    <!--android:enabled="false"-->
+                    <!--android:textSize="@dimen/textsize_big"/>-->
+
+            <!--</LinearLayout>-->
+
+            <include layout="@layout/layout_recorder_disable"></include>
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="30dp"-->
+                <!--android:layout_marginTop="10dp">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tvLeader"-->
+                    <!--style="@style/CustomLayoutLeftText"-->
+                    <!--android:text="@string/string_leader"/>-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edtLeader"-->
+                    <!--style="@style/CustomLayoutEditText"-->
+                    <!--android:enabled="false"-->
+                    <!--android:textSize="@dimen/textsize_big"/>-->
+
+            <!--</LinearLayout>-->
+
+            <include layout="@layout/layout_picture_disable"></include>
+
+            <include layout="@layout/layout_detail_disable"></include>
+
+            <include layout="@layout/layout_log_item_push_button"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

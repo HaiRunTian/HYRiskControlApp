@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvClose"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            android:gravity="center"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            />
+
+        <TextView
+            android:id="@+id/tvTitles"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="接收通知"
+            />
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="6dp"
+            android:background="@drawable/selector_btn_orange_blue"
+            android:text="回复"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_small"/>
+    </RelativeLayout>
+
+
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/edtreplay"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+
+                android:gravity="left"
+                android:hint="请输入回复内容"
+                android:lineSpacingExtra="10dp"
+                android:textSize="@dimen/textsize_title"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_Title"/>
+
+            <EditText
+                android:id="@+id/edtTitle"
+                style="@style/CustomLayoutEditTextDisable"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvType"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_type"/>
+
+            <EditText
+                android:id="@+id/edtType"
+                style="@style/CustomLayoutEditTextNewNews"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tvTime"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_time"/>
+
+            <EditText
+                android:id="@+id/edtTime"
+                style="@style/CustomLayoutEditTextDisable"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tvReceiveMan"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_SendMan"/>
+
+            <EditText
+                android:id="@+id/edtReceiveMan"
+                style="@style/CustomLayoutEditTextDisable"
+                />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tvAddFile"
+                style="@style/CustomLayoutLeftText"
+                android:text=" 附         件 ："/>
+
+
+            <TextView
+                android:id="@+id/tvFileName"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:gravity="center_vertical"
+                />
+
+
+        </LinearLayout>
+
+
+        <include layout="@layout/separate_line_h"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/tvRecvCUnit"
+                style="@style/CustomLayoutLeftText"
+                android:text="内容："/>
+
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="200dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/edtContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:enabled="false"
+                    android:gravity="left"
+                    android:lineSpacingExtra="10dp"
+                    android:textSize="@dimen/textsize_title"/>
+            </LinearLayout>
+
+        </ScrollView>
+
+        <include layout="@layout/separate_line_h"></include>
+
+
+        <!--<ScrollView-->
+            <!--android:id="@+id/scrollView"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="100dp"-->
+            <!--android:visibility="gone">-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content">-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/edtreplay"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="100dp"-->
+
+                    <!--android:gravity="left"-->
+                    <!--android:hint="请输入回复内容"-->
+                    <!--android:lineSpacingExtra="10dp"-->
+                    <!--android:textSize="@dimen/textsize_title"/>-->
+            <!--</LinearLayout>-->
+
+        <!--</ScrollView>-->
+
+    </LinearLayout>
+
+
+</LinearLayout>

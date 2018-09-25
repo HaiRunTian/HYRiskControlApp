@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/customBrowseLayout"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorLightGrey">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/shape_gradient_color_blue"
+        android:paddingLeft="10dp">
+
+        <TextView
+            android:id="@+id/tvBrowseBack"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/string_back"
+            android:gravity="center"
+            android:drawableLeft="@mipmap/ic_back2_32px"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            />
+        <TextView
+            android:id="@+id/tvBrowseTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/textsize_big_plus2"
+            android:text="安全日志浏览"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="日志搜索条件"
+            android:textColor="@color/colorMiddleGrey2"
+            android:textSize="@dimen/textsize_big"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_circlecorner_white"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    style="@style/QueryTextStyle"
+                    android:text="风险类型："/>
+
+                <Spinner
+                    android:id="@+id/spRiskType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:entries="@array/riskType">
+
+                </Spinner>
+
+            </LinearLayout>
+
+            <include layout="@layout/separate_line_h"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    style="@style/QueryTextStyle"
+                    android:text="桩&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;号："/>
+
+                <Spinner
+                    android:id="@+id/spStationID"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </Spinner>
+
+            </LinearLayout>
+
+            <include layout="@layout/separate_line_h"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/QueryTextStyle"
+                    android:text="开始日期："/>
+
+                <TextView
+                    android:id="@+id/tvStartDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_right_arrow_32px"
+                    android:layout_gravity="center"
+                    android:gravity="right"
+                    android:textSize="@dimen/textsize_title"
+                    android:textColor="@color/colorMiddleGrey"
+                    android:text="选择开始时间&#160;&#160;"
+                    android:onClick=""/>
+
+
+            </LinearLayout>
+
+            <include layout="@layout/separate_line_h"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1">
+
+                <TextView
+                    style="@style/QueryTextStyle"
+                    android:text="结束日期："/>
+
+                <TextView
+                    android:id="@+id/tvEndDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@mipmap/ic_right_arrow_32px"
+                    android:layout_gravity="center"
+                    android:gravity="right"
+                    android:textSize="@dimen/textsize_title"
+                    android:textColor="@color/colorMiddleGrey"
+                    android:text="选择结束时间&#160;&#160;"/>
+
+
+            </LinearLayout>
+
+            <include layout="@layout/separate_line_h"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="查询"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="显示全部"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_margin="8dp"
+        android:background="@color/colorMiddleGrey">
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="修改"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="删除"/>
+    </LinearLayout>
+
+</LinearLayout>

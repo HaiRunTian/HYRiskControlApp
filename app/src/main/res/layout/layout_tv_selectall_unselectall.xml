@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:padding="5dp">
+
+    <TextView
+        android:id="@+id/tvTotalSelections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize_big"
+        android:layout_alignParentLeft="true"
+        android:textColor="@color/colorlightRed"/>
+
+    <TextView
+        android:id="@+id/tvSelectAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textsize_big"
+        android:textColor="@color/colorMiddleGrey"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="15dp"
+        android:clickable="true"
+        android:text="全选"/>
+
+    <TextView
+        android:id="@+id/tvUnSelectAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@id/tvSelectAll"
+        android:textSize="@dimen/textsize_big"
+        android:textColor="@color/colorMiddleGrey"
+        android:clickable="true"
+        android:text="全不选"/>
+
+</RelativeLayout>

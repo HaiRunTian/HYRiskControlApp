@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/customNewLogLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/TitleBarStyleLeftText2"
+            android:drawableLeft="@mipmap/ic_btn_return"
+
+            />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="新建重大风险源日志"
+            />
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_below="@+id/titleBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:paddingBottom="40dp">
+
+        <LinearLayout
+            android:id="@+id/linearCustomContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <!--<include layout="@layout/layout_logid"></include>-->
+
+            <include layout="@layout/layout_risk_index"></include>
+
+            <include layout="@layout/layout_section"></include>
+
+            <include layout="@layout/layout_risktype"></include>
+
+            <include layout="@layout/layout_stakenum"></include>
+
+            <include layout="@layout/layout_weather"></include>
+
+            <include layout="@layout/layout_emergency"></include>
+
+            <include layout="@layout/layout_recorder"></include>
+
+            <include layout="@layout/layout_project_role"></include>
+
+            <include layout="@layout/layout_check_deadline"></include>
+
+            <include layout="@layout/layout_builde_charger"></include>
+
+            <include layout="@layout/layout_addpic_area"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/edtmDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorLightGrey"
+                    android:gravity="left"
+                    android:hint="检查发现问题：（记录现场巡查发现的问题）"
+                    android:padding="5dp"
+                    android:textSize="@dimen/textsize_title"/>
+
+
+                <EditText
+                    android:id="@+id/edttDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_weight="1"
+                    android:background="@color/colorLightGrey"
+                    android:gravity="left"
+                    android:hint="建议：写入整改建议"
+                    android:padding="5dp"
+                    android:textSize="@dimen/textsize_text"/>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="5dp">
+
+        <include layout="@layout/layout_submit_btn"></include>
+
+    </LinearLayout>
+
+</RelativeLayout>

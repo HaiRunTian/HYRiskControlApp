@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/linearUserAdmin"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorWhite"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearMessageTop"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageView
+            style="@style/FragmentTitleBarLeftLogo"
+            android:src="@mipmap/ic_activity_home_actionbar_bottom_item1_normal_48px"/>
+
+        <TextView
+            android:id="@+id/tvtitle"
+            style="@style/FragmentTitleBarMiddleText"
+            android:text="@string/string_message_title"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/separate_line_h"></include>
+
+
+    <LinearLayout
+        android:id="@+id/layout"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvMsgRefy"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginRight="5dp"
+            android:background="@drawable/selector_tv_group_bgcolor"
+            android:gravity="center_vertical"
+            android:text="整改通知"/>
+
+        <include layout="@layout/separate_line_h"></include>
+
+        <LinearLayout
+            android:id="@+id/layoutMsg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvMsgNew"
+                android:background="@drawable/selector_tv_bgcolor"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:gravity="center_vertical"
+                android:text="新建通知"/>
+
+            <include layout="@layout/separate_line_h"></include>
+
+            <TextView
+                android:id="@+id/tvMsgDraft"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/selector_tv_bgcolor"
+                android:gravity="center_vertical"
+                android:text="草稿(0)"/>
+            <include layout="@layout/separate_line_h"></include>
+
+            <TextView
+                android:id="@+id/tvMsgRefyNum"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/selector_tv_bgcolor"
+                android:gravity="center_vertical"
+                android:text="收到(0)"/>
+            <TextView
+                android:id="@+id/tvMsgSendNum"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/selector_tv_bgcolor"
+                android:gravity="center_vertical"
+                android:text="下达"/>
+
+            <include layout="@layout/separate_line_h"></include>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tvMsgReply"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_tv_group_bgcolor"
+            android:layout_marginRight="5dp"
+            android:gravity="center_vertical"
+            android:text="回复通知"/>
+
+        <include layout="@layout/separate_line_h"></include>
+
+        <LinearLayout
+            android:id="@+id/layoutMsg2"
+            android:layout_width="match_parent"
+            android:background="@drawable/selector_tv_bgcolor"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tvMsgWaitCheck"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/selector_tv_bgcolor"
+                android:gravity="center_vertical"
+                android:text="待审核通知单(0)"/>
+
+            <include layout="@layout/separate_line_h"></include>
+
+            <TextView
+                android:id="@+id/tvMsgChecked"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/selector_tv_bgcolor"
+                android:gravity="center_vertical"
+                android:text="已审核通知单(0)"/>
+            <TextView
+                android:id="@+id/tvMsgSend"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@drawable/selector_tv_bgcolor"
+                android:gravity="center_vertical"
+                android:text="回复(0)"/>
+
+
+            <include layout="@layout/separate_line_h"></include>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvMsgUnread"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_tv_bgcolor"
+            android:gravity="center_vertical"
+            android:text="未读消息(0)"/>
+        <include layout="@layout/separate_line_h"></include>
+
+
+        <TextView
+            android:id="@+id/tvMsgQuery"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_tv_bgcolor"
+            android:gravity="center_vertical"
+            android:text="查询"/>
+
+        <include layout="@layout/separate_line_h"></include>
+
+
+        <TextView
+            android:id="@+id/tvMsgRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/selector_tv_bgcolor"
+            android:gravity="center_vertical"
+            android:text="刷新"/>
+
+        <include layout="@layout/separate_line_h"></include>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--<string-array name="riskType">-->
+        <!--<item> </item>-->
+        <!--<item>高边坡</item>-->
+        <!--<item>高填深挖</item>-->
+        <!--<item>低挖浅埋</item>-->
+        <!--<item>一般陡坡</item>-->
+        <!--<item>软土</item>-->
+        <!--<item>高液限土</item>-->
+        <!--<item>桥梁</item>-->
+        <!--<item>隧道</item>-->
+        <!--<item>弃土场</item>-->
+        <!--&lt;!&ndash;<item>服务区</item>&ndash;&gt;-->
+    <!--</string-array>-->
+
+    <string-array name="riskType">
+        <item>A 高边坡</item>
+        <item>B 高填深挖</item>
+        <item>C 低挖浅埋</item>
+        <item>D 一般陡坡</item>
+        <item>E 软土</item>
+        <item>F 高液限土</item>
+        <item>G 桥梁</item>
+        <item>H 隧道</item>
+        <item>I 弃土场</item>
+        <item>其他类型</item>
+        <item></item>
+        <!--<item>服务区</item>-->
+    </string-array>
+
+    <string-array name="riskType2">
+        <item>A 高边坡</item>
+        <item>B 高填深挖</item>
+        <item>C 低挖浅埋</item>
+        <item>D 一般陡坡</item>
+        <item>E 软土</item>
+        <item>F 高液限土</item>
+        <item>G 桥梁</item>
+        <item>H 隧道</item>
+        <item>I 弃土场</item>
+        <item>桥梁名称</item>
+        <item>隧道名称</item>
+        <!--<item>服务区</item>-->
+    </string-array>
+
+    <string-array name="testArrays">
+        <item> </item>
+        <item>K0+001</item>
+        <item>K1+102</item>
+        <item>K2+211</item>
+        <item>K3+342</item>
+        <item>K4+054</item>
+        <item>K5+087</item>
+        <item>K6+901</item>
+        <item>K7+051</item>
+        <item>K8+901</item>
+    </string-array>
+
+    <string-array name="weatherType">
+        <!--<item> </item>-->
+        <item>晴</item>
+        <item>多云</item>
+        <item>阴</item>
+        <item>阵雨</item>
+        <item>雷阵雨</item>
+        <item>雷阵雨伴有冰雹</item>
+        <item>雨夹雪</item>
+        <item>小雨</item>
+        <item>中雨</item>
+        <item>大雨</item>
+        <item>暴雨</item>
+        <item>大暴雨</item>
+        <item>特大暴雨</item>
+        <item>阵雪</item>
+        <item>小雪</item>
+        <item>中雪</item>
+        <item>大雪</item>
+        <item>暴雪</item>
+        <item>雾</item>
+        <item>霾</item>
+        <item>冻雨</item>
+        <!--<item>沙尘暴</item>-->
+        <!--<item>小雨-中雨</item>-->
+        <!--<item>中雨-大雨</item>-->
+        <!--<item>大雨-暴雨</item>-->
+        <!--<item>暴雨-大暴雨</item>-->
+        <!--<item>大暴雨-特大暴雨</item>-->
+        <!--<item>小雪-中雪</item>-->
+        <!--<item>中雪-大雪</item>-->
+        <!--<item>大雪-暴雪</item>-->
+        <!--<item>浮尘</item>-->
+        <!--<item>扬沙</item>-->
+        <!--<item>强沙尘暴</item>-->
+        <!--<item>霜冻</item>-->
+        <!--<item>台风</item>-->
+    </string-array>
+
+    <string-array name="section">
+        <item>TJ0</item>
+        <item>TJ01</item>
+        <item>TJ02</item>
+        <item>TJ03</item>
+        <item>TJ04</item>
+        <item>TJ05</item>
+        <item>TJ06</item>
+        <item>TJ07</item>
+        <item>TJ08</item>
+        <item>TJ09</item>
+        <item>TJ10</item>
+        <item>TJ11</item>
+        <item>TJ12</item>
+        <item>TJ13</item>
+        <item>TJ14</item>
+        <item>TJ15</item>
+        <item>TJ16</item>
+    </string-array>
+
+    <!--职务列表-->
+    <string-array name="project_roles">
+        <item>管理员</item>
+        <item>安全部经理</item>
+        <item>总监</item>
+        <item>副总监</item>
+        <item>桥梁工程师</item>
+        <item>路基工程师</item>
+        <item>隧道工程师</item>
+        <item>试验工程师</item>
+        <item>安全工程师</item>
+        <item>测量工程师</item>
+        <item>房建工程师</item>
+        <item>试验员</item>
+        <item>监理员</item>
+        <item>项目经理</item>
+        <item>生产副经理</item>
+        <item>总工</item>
+        <item>安全总监</item>
+        <item>质检部</item>
+        <item>安全部</item>
+        <item>路基一工区</item>
+        <item>路基二工区</item>
+        <item>桥梁工区</item>
+        <item>梁场</item>
+        <item>副经理</item>
+        <item>安全员</item>
+        <item>安全部长</item>
+        <item>领工员</item>
+        <item>项目常务副经理</item>
+        <item>项目副经理</item>
+        <item>常务副总工</item>
+        <item>安全部副部长</item>
+        <item>安全部资料员</item>
+        <item>工区主任</item>
+        <item>项目副主任</item>
+        <item>经理</item>
+        <item>常务副经理兼总工</item>
+        <item>施工员</item>
+        <item>质检部部长</item>
+        <item>安全资料员</item>
+        <item>工程部部长</item>
+        <item>路基现场施工管理人员</item>
+        <item>桥梁现场施工管理人员</item>
+        <item>预制场现场施工管理人员</item>
+        <item>现场安全员</item>
+        <item>现场技术员</item>
+        <item>技术员</item>
+        <item>质检部长</item>
+        <item>安全部员</item>
+        <item>工程部长</item>
+        <item>技术主管</item>
+        <item>路基施工员</item>
+        <item>桥梁施工员</item>
+        <item>涵洞施工员</item>
+        <item>桩基施工员</item>
+        <item>副经理（兼TJ6,7,8质量组组长）</item>
+        <item>副经理（兼TJ9,10质量组组长）</item>
+        <item>TJ6桥梁专监</item>
+        <item>TJ6路基专监</item>
+        <item>TJ7桥梁专监</item>
+        <item>TJ8桥梁专监</item>
+        <item>TJ8路基专监</item>
+        <item>TJ9桥梁专监</item>
+        <item>TJ9路基专监</item>
+        <item>TJ10桥梁专监</item>
+        <item>TJ10路基专监</item>
+        <item>房建专监</item>
+        <item>TJ6监理员</item>
+        <item>TJ10监理员</item>
+        <item>TJ8监理员</item>
+        <item>TJ7监理员</item>
+        <item>TJ9监理员</item>
+        <item>安全主任</item>
+        <item>安全环保</item>
+        <item>安质部长</item>
+        <item>常务副经理</item>
+        <item>副总工兼技术主管</item>
+        <item>副经理兼工区长</item>
+        <item>工区长</item>
+        <item>安全部部长</item>
+        <item>安全部部员</item>
+        <item>项目总工</item>
+        <item>施工主管</item>
+        <item>副部长</item>
+        <item>辅助工</item>
+        <item>安全副总监</item>
+        <item>安全专监</item>
+        <item>TJ14标监理组长</item>
+        <item>TJ15标监理组长</item>
+        <item>TJ16标监理组长</item>
+        <item>TJ14标专监</item>
+        <item>TJ15标专监</item>
+        <item>TJ16标专监</item>
+        <item>TJ14标监理员</item>
+        <item>TJ15标监理员</item>
+        <item>TJ16标监理员</item>
+        <item>项目书记</item>
+        <item>测量队队长</item>
+        <item>项目书记</item>
+        <item>（安全总监）</item>
+        <item>安全副经理</item>
+        <item>安全主管</item>
+        <item>现场施工管理员</item>
+    </string-array>
+
+
+    <string-array name="section2">
+        <item>TJ01</item>
+        <item>TJ02</item>
+        <item>TJ03</item>
+        <item>TJ04</item>
+        <item>TJ05</item>
+        <item>TJ06</item>
+        <item>TJ07</item>
+        <item>TJ08</item>
+        <item>TJ09</item>
+        <item>TJ10</item>
+        <item>TJ11</item>
+        <item>TJ12</item>
+        <item>TJ13</item>
+        <item>TJ14</item>
+        <item>TJ15</item>
+        <item>TJ16</item>
+    </string-array>
+</resources>

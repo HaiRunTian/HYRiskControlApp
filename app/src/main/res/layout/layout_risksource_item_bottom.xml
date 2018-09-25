@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/customNewLogLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:orientation="vertical">
+    <!--android:background="@color/colorLightGrey"-->
+
+    <LinearLayout
+        android:id="@+id/linearCustomContentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp">
+
+            <TextView
+                android:id="@+id/tvGrade"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_Grade"/>
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edtGrade"
+                style="@style/CustomLayoutEditText1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp">
+
+            <TextView
+                android:id="@+id/tvColorIdentity"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_color"/>
+
+            <EditText
+                android:id="@+id/edtColorIdentity"
+                style="@style/CustomLayoutEditText1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp">
+
+            <TextView
+                android:id="@+id/tvPosibilityLevel"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_posibility"/>
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edtPosibilityLevel"
+                style="@style/CustomLayoutEditText1"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp">
+
+            <TextView
+                android:id="@+id/tvSeriousnesLevel"
+                style="@style/CustomLayoutLeftText"
+                android:text="@string/string_seriousness"/>
+
+            <EditText
+                android:focusable="false"
+                android:id="@+id/edtSeriousnesLevel"
+                style="@style/CustomLayoutEditText1"/>
+
+        </LinearLayout>
+
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginTop="0dp">-->
+            <!--<include layout="@layout/layout_risksource_item_bottom_button"/>-->
+
+
+        <!--</LinearLayout>-->
+
+
+
+
+    </LinearLayout>
+
+</RelativeLayout>

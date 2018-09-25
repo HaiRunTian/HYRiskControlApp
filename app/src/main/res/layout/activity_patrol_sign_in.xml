@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/customNewLogLayout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:focusable="true"
+              android:focusableInTouchMode="true"
+              android:orientation="vertical">
+    <!--android:background="@color/colorLightGrey"-->
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle">
+
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/TitleBarStyleLeftText2"
+            android:drawableLeft="@mipmap/ic_btn_return"
+
+            />
+
+        <TextView
+            android:id="@+id/tvTitle"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="巡查签到"
+            />
+    </RelativeLayout>
+
+    <ScrollView
+        android:id="@+id/scrlvPatrolSignIn"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/linearCustomContentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvLoginName"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="@string/string_newPatrolAccount"/>
+
+                <EditText
+                    android:id="@+id/edtLoginName"
+                    style="@style/CustomLayoutEditText1_disable"/>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+
+                <TextView
+                    android:id="@+id/tvRealName"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="用  户 姓 名："/>
+
+                <EditText
+                    android:id="@+id/edtRealName"
+                    style="@style/CustomLayoutEditText1_disable"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:id="@+id/tvXCoord"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="X     坐    标："/>
+
+                <EditText
+                    android:id="@+id/edtXCoord"
+                    style="@style/CustomLayoutEditText1_disable"
+                    />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                >
+
+                <TextView
+                    android:id="@+id/tvYCoord"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="Y     坐    标："/>
+
+                <EditText
+                    android:id="@+id/edtYCoord"
+                    style="@style/CustomLayoutEditText1_disable"
+                    />
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_section"></include>
+
+            <include layout="@layout/layout_risktype"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tvRisk"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="风    险   源："/>
+
+                <Spinner
+                    android:id="@+id/spRisk"
+                    style="@style/CustomSpinnerStyle">
+                </Spinner>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/tvIsLocate"
+                    style="@style/CustomLayoutLeftText"
+                    android:text="是否位置判断："/>
+
+                <CheckBox
+                    android:id="@+id/cbIsLocate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    >
+                </CheckBox>
+            </LinearLayout>
+
+            <include layout="@layout/layout_addpic_area"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="bottom">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerInParent="true"
+                        android:layout_marginBottom="7dp"
+                        android:background="@drawable/selector_btn_circle"
+                        android:text="签到"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/textsize_big"/>
+
+                    <TextView
+                        android:id="@+id/tvTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10:10"
+                        android:layout_below="@id/btnSubmit"
+                        android:textColor="@color/colorLoginBgStart"
+                        android:textSize="@dimen/textsize_big_plus2"/>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

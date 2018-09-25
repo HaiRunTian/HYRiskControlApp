@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layoutCon"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="10dp">
+
+    <TextView
+        android:id="@+id/tvOwner"
+        style="@style/CustomLayoutLeftText"
+        android:text="@string/string_owner"/>
+
+    <EditText
+        android:id="@+id/edtOwner"
+        style="@style/CustomLayoutEditText1"
+        android:editable="false"
+        android:focusableInTouchMode="false"
+        android:hint="点 击 选 取,长 按 查 看"/>
+
+</LinearLayout>

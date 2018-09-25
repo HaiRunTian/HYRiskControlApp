@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/linearUserAdmin"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/colorWhite"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/linearRiskSourceTop"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@mipmap/ic_activity_home_actionbar_bottom_item3_normal_48px"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textsize_big_plus4"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/colorLoginBgStart"
+            android:text="@string/string_risk_admin"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/separate_line_h"></include>
+
+    <LinearLayout
+        android:id="@+id/linearRiskSourceMiddle"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <include layout="@layout/expandablelistview"></include>
+
+
+    </LinearLayout>
+
+</LinearLayout>
