@@ -67,7 +67,7 @@
 
             <include layout="@layout/layout_reform_method_require"></include>
 
-            <include layout="@layout/layout_supervisor"></include>
+            <!--<include layout="@layout/layout_supervisor"></include>-->
 
             <include layout="@layout/layout_construction"></include>
 

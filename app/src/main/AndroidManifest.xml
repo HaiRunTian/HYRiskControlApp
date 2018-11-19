@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="tianchi.com.risksourcecontrol">
+          package="tianchi.com.risksourcecontrol2">
 
     <!-- 这个权限用于调用系统摄像头 -->
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -25,18 +25,21 @@
     <!-- SD卡读取权限，用户写入离线定位数据 -->
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
-    <!-- <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" /> -->
+    <!-- <uses-permission android:name="android
+    .permission.WRITE_SECURE_SETTINGS" /> -->
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <!-- <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" /> -->
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_SETTINGS"/>
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
 
     <application
         android:name=".base.AppInitialization"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_logo"
+        android:icon="@mipmap/logo03"
         android:label="@string/app_name"
         android:persistent="true"
         android:supportsRtl="true"
@@ -59,7 +62,7 @@
         <!--</meta-data>-->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="MRwBndYP25C1mdiAt4KhICg1WqHgRKhT">
+            android:value="qL59KHduGfkc0omyAbSQKdwmIGH7GwaM">
         </meta-data>
         <!-- 百度地图定位服务 -->
         <service
@@ -276,9 +279,18 @@
         <activity
             android:name=".activitiy.risksourceformap.SoilTypeFormActivity"
             android:theme="@style/RIsklistViewDialog2"/>
+        <activity
+            android:name=".activitiy.risksourceformap.ServiceZoneFromActivity"
+            android:theme="@style/RIsklistViewDialog2"/>
 
         <activity
             android:name=".activitiy.risksourceformap.HighLowTypeRiskForMapActivity"
+            android:theme="@style/RIsklistViewDialog2"/>
+        <activity
+            android:name=".activitiy.risksourceformap.LowFillFormMapActivity"
+            android:theme="@style/RIsklistViewDialog2"/>
+        <activity
+            android:name=".activitiy.risksourceformap.SpecialSoilFromActivity"
             android:theme="@style/RIsklistViewDialog2"/>
 
 

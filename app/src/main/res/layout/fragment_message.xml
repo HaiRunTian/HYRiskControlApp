@@ -43,6 +43,7 @@
             android:layout_marginRight="5dp"
             android:background="@drawable/selector_tv_group_bgcolor"
             android:gravity="center_vertical"
+            android:textColor="@color/colorWhite"
             android:text="整改通知"/>
 
         <include layout="@layout/separate_line_h"></include>
@@ -100,6 +101,7 @@
             android:background="@drawable/selector_tv_group_bgcolor"
             android:layout_marginRight="5dp"
             android:gravity="center_vertical"
+            android:textColor="@color/colorWhite"
             android:text="回复通知"/>
 
         <include layout="@layout/separate_line_h"></include>

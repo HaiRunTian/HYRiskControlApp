@@ -14,6 +14,6 @@
         style="@style/CustomLayoutEditText1"
         android:editable="false"
         android:focusableInTouchMode="false"
-        android:hint="点 击 选 取"/>
+        android:hint="点击选取，只能选一个"/>
 
 </LinearLayout>

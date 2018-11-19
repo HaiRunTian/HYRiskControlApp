@@ -59,8 +59,6 @@
 
             <!--<include layout="@layout/layout_owner"></include>-->
 
-
-
             <include layout="@layout/layout_submit_btn"/>
 
         </LinearLayout>

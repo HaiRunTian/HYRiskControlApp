@@ -109,11 +109,11 @@
         <item>TJ09</item>
         <item>TJ10</item>
         <item>TJ11</item>
-        <item>TJ12</item>
-        <item>TJ13</item>
-        <item>TJ14</item>
-        <item>TJ15</item>
-        <item>TJ16</item>
+        <!--<item>TJ12</item>-->
+        <!--<item>TJ13</item>-->
+        <!--<item>TJ14</item>-->
+        <!--<item>TJ15</item>-->
+        <!--<item>TJ16</item>-->
     </string-array>
 
     <!--职务列表-->
@@ -235,10 +235,10 @@
         <item>TJ09</item>
         <item>TJ10</item>
         <item>TJ11</item>
-        <item>TJ12</item>
-        <item>TJ13</item>
-        <item>TJ14</item>
-        <item>TJ15</item>
-        <item>TJ16</item>
+        <!--<item>TJ12</item>-->
+        <!--<item>TJ13</item>-->
+        <!--<item>TJ14</item>-->
+        <!--<item>TJ15</item>-->
+        <!--<item>TJ16</item>-->
     </string-array>
 </resources>

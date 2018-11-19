@@ -84,7 +84,7 @@
 
                 <EditText
                     android:id="@+id/edtXCoord"
-                    style="@style/CustomLayoutEditText1_disable"
+                    style="@style/CustomLayoutEditText"
                     />
 
             </LinearLayout>
@@ -102,7 +102,7 @@
 
                 <EditText
                     android:id="@+id/edtYCoord"
-                    style="@style/CustomLayoutEditText1_disable"
+                    style="@style/CustomLayoutEditText1"
                     />
 
             </LinearLayout>

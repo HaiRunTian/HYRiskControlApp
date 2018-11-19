@@ -17,7 +17,7 @@
             android:id="@+id/linearUserProfileTop"
             android:layout_width="match_parent"
             android:layout_height="250dp"
-            android:background="@mipmap/ic_man_bg_man"
+            android:background="@mipmap/ic_mine"
             android:orientation="vertical"
             android:padding="1dp">
 

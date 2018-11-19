@@ -48,12 +48,12 @@
             <include layout="@layout/layout_check_date"></include>
             <include layout="@layout/layout_check_man_disable"></include>
             <include layout="@layout/layout_check_deadline"></include>
-            <include layout="@layout/layout_addpic_area"></include>
+            <include layout="@layout/layout_addpic_area2"></include>
             <include layout="@layout/layout_check_content"></include>
             <include layout="@layout/layout_check_find_problem"></include>
             <include layout="@layout/layout_reform_method_require"></include>
             <!--<include layout="@layout/layout_recorder2"></include>-->
-            <include layout="@layout/layout_supervisor"></include>;
+            <!--<include layout="@layout/layout_supervisor"></include>;-->
             <include layout="@layout/layout_construction"></include>;
             <include layout="@layout/layout_copy"></include>;
             <include layout="@layout/layout_submit_or_draft_btn"></include>
