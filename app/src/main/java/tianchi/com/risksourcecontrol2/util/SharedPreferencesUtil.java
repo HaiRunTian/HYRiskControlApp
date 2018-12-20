@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import java.lang.ref.WeakReference;
+import java.util.HashSet;
+
+import static android.R.attr.value;
 
 /*
 * 本地数据持久化工具类
@@ -37,7 +40,8 @@ public class SharedPreferencesUtil {
 			sInited = true;
 		}
 	}
-	
+
+
 	public static SharedPreferencesUtil getInstance()
 	{
 		if(!sInited){
@@ -46,6 +50,7 @@ public class SharedPreferencesUtil {
 		
 		return sInstace;
 	}
+
 	
 	/**
 	 * 打开指定存储的文件,不存在则新建一个
@@ -63,6 +68,7 @@ public class SharedPreferencesUtil {
 			mSharedPreferences.edit().commit();
 		}
 	}
+
 	public void put(String key, Boolean value){
 		if(isXMLOpened)
 		{

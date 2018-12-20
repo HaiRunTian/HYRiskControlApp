@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +14,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -36,12 +34,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import tianchi.com.risksourcecontrol2.R;
-import tianchi.com.risksourcecontrol2.activitiy.log.NewSafetyLogActivity;
 import tianchi.com.risksourcecontrol2.activitiy.user.RelationshipListActivity;
 import tianchi.com.risksourcecontrol2.activitiy.user.UserPermission;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.login.UsersList;
 import tianchi.com.risksourcecontrol2.config.FoldersConfig;
+import tianchi.com.risksourcecontrol2.config.ServerConfig;
 import tianchi.com.risksourcecontrol2.custom.MyAlertDialog;
 import tianchi.com.risksourcecontrol2.custom.MyDatePicker;
 import tianchi.com.risksourcecontrol2.custom.MyTakePicDialog;
@@ -51,7 +49,6 @@ import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.CameraUtils;
 import tianchi.com.risksourcecontrol2.util.DateTimeUtils;
 import tianchi.com.risksourcecontrol2.util.FileUtils;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.view.IRectifyNotifyView;
 
 /**
@@ -80,6 +77,10 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     private AlertDialog m_dialog;//拍照选择弹窗
     private ProgressDialog m_progressDialog;//提交进度
     private Spinner m_spSection; //标段
+    private String m_section;
+    private String[] m_arrSection;
+    private String[] m_spSction;
+
     private Button m_btnSubmit; //提交
     private Button m_btnDraft; //草稿
     //    private EditText m_receiveMans; //接收人  @弃用
@@ -105,6 +106,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     public String m_remark;
     private int uploadImgIndex = 0;//上传照片时的数量
     private int m_remarkIndex = 0; //照片备注序号
+
 
     RectifyNotifyInfoPresenter mReNoticePresenter = new RectifyNotifyInfoPresenter(this);
     private Handler m_handler = new Handler(new Handler.Callback() {
@@ -203,8 +205,10 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         m_progressDialog = new ProgressDialog(this);
         m_progressDialog.setMessage("通知发送中...");
         m_progressDialog.setCancelable(true);
-        m_spSection.setAdapter(new ArrayAdapter<String>(NewRectifyNotifyInfoActivity.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.section2)));
+//        m_spSection.setAdapter(new ArrayAdapter<String>(NewRectifyNotifyInfoActivity.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.section2)));
 //       long time = System.currentTimeMillis();
+
+        init();
         m_edtCheckDate.setText(DateTimeUtils.setCurrentTime());
         m_edtCheckMan.setText(UserSingleton.getUserInfo().getRealName());
 
@@ -212,6 +216,35 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
 
 
+    }
+    private void init() {
+        //        currentLoginName = getIntent().getStringExtra("userName");//当前账号
+        //        UserSingleton.getUserInfo().setLoginName(currentLoginName);//保存账号
+        if (UserSingleton.getUserInfo().getLoginName() != null) {
+            //            currentLoginName = UserSingleton.getUserInfo().getLoginName();//当前账号
+            //            m_tvUserProfile.setText(currentLoginName);//设置左上方账号名
+
+            //            m_tvUserProfile.setText(currentLoginName);//设置左上方账号名
+            //获取用户所拥有标段
+            m_section = UserSingleton.getUserInfo().getSectionList();
+            if (m_section.isEmpty()) {
+                //                MyToast.showMyToast(DrawerActivity.this, "你没有掌控的标段，请联系管理员", 4);
+                return;
+            }
+
+            m_arrSection = m_section.split("#");  //字符串转成数组
+            String[] _spData = new String[m_arrSection.length];
+            //多选标段数据
+            m_spSction = new String[m_arrSection.length];
+            for (int _i = 0; _i < m_arrSection.length; _i++) {
+                _spData[_i] = ServerConfig.getMap().get(m_arrSection[_i]);
+                m_spSction[_i] = ServerConfig.getMapSection().get(m_arrSection[_i]);
+            }
+            m_spSection.setSelection(0, false);
+            m_spSection.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, _spData));
+            //m_spSection.setAdapter(new SectionAdapter(DrawerActivity.this, m_arrSection));
+        }
+        // m_riskTypeList = Arrays.asList(getResources().getStringArray(R.array.riskType));//取到风险源类型列表
     }
 
     //查看图片

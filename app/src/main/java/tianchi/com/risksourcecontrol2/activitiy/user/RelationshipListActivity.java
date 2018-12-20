@@ -84,7 +84,7 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
                 switch (checkedId) {
-                    case R.id.rdbOwner:
+                    case R.id.rdbOwner://业主方
                         if (UserPermission.OWNER_ALL == m_permission) { //业主单位
                             switchFragment(0);
                         } else if (m_roid == 19 && m_permission == UserPermission.SUPERVISON_SECOND) { //监理
@@ -94,7 +94,7 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
                             MyToast.showMyToast(RelationshipListActivity.this, "您没有权限查看业主方人员名单", Toast.LENGTH_SHORT);
                         }
                         break;
-                    case R.id.rdbSupervisor:
+                    case R.id.rdbSupervisor://监理方
                         if (m_roid == 17 && m_permission != UserPermission.CONSTRU_SECOND) {
                             switchFragment(1);
                         } else if (m_roid == 19 && UserPermission.SUPERVISON_FIRST == m_permission) {
@@ -107,7 +107,7 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
                             switchFragment(1);
                         }else  MyToast.showMyToast(RelationshipListActivity.this, "您没有权限查看监理人员名单", Toast.LENGTH_SHORT);
                         break;
-                    case R.id.rdbConstruction:
+                    case R.id.rdbConstruction://施工方
                         if (m_roid == 19 && m_permission == UserPermission.SUPERVISON_SECOND) {
                             MyToast.showMyToast(RelationshipListActivity.this, "您没有权限查看施工方人员名单", Toast.LENGTH_SHORT);
                         } else if (m_roid == 17 && m_permission == UserPermission.SUPERVISON_THREE) {
