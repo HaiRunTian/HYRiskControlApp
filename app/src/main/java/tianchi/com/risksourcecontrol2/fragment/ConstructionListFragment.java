@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,7 @@ public class ConstructionListFragment extends Fragment {
     private ListView m_lvConstructionRight;//右侧listview
     private List<String> m_list_left;//左侧填充的文本list
     private List<String> m_list_right;//右侧填充的文本list
+
     private Map<String, List<String>> m_listHashMap;//数据容器,string对应左侧项，arraylist对应右侧子项列表
     private ConstructionAdapter m_rightAdapter;//右侧子项适配器
 //    private ArrayAdapter m_leftAdapter;//左侧列表适配器
@@ -129,6 +131,7 @@ public class ConstructionListFragment extends Fragment {
             //selection是获取position前所有选项的子项总数
             for (int i = 0; i < position; i++) {
                 //计算当前选中项之前所有子项的总数
+
                 selection += m_listHashMap.get(m_list_left.get(i)).size();
             }
             m_lvConstructionRight.setSelection(selection);
@@ -154,6 +157,7 @@ public class ConstructionListFragment extends Fragment {
 
     private void initData() {
         m_list_left = new ArrayList<>();
+
         m_list_right = new ArrayList<>();
         //        m_listHashMap = new HashMap<>();
         //        /*测试数据*/
@@ -167,8 +171,12 @@ public class ConstructionListFragment extends Fragment {
         //            m_listHashMap.put("施工方" + i, list);
         //        }
         m_listHashMap = UserSingleton.getConstructionList();
+
         for (String key : m_listHashMap.keySet()) {
+
             m_list_left.add(key);
+            Collections.sort(m_list_left);
+
             for (String name : m_listHashMap.get(key)) {
                 m_list_right.add(name);
             }

@@ -82,7 +82,9 @@ public class ServerConfig {
     public static String URL_GET_MSG_CHECK_ONCHECK = URL + "/hyrisk/rectifyNotifyReply/setNotifyMessagesReaded.json";//未回复的通知单数量
     public static String URL_UPDATE_NOTIFY_TYPE = URL + "/hyrisk/rectifyNotifyReply/updateNotifyStateForReceiver.json";//更新整改通知单阅读
     public static String URL_QUERY_USER_LIST = URL + "/hyrisk/admin/user/getSuperVisorNameList.json";//获取相关用户名单
+
     public static String URL_QUERY_USER_LIST2 = URL + "/hyrisk/admin/user/getUsersNameList.json";//获取相关用户名单
+
     public static String URL_QUERY_MSG = URL + "/hyrisk/rectifyNotifyReply/queryNotifyMessages.json";//获取用户已读未读消息
     public static String URL_QUERY_NOTIFY_FOR_ID = URL + "/hyrisk/rectifyNotify/queryNotifyInfo.json";//根据ID查询整改通知单
     public static String URL_QUERY_REPLY_FOR_ID = URL + "/hyrisk/rectifyNotifyReply/queryNotifyInfo.json";//根据ID查询整改回复通知单

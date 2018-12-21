@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -150,6 +151,8 @@ public class SupervisorListFragment extends Fragment {
 
     private void initData() {
         m_list_left = new ArrayList<>();
+
+
         m_list_right = new ArrayList<>();
 //        m_listHashMap = new HashMap<>();
 //        /*测试数据*/
@@ -163,8 +166,10 @@ public class SupervisorListFragment extends Fragment {
 //            m_listHashMap.put("监理" + i, list);
 //        }
         m_listHashMap = UserSingleton.getSupervisorList();
+
         for (String key : m_listHashMap.keySet()) {
             m_list_left.add(key);
+            Collections.sort(m_list_left);
             for (String name : m_listHashMap.get(key)) {
                 m_list_right.add(name);
             }

@@ -61,6 +61,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     private static final int GET_SUPERVISOR = 0;
     private static final int GET_COPYER = 8;
     private static final int GET_CONSTRUCTION = 9;
+    private static final int GET_CHECKMAN = 7;
     private int m_logState; //日志状态
     private EditText m_edtLogId; //日志编号
     private EditText m_edtCheckUnit; //检查单位
@@ -83,6 +84,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
     private Button m_btnSubmit; //提交
     private Button m_btnDraft; //草稿
+
     //    private EditText m_receiveMans; //接收人  @弃用
     private TextView m_tvBack; //返回
 //    private EditText m_edtSupervisor; //监理
@@ -176,6 +178,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //        m_edtSupervisor.setOnClickListener(this);
         m_edtCopyer.setOnClickListener(this);
         m_edtConstruction.setOnClickListener(this);
+        m_edtCheckMan.setOnClickListener(this);
     }
 
     private void initView() {
@@ -210,6 +213,8 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
         init();
         m_edtCheckDate.setText(DateTimeUtils.setCurrentTime());
+
+
         m_edtCheckMan.setText(UserSingleton.getUserInfo().getRealName());
 
         //dialog布局
@@ -309,6 +314,9 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         int m_roid = UserSingleton.getUserInfo().getRoleId();
 //        LogUtils.i("m_roid = ",m_roid+"");
         switch (v.getId()) {
+            case R.id.edtLogCheckMan:
+                startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.OWNER_ALL), GET_CHECKMAN);
+                break;
             case R.id.btnAddPic:
                 int i = imageItem.size();
                 if (imageItem.size() == 5) {
@@ -924,7 +932,17 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                         UsersList.clearList();
                     }
                     break;
-
+                case GET_CHECKMAN:
+                    if (resultCode == RESULT_OK) {
+                        String allNameList = "";
+                        for (String name : UsersList.getList()) {
+                            allNameList += name + "#";
+                        }
+                        m_edtCheckMan.setText("");
+                        m_edtCheckMan.setText(UserSingleton.getUserInfo().getRealName()+"#"+allNameList.substring(0, allNameList.length() - 1));
+                        UsersList.clearList();
+                    }
+                    break;
                 case GET_CONSTRUCTION:
                     if (resultCode == RESULT_OK) {
                         if (UsersList.getList().size()>1){

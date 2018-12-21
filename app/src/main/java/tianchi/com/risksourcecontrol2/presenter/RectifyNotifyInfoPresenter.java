@@ -129,6 +129,7 @@ public class RectifyNotifyInfoPresenter implements INewLogPresenter {
         _rectifyNotifyInfo.setInspectContent(m_notifyView.getCheckContent()); //检查内容
         _rectifyNotifyInfo.setQuestion(m_notifyView.getQuestion()); //发现问题
         _rectifyNotifyInfo.setRequest(m_notifyView.getRectifyRequest()); //整改措施与方法
+
         _rectifyNotifyInfo.setInspectorSign(m_notifyView.getCheckMan()); //检查人
 //        String s2 = m_notifyView.rectifyDate();
 //        LogUtils.i("整改时间", s2);

@@ -143,10 +143,24 @@ public class UserLoginBiz implements IUserLoginBiz {
                             //                        }
                             break;
                         case 1: ////人员列表
+
                             String beanString = GsonUtils.getNodeJsonString(jsonString, "Data");//解析数据
-//                            LogUtils.i("人员列表",beanString);
+
+//                            List<UserBean> _userBeen = JsonUtil.parseUser(jsonString);
+//                            for (UserBean key:_userBeen){
+//                                List<String> _j1 = key.getJ1();
+//                                String _s = _j1.get(1).toString();
+//                                LogUtils.i("人员列表",_s);
+//                            }
+//                            if (_userBeen!=null){
+//                                UserLoginWork.distributeUserList(_userBeen);
+//                            }
+
+                            LogUtils.i("人员列表",beanString);
+
                             Map<String, List<String>> relationshipMap = GsonUtils.gsonToMaps(beanString);
                             if (relationshipMap != null) {
+
                                 UserLoginWork.distributeRelationshipList(relationshipMap);
                             }
                             if (listener != null) {

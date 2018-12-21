@@ -3,7 +3,6 @@ package tianchi.com.risksourcecontrol2.location;
 import android.app.Application;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.view.View;
 
 import com.baidu.location.BDAbstractLocationListener;
@@ -17,7 +16,6 @@ import com.supermap.data.PrjCoordSys;
 import com.supermap.mapping.MapControl;
 
 import tianchi.com.risksourcecontrol2.base.AppInitialization;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
 
 /**
  * Created by Los on 2018-08-23 15:23.
@@ -116,7 +114,7 @@ public class BaiDuGPS implements BaseGPS {
                    //
                     double[] scales =  m_mapCtrl.getMap().getVisibleScales();
                     m_mapCtrl.panTo(m_pos,300);
-                    boolean result = m_mapCtrl.zoomTo(scales[scales.length-4],1000);
+                    boolean result = m_mapCtrl.zoomTo(scales[scales.length-1],1000);
                     m_mapCtrl.getMap().refresh();
 //                    LogUtils.i(Double.toString(scales[scales.length-3])+",result "+ result);
                     m_isFirst = false;

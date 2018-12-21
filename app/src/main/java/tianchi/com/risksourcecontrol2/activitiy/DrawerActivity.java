@@ -30,6 +30,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.supermap.data.CoordSysTranslator;
 import com.supermap.data.Datasource;
 import com.supermap.data.DatasourceConnectionInfo;
@@ -64,9 +65,11 @@ import com.supermap.services.QueryOption;
 import com.supermap.services.QueryService;
 import com.supermap.services.ResponseCallback;
 import com.supermap.services.ServiceQueryParameter;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.activitiy.message.ReceiveNoticeListActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksource.RiskResultListActivity;
@@ -75,9 +78,7 @@ import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.BridgeTypeformM
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.HighLowTypeRiskForMapActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.LowFillFormMapActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.ServiceZoneFromActivity;
-import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.SoilTypeFormActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.SpecialSoilFromActivity;
-import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.TakingSoilFieldTypeFromActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.TunnelTypeFromActivity;
 import tianchi.com.risksourcecontrol2.base.AppInitialization;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
@@ -99,7 +100,6 @@ import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.ActivityCollector;
 import tianchi.com.risksourcecontrol2.util.GetNewNotifyUtils;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.view.IHomeView;
 
 /**
@@ -1170,7 +1170,7 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                 String mapName = m_MapControl.getMap().getName();
 //                LogUtils.i("MapName=-------------", mapName);
                 double _scale = 0.0;
-
+                double[] scales =  m_MapControl.getMap().getVisibleScales();
 
                 Point2D _point2D = new Point2D();
                 switch (m_spSection.getSelectedItem().toString()){
@@ -1183,61 +1183,62 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                     case "第1标段":
                         _point2D.setX(12462700.920571);
                         _point2D.setY(2746550.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第2标段":
                         _point2D.setX(12457774.920571);
                         _point2D.setY(2735152.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第3标段":
                         _point2D.setX(12453084.920571);
                         _point2D.setY(2726087.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第4标段":
                         _point2D.setX(12448804.920571);
                         _point2D.setY(2717045.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第5标段":
                         _point2D.setX(12446756.920571);
                         _point2D.setY(2708127.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第6标段":
                         _point2D.setX(12441816.920571);
                         _point2D.setY(2698446.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第7标段":
                         _point2D.setX(12436045.920571);
                         _point2D.setY(2688389.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第8标段":
                         _point2D.setX(12431431.920571);
                         _point2D.setY(2680796.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第9标段":
                         _point2D.setX(12426306.920571);
                         _point2D.setY(2678240.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第10标段":
                         _point2D.setX(12422166.920571);
                         _point2D.setY(2675276.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                     case "第11标段":
                         _point2D.setX(12413058.920571);
                         _point2D.setY(2670839.762388);
-                        _scale = 1.0 / 66961.67;
+                        _scale = 1.0 / 44846.63;
                         break;
                 }
 
-                m_MapControl.zoomTo(_scale, 1);//在指定的时间内缩放到固定的比例尺
+//                m_MapControl.zoomTo(scales[scales.length-1], 1000);//在指定的时间内缩放到固定的比例尺
+                m_MapControl.zoomTo(_scale, 1000);//在指定的时间内缩放到固定的比例尺
                 m_MapControl.panTo(_point2D, 1); //在指定的时间内平移地图到指定的点。
                 m_MapControl.getMap().refresh();
                 hideLoading();

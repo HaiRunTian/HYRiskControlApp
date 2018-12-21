@@ -4,9 +4,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import tianchi.com.risksourcecontrol2.bean.UserBean;
 import tianchi.com.risksourcecontrol2.bean.login.UserInfo;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
@@ -71,11 +73,45 @@ public class UserLoginWork {
         }
         return _jsonObject.toString();
     }
+    public static void distributeUserList(List<UserBean> userBean) {
+        HashMap<String, List<String >> _hashMap = new HashMap<>();
+        HashMap<String, List<String >> _hashMap1 = new HashMap<>();
 
+        for (int i = 0; i < userBean.size(); i++) {
+            //业主
+            List<String> _j0 = userBean.get(i).getJ0();
+            UserSingleton.setOwnerList(_j0);
+            //监理
+            _hashMap.put("J1",userBean.get(i).getJ1());
+            _hashMap.put("J2",userBean.get(i).getJ2());
+            _hashMap.put("J3",userBean.get(i).getJ3());
+            UserSingleton.setSupervisorList(_hashMap);
+
+            //施工方
+            _hashMap1.put("TJ01",userBean.get(i).getTJ01());
+            _hashMap1.put("TJ02",userBean.get(i).getTJ02());
+            _hashMap1.put("TJ03",userBean.get(i).getTJ03());
+            _hashMap1.put("TJ04",userBean.get(i).getTJ04());
+            _hashMap1.put("TJ05",userBean.get(i).getTJ05());
+            _hashMap1.put("TJ06",userBean.get(i).getTJ06());
+            _hashMap1.put("TJ07",userBean.get(i).getTJ07());
+            _hashMap1.put("TJ08",userBean.get(i).getTJ08());
+            _hashMap1.put("TJ09",userBean.get(i).getTJ09());
+            _hashMap1.put("TJ10",userBean.get(i).getTJ10());
+            _hashMap1.put("TJ11",userBean.get(i).getTJ11());
+            UserSingleton.setConstructionList(_hashMap1);
+
+
+
+        }
+    }
     //将取到的hashmap分配到对应的容器（业主，监理，施工方）
     public static void distributeRelationshipList(Map<String, List<String>> map) {
+
+
         for (String key : map.keySet()) {
             if (key.equals("J0")) {//业主
+
                 List<String> _list = new ArrayList<>();
                 if (map.get(key) != null) {
                     try {
@@ -155,5 +191,6 @@ public class UserLoginWork {
         allUserList = allUserList.substring(0, allUserList.length() - 1);
         return allUserList;
     }
+
 
 }
