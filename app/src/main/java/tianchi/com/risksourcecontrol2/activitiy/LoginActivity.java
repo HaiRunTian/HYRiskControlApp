@@ -54,6 +54,7 @@ import okio.BufferedSink;
 import okio.Okio;
 import okio.Sink;
 import tianchi.com.risksourcecontrol2.R;
+import tianchi.com.risksourcecontrol2.adapter.SelectListAdapter;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.HistoryInfo;
 import tianchi.com.risksourcecontrol2.config.FoldersConfig;
@@ -396,7 +397,6 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
         LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
         ListView userlist = (ListView) view.findViewById(R.id.input_select_list);
         userlist.setDividerHeight(0);
-
         adapter = new SelectListAdapter(this, mAccounts);
         adapter.setOnItemClickListener(this);
         adapter.setOnDelBtnClickListener(this);
@@ -421,6 +421,7 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
 
         m_tvVersion = (TextView) findViewById(R.id.tvVersionNum);
         m_Arrow = ((ImageView) findViewById(R.id.input_arrow));
+
         mInputLayout = ((RelativeLayout) findViewById(R.id.input_layout));
 
         //获取版本号

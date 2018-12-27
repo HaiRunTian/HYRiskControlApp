@@ -118,7 +118,6 @@ public class RectifyNotifyInfoPresenter implements INewLogPresenter {
 
     //获取录入的实体类信息
     private RectifyNotifyInfo getSafetyLog() {
-
         RectifyNotifyInfo _rectifyNotifyInfo = new RectifyNotifyInfo();
 //      _rectifyNotifyInfo.setTitle(m_notifyView.getLogID());  //日志id
         _rectifyNotifyInfo.setInspectUnit(m_notifyView.getCheckUnit()); //检查单位
@@ -136,7 +135,9 @@ public class RectifyNotifyInfoPresenter implements INewLogPresenter {
         _rectifyNotifyInfo.setRectifyPeriod(m_notifyView.rectifyDate()); //整改期限
         _rectifyNotifyInfo.setReceiverMans(m_notifyView.getReceiveMans()); //接收人
         _rectifyNotifyInfo.setLogState(m_notifyView.getLogState()); //日志状态
+
         _rectifyNotifyInfo.setSection(m_notifyView.getSection()); //标段
+
         _rectifyNotifyInfo.setImages(m_notifyView.getPicture());  //照片名字
         _rectifyNotifyInfo.setImageInfos(m_notifyView.getImgInfo());//照片备注
 //        LogUtils.i("提交数据 = ",m_notifyView.getImgInfo());

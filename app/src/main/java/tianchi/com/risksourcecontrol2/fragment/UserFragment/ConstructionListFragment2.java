@@ -174,8 +174,10 @@ public class ConstructionListFragment2  extends Fragment{
             }
         }
 //        m_leftAdapter = new ArrayAdapter(ConstructionListFragment.this.getActivity(), android.R.layout.simple_list_item_1, m_list_left);
+
         m_leftAdapter = new ListviewItemBaseAdapter(ConstructionListFragment2.this
                 .getActivity(), m_list_left);
+
         m_rightAdapter = new ConstructionAdapter(m_list_right, ConstructionListFragment2.this
                 .getActivity());
         m_tvTotalSelections.setText("一共选择了" + UsersList.getList().size() + "人");

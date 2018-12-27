@@ -53,7 +53,8 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/arrow_up"
                     android:contentDescription="@string/app_name"
-                    android:onClick="onDownArrowClicked" />
+                    android:onClick="onDownArrowClicked"
+                    />
             </RelativeLayout>
 
             <EditText

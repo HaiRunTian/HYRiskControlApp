@@ -21,7 +21,7 @@ import tianchi.com.risksourcecontrol2.R;
 public class ListviewItemBaseAdapter extends BaseAdapter {
     private LayoutInflater m_inflater;
     private List<String> m_list;
-
+    private int position = 0;
     public ListviewItemBaseAdapter(Context context, List<String> list) {
         m_list = list;
         m_inflater = LayoutInflater.from(context);
@@ -31,7 +31,6 @@ public class ListviewItemBaseAdapter extends BaseAdapter {
     public int getCount() {
         return m_list.size();
     }
-
     @Override
     public Object getItem(int position) {
         return m_list.get(position);
@@ -54,8 +53,15 @@ public class ListviewItemBaseAdapter extends BaseAdapter {
         } else {
             _holder = (ViewHolder) convertView.getTag();
         }
-        _holder.m_textView.setText(m_list.get(position));
+        _holder.m_textView.setText((CharSequence) m_list.get(position));
         return convertView;
+    }
+    public void setSelectItem(int position) {
+        this.position = position;
+    }
+
+    public int getSelectItem() {
+        return position;
     }
 
     class ViewHolder {

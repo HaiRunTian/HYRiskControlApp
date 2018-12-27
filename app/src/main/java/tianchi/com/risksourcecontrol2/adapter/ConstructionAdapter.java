@@ -71,7 +71,7 @@ public class ConstructionAdapter extends BaseAdapter{
         } else {
             _holder = (ViewHolder) convertView.getTag();
         }
-        _holder.tvItem.setText(list.get(position));
+        _holder.tvItem.setText(list.get(position).toString());
         _holder.cbItem.setChecked(getIsSelected().get(position));
         return convertView;
     }
@@ -87,5 +87,6 @@ public class ConstructionAdapter extends BaseAdapter{
     public class ViewHolder {
         public TextView tvItem;//选项左侧文本
         public CheckBox cbItem;//选项右侧复选框
+
     }
 }

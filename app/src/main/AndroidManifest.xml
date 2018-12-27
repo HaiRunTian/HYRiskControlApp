@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="tianchi.com.risksourcecontrol2">
+          package="tianchi.com.risksourcecontrol2"
+    >
 
     <!-- 这个权限用于调用系统摄像头 -->
     <uses-permission android:name="android.permission.CAMERA"/>
@@ -129,13 +130,6 @@
         <activity android:name=".activitiy.mine.SettingActivity"/>
         <!-- 新建安全日志 -->
         <activity android:name=".activitiy.log.NewSafetyLogActivity"/>
-
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN"/> -->
-
-
-        <!-- <category android:name="android.intent.category.LAUNCHER"/> -->
-        <!-- </intent-filter> -->
 
         <!-- 新建巡查日志 -->
         <activity

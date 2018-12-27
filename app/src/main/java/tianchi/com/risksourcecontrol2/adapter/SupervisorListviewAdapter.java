@@ -22,11 +22,12 @@ public class SupervisorListviewAdapter extends BaseAdapter {
     // 填充数据的list
     private List<String> list;
     // 用来控制CheckBox的选中状况
-    private static HashMap<Integer, Boolean> isSelected;
+    private static HashMap<Integer, Boolean> isSelected ;
     // 上下文
     private Context context;
     // 用来导入布局
     private LayoutInflater inflater;
+    private int position = 0;
 
     // 构造器
     public SupervisorListviewAdapter(List<String> list, Context context) {
@@ -39,9 +40,9 @@ public class SupervisorListviewAdapter extends BaseAdapter {
 
     // 初始化isSelected的数据,全部置为未选
     private void initData() {
-        for (int i = 0; i < list.size(); i++) {
-            isSelected.put(i, false);
-        }
+            for (int i = 0; i < list.size(); i++) {
+                isSelected.put(i, false);
+            }
     }
 
     @Override
@@ -82,6 +83,9 @@ public class SupervisorListviewAdapter extends BaseAdapter {
 
     public static void setIsSelected(HashMap<Integer, Boolean> isSelected) {
         SupervisorListviewAdapter.isSelected = isSelected;
+    }
+    public void setSelectItem(int position) {
+        this.position = position;
     }
 
     public class ViewHolder {

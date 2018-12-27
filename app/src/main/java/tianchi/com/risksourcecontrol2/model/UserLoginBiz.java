@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import okhttp3.Request;
+import tianchi.com.risksourcecontrol2.bean.UserBean;
 import tianchi.com.risksourcecontrol2.bean.login.UserInfo;
 import tianchi.com.risksourcecontrol2.config.ServerConfig;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
@@ -145,23 +146,17 @@ public class UserLoginBiz implements IUserLoginBiz {
                         case 1: ////人员列表
 
                             String beanString = GsonUtils.getNodeJsonString(jsonString, "Data");//解析数据
-
-//                            List<UserBean> _userBeen = JsonUtil.parseUser(jsonString);
-//                            for (UserBean key:_userBeen){
-//                                List<String> _j1 = key.getJ1();
-//                                String _s = _j1.get(1).toString();
-//                                LogUtils.i("人员列表",_s);
-//                            }
+                            LogUtils.i("人员列表",beanString);
+//                            UserBean _userBeen = GsonUtils.jsonToBean(beanString,UserBean.class);
+//
 //                            if (_userBeen!=null){
 //                                UserLoginWork.distributeUserList(_userBeen);
 //                            }
-
-                            LogUtils.i("人员列表",beanString);
-
                             Map<String, List<String>> relationshipMap = GsonUtils.gsonToMaps(beanString);
+
                             if (relationshipMap != null) {
 
-                                UserLoginWork.distributeRelationshipList(relationshipMap);
+                                UserLoginWork.distributeRelationshipList(relationshipMap);//初始化用户列表
                             }
                             if (listener != null) {
                                 listener.loadingSucceed();

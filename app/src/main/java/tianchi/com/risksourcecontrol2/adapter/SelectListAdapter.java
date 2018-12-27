@@ -1,4 +1,4 @@
-package tianchi.com.risksourcecontrol2.activitiy;
+package tianchi.com.risksourcecontrol2.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -21,8 +21,7 @@ import tianchi.com.risksourcecontrol2.bean.HistoryInfo;
 public class SelectListAdapter extends BaseAdapter {
     private ArrayList<HistoryInfo> mAccounts ;
     private LayoutInflater mInflater;
-    private OnItemClickListener mOnItemClickListener;
-    private OnDelBtnClickListener mOnDelBtnClickListener;
+
     private Context m_context;
 
     public SelectListAdapter(Context context, ArrayList<HistoryInfo> items)
@@ -68,6 +67,7 @@ public class SelectListAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 mOnItemClickListener.onItemClicked(position);
+
             }
         });
 
@@ -92,11 +92,14 @@ public class SelectListAdapter extends BaseAdapter {
         }
 
     }
+
     /**
      * 选择条目点击监听器接口
      *
      * @author Jone
      */
+    private OnItemClickListener mOnItemClickListener;
+
     public interface OnItemClickListener
     {
         public void onItemClicked(int position);
@@ -112,6 +115,8 @@ public class SelectListAdapter extends BaseAdapter {
      *
      * @author Jone
      */
+    private OnDelBtnClickListener mOnDelBtnClickListener;
+
     public interface OnDelBtnClickListener
     {
         public void onDelBtnClicked(int position);

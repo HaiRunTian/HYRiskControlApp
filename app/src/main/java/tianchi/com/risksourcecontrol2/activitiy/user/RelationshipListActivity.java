@@ -44,14 +44,28 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
     private TextView m_tvSubmit;
     private int m_roid;
     private int m_permission = -1;
-
+//    private DisplayMetrics dm;
+//    private ListView m_lvSupervisorLeft;
+//    private ListView m_lvSupervisorRight;
+//    private ListviewItemBaseAdapter m_LeftAdapter;
+//    private SupervisorListviewAdapter m_rightAdapter;
+//    private TextView m_tvTotalSelections;
+//
+//    private Map<String, List<String>> m_listHashMap;
+//    private List<String> m_list_left;//左侧填充的文本list
+//    private List<String> m_list_right;//右侧填充的文本list
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relationship_list);
         init();
         initView();
+//        dm = new DisplayMetrics();
+//        getWindowManager().getDefaultDisplay().getMetrics(dm);
+//        initModle();// 添加数据
     }
+
+
 
     @Override
     protected void onStop() {
@@ -66,9 +80,10 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
     }
 
     private void initView() {
-        //        m_fragmentRaltionShip = new RelationshipListFragment();
+//                m_fragmentRaltionShip = new RelationshipListFragment();
         m_roid = UserSingleton.getUserInfo().getRoleId();
-        switchFragment(-1);
+//        switchFragment(-1);
+//
 //        if (m_roid == 17) {
 //            switchFragment(0);
 //        } else if (m_roid == 19) {
@@ -80,6 +95,7 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
         m_tvSubmit = (TextView) findViewById(R.id.tvSubmit);
         m_tvSubmit.setOnClickListener(this);
         m_radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
+
         m_radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, @IdRes int checkedId) {
@@ -95,6 +111,7 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
                         }
                         break;
                     case R.id.rdbSupervisor://监理方
+
                         if (m_roid == 17 && m_permission != UserPermission.CONSTRU_SECOND) {
                             switchFragment(1);
                         } else if (m_roid == 19 && UserPermission.SUPERVISON_FIRST == m_permission) {
@@ -109,6 +126,7 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
                         break;
                     case R.id.rdbConstruction://施工方
                         if (m_roid == 19 && m_permission == UserPermission.SUPERVISON_SECOND) {
+
                             MyToast.showMyToast(RelationshipListActivity.this, "您没有权限查看施工方人员名单", Toast.LENGTH_SHORT);
                         } else if (m_roid == 17 && m_permission == UserPermission.SUPERVISON_THREE) {
                             MyToast.showMyToast(RelationshipListActivity.this, "您没有权限查看施工方人员名单", Toast.LENGTH_SHORT);
@@ -160,6 +178,92 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
         }
         m_transaction.commit();
     }
+
+//    private void downPopwindow() {
+//        View contentView  = LayoutInflater.from(this).inflate(R.layout.pop_down, null);
+//        int screenHeight = dm.heightPixels * 2 / 3;
+//        PopupWindow _popupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, screenHeight);
+//        _popupWindow.setContentView(contentView);
+//        _popupWindow.setFocusable(true);
+//        _popupWindow.setBackgroundDrawable(new BitmapDrawable());
+//        _popupWindow.setOutsideTouchable(false);
+//        m_lvSupervisorLeft = ((ListView) contentView.findViewById(R.id.lvLeft));
+//        m_lvSupervisorRight = ((ListView) contentView.findViewById(R.id.lvRight));
+//        m_tvTotalSelections = ((TextView) contentView.findViewById(R.id.tvTotalSelections));
+//
+//
+//        m_listHashMap = UserSingleton.getSupervisorList();
+//
+//        for (String key : m_listHashMap.keySet()){
+//            m_list_left.add(key);
+//            m_list_right=(m_listHashMap.get(key));
+//        }
+//
+//
+//        m_LeftAdapter = new ListviewItemBaseAdapter(this,m_list_left);
+//        m_LeftAdapter.setSelectItem(0);
+//        m_lvSupervisorLeft.setAdapter(m_LeftAdapter);
+//        m_lvSupervisorLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                initAdapter();
+//                m_lvSupervisorLeft.setAdapter(m_LeftAdapter);
+//                m_LeftAdapter.notifyDataSetChanged();
+//            }
+//        });
+//
+//        m_lvSupervisorLeft.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+//        initAdapter();//适配器
+//
+//        m_lvSupervisorRight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String _s = (String) m_rightAdapter.getItem(position);
+//                Toast.makeText(RelationshipListActivity.this, ""+_s, Toast.LENGTH_SHORT).show();
+//                m_rightAdapter.setSelectItem(position);
+//                m_rightAdapter.notifyDataSetChanged();
+//
+//                SupervisorListviewAdapter.ViewHolder _holder = (SupervisorListviewAdapter.ViewHolder) view.getTag();
+//                _holder.cbItem.toggle();//反选checbox
+//                SupervisorListviewAdapter.getIsSelected().put(position, _holder.cbItem.isChecked());//同步列表项选中情况
+//                if (_holder.cbItem.isChecked()) {
+////                    UsersList.addUserToList(m_list_right.get(position));//放入名单总列表
+//                } else {
+////                    UsersList.removeUserFromList(m_list_right.get(position));//从名单总列表移除
+//                }
+//                notifyChanged();
+//            }
+//        });
+//        _popupWindow.showAsDropDown(m_radioGroup);
+//
+////
+////        // 取得ViewHolder对象，这样就省去了通过层层的findViewById去实例化我们需要的cb实例的步骤
+////        SupervisorListviewAdapter.ViewHolder _holder = (SupervisorListviewAdapter.ViewHolder) view.getTag();
+////        _holder.cbItem.toggle();//反选checbox
+////        SupervisorListviewAdapter.getIsSelected().put(position, _holder.cbItem.isChecked());//同步列表项选中情况
+////        if (_holder.cbItem.isChecked()) {
+////            UsersList.addUserToList(m_list_right.get(position));//放入名单总列表
+////        } else {
+////            UsersList.removeUserFromList(m_list_right.get(position));//从名单总列表移除
+////        }
+////        notifyChanged();
+//    }
+//    private void initModle() {
+//        m_list_left = new ArrayList<>();
+//        m_list_right = new ArrayList<>();
+//
+//    }
+//    // 刷新listview和TextView的显示
+//    private void notifyChanged() {
+//        // 通知listView刷新
+//        m_rightAdapter.notifyDataSetChanged();
+//        m_tvTotalSelections.setText("一共选择了" + UsersList.getList().size() + "人");
+//    }
+//    private void initAdapter() {
+//        m_rightAdapter = new SupervisorListviewAdapter(m_list_right,this);
+//        m_lvSupervisorRight.setAdapter(m_rightAdapter);
+//        m_rightAdapter.notifyDataSetChanged();
+//    }
 
     private void hideFragment(FragmentTransaction transaction) {
         if (m_fragmentRaltionShip != null) {

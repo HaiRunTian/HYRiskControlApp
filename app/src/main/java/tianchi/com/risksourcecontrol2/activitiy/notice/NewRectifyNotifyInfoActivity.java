@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -14,13 +16,18 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -36,6 +43,8 @@ import java.util.List;
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.activitiy.user.RelationshipListActivity;
 import tianchi.com.risksourcecontrol2.activitiy.user.UserPermission;
+import tianchi.com.risksourcecontrol2.adapter.BeAdapter;
+import tianchi.com.risksourcecontrol2.adapter.InputAdapter;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.login.UsersList;
 import tianchi.com.risksourcecontrol2.config.FoldersConfig;
@@ -57,17 +66,20 @@ import tianchi.com.risksourcecontrol2.view.IRectifyNotifyView;
  * 权限:业主、监理、施工方都可以创建
  */
 
-public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.OnClickListener, IRectifyNotifyView, MyTakePicDialog.OnItemClickListener {
+public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.OnClickListener, IRectifyNotifyView, MyTakePicDialog.OnItemClickListener,InputAdapter.OnItemClickListener,BeAdapter.OnItemClickListener{
     private static final int GET_SUPERVISOR = 0;
     private static final int GET_COPYER = 8;
     private static final int GET_CONSTRUCTION = 9;
     private static final int GET_CHECKMAN = 7;
     private int m_logState; //日志状态
     private EditText m_edtLogId; //日志编号
-    private EditText m_edtCheckUnit; //检查单位
+//    private SpinnerEditText m_edtCheckUnit; //检查单位
+//    private SpinnerEditText m_edtBecheckUnit; //受检单位
+    private EditText m_edtCheckUnit;//检查单位
     private EditText m_edtBecheckUnit; //受检单位
-    private EditText m_edtCheckDate; //检查时间
     private EditText m_edtCheckMan; //检查人
+
+    private EditText m_edtCheckDate; //检查时间
     private EditText m_edtLogRectifyDate; //整改期限日期
     private Button m_btnAddPic; //添加照片
     private GridView m_gdvPic; //
@@ -108,7 +120,33 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     public String m_remark;
     private int uploadImgIndex = 0;//上传照片时的数量
     private int m_remarkIndex = 0; //照片备注序号
+    private LinearLayout be_ll;
+    private LinearLayout inspect_ll;
+    private InputAdapter m_inputAdapter;
+    private BeAdapter m_beAdapter;
+    private PopupWindow mSelectWindow;
+    private ImageButton be_arrow;
+    private ImageButton input_arrow;
 
+    private String[] inspect_Title = {
+            "中铁十四局集团第二工程有限公司",
+            "中铁十二局集团第一工程有限公司",
+            "中交二公局第三工程有限公司",
+            "中铁太桥局集团有限公司",
+            "龙建路桥股份有限公司",
+            "中铁二十局集团有限公司",
+            "广东省长大公路工程有限公司",
+            "中交路桥建设有限公司"
+    };
+
+    private String[] be_Title= {
+            "广东翔飞公路工程监理有限公司",
+            "江苏交通工程咨询监理有限公司",
+            "北京路桥通国际工程咨询有限公司",
+            "深圳高速工程检测有限公司",
+            "苏交科集团股份有限公司",
+            "山西省交通建设工程质量检测中心"
+    };
 
     RectifyNotifyInfoPresenter mReNoticePresenter = new RectifyNotifyInfoPresenter(this);
     private Handler m_handler = new Handler(new Handler.Callback() {
@@ -118,8 +156,6 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
             return false;
         }
     });
-
-
 
 
     private void uploadPictures() {
@@ -151,9 +187,9 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         initView();
         initEvent();
         initValue();
-
-
     }
+
+
 
     private void initValue() {
 //        m_edtLogId.setText("1");
@@ -179,15 +215,21 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         m_edtCopyer.setOnClickListener(this);
         m_edtConstruction.setOnClickListener(this);
         m_edtCheckMan.setOnClickListener(this);
+        be_arrow.setOnClickListener(this);
+        input_arrow.setOnClickListener(this);
     }
 
     private void initView() {
+
+
         m_imgInfo = new StringBuffer();
         View _view = $(R.id.layout);
         _view.setVisibility(View.GONE);
         m_edtLogId = $(R.id.edtLogID);
+
         m_edtCheckUnit = $(R.id.edtLogCheckUnit);
         m_edtBecheckUnit = $(R.id.edtLogBeCheckUnit);
+
         m_edtCheckDate = $(R.id.edtLogCheckDate);
         m_edtCheckMan = $(R.id.edtLogCheckMan);
         m_edtLogRectifyDate = $(R.id.edtLogRectifyDate);
@@ -205,6 +247,12 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //        m_edtSupervisor = $(R.id.edtSupervisor);
         m_edtConstruction = $(R.id.edtConstruction);
         m_edtCopyer = $(R.id.edtCopy);
+
+        be_arrow = $(R.id.be);
+        input_arrow = $(R.id.inspect);
+        be_ll = $(R.id.be_ll);
+        inspect_ll = $(R.id.inspect_ll);
+
         m_progressDialog = new ProgressDialog(this);
         m_progressDialog.setMessage("通知发送中...");
         m_progressDialog.setCancelable(true);
@@ -212,16 +260,17 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //       long time = System.currentTimeMillis();
 
         init();
+
         m_edtCheckDate.setText(DateTimeUtils.setCurrentTime());
 
 
         m_edtCheckMan.setText(UserSingleton.getUserInfo().getRealName());
 
-        //dialog布局
-
 
 
     }
+
+
     private void init() {
         //        currentLoginName = getIntent().getStringExtra("userName");//当前账号
         //        UserSingleton.getUserInfo().setLoginName(currentLoginName);//保存账号
@@ -314,9 +363,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         int m_roid = UserSingleton.getUserInfo().getRoleId();
 //        LogUtils.i("m_roid = ",m_roid+"");
         switch (v.getId()) {
-            case R.id.edtLogCheckMan:
-                startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.OWNER_ALL), GET_CHECKMAN);
-                break;
+
             case R.id.btnAddPic:
                 int i = imageItem.size();
                 if (imageItem.size() == 5) {
@@ -333,14 +380,18 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
             case R.id.btnSubmit:
                 m_logState = 1;
                 if (checkInfo()) {
-                    uploadFirstPicture();
+//                    uploadFirstPicture();
+                    RectifyNotifyInfoPresenter _rectifyNotifyInfoPresenter = new RectifyNotifyInfoPresenter(this);
+                    _rectifyNotifyInfoPresenter.submit();
                 }
                 break;
 
             case R.id.btnDraft:
                 m_logState = 2;
 //                if (checkInfo()) {
-                uploadFirstPicture();
+//                uploadFirstPicture();
+                RectifyNotifyInfoPresenter _rectifyNotifyInfoPresenter = new RectifyNotifyInfoPresenter(this);
+                _rectifyNotifyInfoPresenter.submit();
 //                }
                 break;
 
@@ -356,6 +407,10 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
             case R.id.tvBack:
                 finish();
                 break;
+            //获取全部名单
+            case R.id.edtLogCheckMan:
+                startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.OWNER_ALL), GET_CHECKMAN);
+                break;
 
             //如果是业主，可以选择监理
             case R.id.edtSupervisor:
@@ -364,7 +419,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //                    LogUtils.i("UserPermission = ",UserPermission.SUPERVISON_THREE+"");
                 }
                 break;
-
+            //如果是抄送，可以选择监全部
             case R.id.edtCopy:
 //                if (m_roid == 17) {
 //                    startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.SUPERVISON_FIRST), GET_COPYER);
@@ -382,7 +437,34 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //                }
 
                 break;
+            case R.id.inspect:
+                if (inspect_Title.length!= 0)
+                {
+                    View view = LayoutInflater.from(this).inflate(R.layout.down_account, null, false);
+                    LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
+                    ListView listView = (ListView) view.findViewById(R.id.input_select_list);
+                    listView.setDividerHeight(0);
+                    m_inputAdapter = new InputAdapter(this, inspect_Title);
+                    m_inputAdapter.setOnItemClickListener(this);
+                    listView.setAdapter(m_inputAdapter);
+                    initSpinnerEditText(contentview,be_ll);
 
+                }
+                break;
+            case R.id.be:
+                if (be_Title.length != 0)
+                {
+                    View view = LayoutInflater.from(this).inflate(R.layout.down_account, null, false);
+                    LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
+                    ListView listView = (ListView) view.findViewById(R.id.input_select_list);
+                    listView.setDividerHeight(0);
+
+                    m_beAdapter = new BeAdapter(this, be_Title);
+                    m_beAdapter.setOnBeClickListener(this);
+                    listView.setAdapter(m_beAdapter);
+                    initSpinnerEditText(contentview,inspect_ll);
+                }
+                break;
             default:
                 break;
 
@@ -390,12 +472,32 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
 
     }
-
+    private void initSpinnerEditText( LinearLayout contentview, LinearLayout mInputLayout) {
+        mSelectWindow = new PopupWindow(contentview, mInputLayout.getMeasuredWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        mSelectWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        mSelectWindow.setOutsideTouchable(true);
+        mSelectWindow.showAsDropDown(mInputLayout, 0, 0);
+    }
+    @Override
+    public void onItemClicked(int position) {
+        closePopWindow();
+        m_edtCheckUnit.setText(inspect_Title[position].toString());
+    }
+    @Override
+    public void onBeClicked(int position) {
+        closePopWindow();
+        m_edtBecheckUnit.setText(be_Title[position].toString());
+    }
+    private void closePopWindow(){
+        mSelectWindow.dismiss();
+        mSelectWindow = null;
+    }
 
     //上传第一张照片
     private void uploadFirstPicture() {
         //        File picFile = new File(FoldersConfig.PRO_SAFETY_PIC_PATH, picNames.get(0));
         if (picFiles.get(0).getName().equals(picNames.get(0))) {
+
             if (canUpload) {
                 mReNoticePresenter.uploadFile(picFiles.size(), 0);
 //                picNames.set(0, "");
@@ -925,7 +1027,9 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                     if (resultCode == RESULT_OK) {
                         String allNameList = "";
                         for (String name : UsersList.getList()) {
-                            allNameList += name + "#";
+                            String _s = name.toString();
+                            String _s1 = _s.substring(_s.lastIndexOf("#")+1);
+                            allNameList += _s1 + "#";
                         }
                         m_edtCopyer.setText("");
                         m_edtCopyer.setText(allNameList.substring(0, allNameList.length() - 1));
@@ -936,7 +1040,9 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                     if (resultCode == RESULT_OK) {
                         String allNameList = "";
                         for (String name : UsersList.getList()) {
-                            allNameList += name + "#";
+                            String _s = name.toString();
+                            String _s1 = _s.substring(_s.lastIndexOf("#")+1);
+                            allNameList += _s1 + "#";
                         }
                         m_edtCheckMan.setText("");
                         m_edtCheckMan.setText(UserSingleton.getUserInfo().getRealName()+"#"+allNameList.substring(0, allNameList.length() - 1));
@@ -951,7 +1057,9 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                         }
                         String allNameList = "";
                         for (String name : UsersList.getList()) {
-                            allNameList += name + "#";
+                            String _s = name.toString();
+                            String _s1 = _s.substring(_s.lastIndexOf("#")+1);
+                            allNameList += _s1 + "#";
                         }
                         m_edtConstruction.setText("");
                         m_edtConstruction.setText(allNameList.substring(0, allNameList.length() - 1));
@@ -1071,20 +1179,23 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
             isOk = false;
 
         }
-        if (getReceiveMans().length() == 0) {
-
-            m_edtCheckMan.setError("接收人不能为空");
-            isOk = false;
-
-        }
+//        if (getReceiveMans().length() == 0) {
+//
+//            m_edtCheckMan.setError("接收人不能为空");
+//            isOk = false;
+//
+//        }
 //        if (getSection().length() == 0) {
 //
 //            isOk = false;
 //        }
-        if (getPicture().length() == 0) {
-            Toast.makeText(this, "请添加图片", Toast.LENGTH_SHORT).show();
-            isOk = false;
-        }
+//        if (getPicture().length() == 0) {
+//            Toast.makeText(this, "请添加图片", Toast.LENGTH_SHORT).show();
+//            isOk = false;
+//        }
         return isOk;
     }
+
+
+
 }

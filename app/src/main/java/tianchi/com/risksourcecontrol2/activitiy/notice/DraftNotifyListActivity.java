@@ -1,6 +1,5 @@
 package tianchi.com.risksourcecontrol2.activitiy.notice;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,8 +10,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -182,6 +179,7 @@ public class DraftNotifyListActivity extends BaseActivity implements View.OnClic
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         MyToast.showMyToast(DraftNotifyListActivity.this, "删除草稿", Toast.LENGTH_SHORT);
+
         MyAlertDialog.showAlertDialog(DraftNotifyListActivity.this, "温馨提示", "是否要删除草稿？", "确定", "取消", false, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
