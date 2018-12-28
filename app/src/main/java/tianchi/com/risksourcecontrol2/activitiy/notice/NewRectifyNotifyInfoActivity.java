@@ -380,9 +380,11 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
             case R.id.btnSubmit:
                 m_logState = 1;
                 if (checkInfo()) {
-//                    uploadFirstPicture();
-                    RectifyNotifyInfoPresenter _rectifyNotifyInfoPresenter = new RectifyNotifyInfoPresenter(this);
-                    _rectifyNotifyInfoPresenter.submit();
+                    if (getPicture().length() != 0) {
+                        uploadFirstPicture();
+                    }else {
+                        mReNoticePresenter.submit();
+                    }
                 }
                 break;
 

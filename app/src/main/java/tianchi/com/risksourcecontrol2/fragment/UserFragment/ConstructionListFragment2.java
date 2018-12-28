@@ -38,6 +38,7 @@ public class ConstructionListFragment2  extends Fragment{
     private TextView m_tvSelectAll;
     private TextView m_tvUnSelectAll;
     private TextView m_tvTotalSelections;
+    private ArrayList<String> m_list_rightText;
 
     @Nullable
     @Override
@@ -155,6 +156,7 @@ public class ConstructionListFragment2  extends Fragment{
     private void initData() {
         m_list_left = new ArrayList<>();
         m_list_right = new ArrayList<>();
+        m_list_rightText = new ArrayList<>();
         //        m_listHashMap = new HashMap<>();
         //        /*测试数据*/
         //        for (int i = 1; i <= 3; i++) {
@@ -170,6 +172,7 @@ public class ConstructionListFragment2  extends Fragment{
         for (String key : m_listHashMap.keySet()) {
             m_list_left.add(key);
             for (String name : m_listHashMap.get(key)) {
+                m_list_rightText.add(key);
                 m_list_right.add(name);
             }
         }
@@ -178,7 +181,7 @@ public class ConstructionListFragment2  extends Fragment{
         m_leftAdapter = new ListviewItemBaseAdapter(ConstructionListFragment2.this
                 .getActivity(), m_list_left);
 
-        m_rightAdapter = new ConstructionAdapter(m_list_right, ConstructionListFragment2.this
+        m_rightAdapter = new ConstructionAdapter(m_list_right,m_list_rightText, ConstructionListFragment2.this
                 .getActivity());
         m_tvTotalSelections.setText("一共选择了" + UsersList.getList().size() + "人");
     }

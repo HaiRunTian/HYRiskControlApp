@@ -67,11 +67,12 @@ public class ReceviceNoticeAdapter extends BaseAdapter {
         _viewHolder.m_tvAuther.setText("发送人:" + m_readDataList.get(position).getInspectorSign());
         _viewHolder.m_tvTitle.setText(m_readDataList.get(position).getLogId());
 
-        if (m_readDataList.get(position).getLogState()!=1 && m_readDataList.get(position).getLogState()!=4){
+        if (m_readDataList.get(position).getLogState()!=1 && m_readDataList.get(position).getLogState()!=4) {
             _viewHolder.m_tvIsRead.setText("已回复");
-        }else {
-            _viewHolder.m_tvIsRead.setText("未审核");
         }
+//        }else {
+//            _viewHolder.m_tvIsRead.setText("未审核");
+//        }
 
         String _time = m_readDataList.get(position).getSubmitTime();
 

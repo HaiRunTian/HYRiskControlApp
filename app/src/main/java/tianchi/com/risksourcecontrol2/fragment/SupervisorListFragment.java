@@ -36,7 +36,7 @@ public class SupervisorListFragment extends Fragment {
 
     private List<String> m_list_left;//左侧填充的文本list
     private List<String> m_list_right;//右侧填充的文本list
-
+    private List<String> m_list_rightText;
     private Map<String, List<String>> m_listHashMap;//数据容器,string对应左侧项，arraylist对应右侧子项列表
     private SupervisorListviewAdapter m_rightAdapter;//右侧子项适配器
     private ListviewItemBaseAdapter m_leftAdapter;//左侧列表适配器
@@ -257,11 +257,6 @@ public class SupervisorListFragment extends Fragment {
         });
     }
 
-    private void initAdapter(List<String> list) {
-        m_rightAdapter = new SupervisorListviewAdapter(list,SupervisorListFragment.this.getActivity());
-        m_lvSupervisorRight.setAdapter(m_rightAdapter);
-//        m_rightAdapter.notifyDataSetChanged();
-    }
 
 
     // 刷新listview和TextView的显示
@@ -307,7 +302,7 @@ public class SupervisorListFragment extends Fragment {
     private void initData() {
         m_list_left = new ArrayList<>();
         m_list_right = new ArrayList<>();
-
+        m_list_rightText = new ArrayList<>();
 //        m_listHashMap = new HashMap<>();
 //        /*测试数据*/
 //        for (int i = 1; i <= 3; i++) {
@@ -327,7 +322,8 @@ public class SupervisorListFragment extends Fragment {
             m_list_left.add(key);
             Collections.sort(m_list_left);
             for (String name : m_listHashMap.get(key)) {
-                m_list_right.add(key+name);
+                m_list_rightText.add(key);
+                m_list_right.add(name);
                 Collections.sort(m_list_right);
             }
 
@@ -336,7 +332,7 @@ public class SupervisorListFragment extends Fragment {
 //        m_leftAdapter = new ArrayAdapter(SupervisorListFragment.this.getActivity(), android.R.layout.simple_list_item_1, m_list_left);
 
         m_leftAdapter = new ListviewItemBaseAdapter(SupervisorListFragment.this.getActivity(), m_list_left);
-        m_rightAdapter = new SupervisorListviewAdapter(m_list_right,SupervisorListFragment.this.getActivity());
+        m_rightAdapter = new SupervisorListviewAdapter(m_list_right,m_list_rightText,SupervisorListFragment.this.getActivity());
 
         m_tvTotalSelections.setText("一共选择了" + UsersList.getList().size() + "人");
     }

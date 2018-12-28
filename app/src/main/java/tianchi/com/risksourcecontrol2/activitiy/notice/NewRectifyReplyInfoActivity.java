@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -48,7 +47,6 @@ import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.CameraUtils;
 import tianchi.com.risksourcecontrol2.util.DateTimeUtils;
 import tianchi.com.risksourcecontrol2.util.FileUtils;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.view.IRectifyNotifyView;
 import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
 
@@ -208,6 +206,7 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
         m_btnBack = $(R.id.tvBack);
         m_edtSupervisor = $(R.id.edtSupervisor);
         m_tvSupervisor = $(R.id.tvSupervisor);
+
         m_tvSupervisor.setText(getResources().getString(R.string.string_recive_man));
 //        m_edtOwner = $(R.id.edtOwner);
         m_edtReformMan.setText(UserSingleton.getUserInfo().getRealName());
