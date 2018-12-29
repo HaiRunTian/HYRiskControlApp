@@ -78,7 +78,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     private EditText m_edtCheckUnit;//检查单位
     private EditText m_edtBecheckUnit; //受检单位
     private EditText m_edtCheckMan; //检查人
-
+    private EditText m_edtCheckMans; //副检查人
     private EditText m_edtCheckDate; //检查时间
     private EditText m_edtLogRectifyDate; //整改期限日期
     private Button m_btnAddPic; //添加照片
@@ -215,6 +215,8 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         m_edtCopyer.setOnClickListener(this);
         m_edtConstruction.setOnClickListener(this);
         m_edtCheckMan.setOnClickListener(this);
+        m_edtCheckMans.setOnClickListener(this);
+
         be_arrow.setOnClickListener(this);
         input_arrow.setOnClickListener(this);
     }
@@ -232,6 +234,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
         m_edtCheckDate = $(R.id.edtLogCheckDate);
         m_edtCheckMan = $(R.id.edtLogCheckMan);
+        m_edtCheckMans = $(R.id.edtLogCheckMans);
         m_edtLogRectifyDate = $(R.id.edtLogRectifyDate);
         m_btnAddPic = $(R.id.btnAddPic);
         m_gdvPic = $(R.id.gridView1);
@@ -390,10 +393,15 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
             case R.id.btnDraft:
                 m_logState = 2;
+                if (getPicture().length() != 0) {
+                    uploadFirstPicture();
+                }else {
+                    mReNoticePresenter.saveToDraft();
+                }
 //                if (checkInfo()) {
 //                uploadFirstPicture();
-                RectifyNotifyInfoPresenter _rectifyNotifyInfoPresenter = new RectifyNotifyInfoPresenter(this);
-                _rectifyNotifyInfoPresenter.submit();
+//                RectifyNotifyInfoPresenter _rectifyNotifyInfoPresenter = new RectifyNotifyInfoPresenter(this);
+//                _rectifyNotifyInfoPresenter.submit();
 //                }
                 break;
 
@@ -410,10 +418,9 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                 finish();
                 break;
             //获取全部名单
-            case R.id.edtLogCheckMan:
+            case R.id.edtLogCheckMans:
                 startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.OWNER_ALL), GET_CHECKMAN);
                 break;
-
             //如果是业主，可以选择监理
             case R.id.edtSupervisor:
                 if (m_roid == 17) {
@@ -594,6 +601,11 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         return m_edtCheckMan.getText().toString().trim();
     }
 
+    @Override
+    public String getCheckMans() {
+        return m_edtCheckMans.getText().toString().trim();
+    }
+
     /**
      * 整改期限
      *
@@ -648,6 +660,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         _stringBuffer.append(m_edtConstruction.getText().toString());
         if (!m_edtCopyer.getText().toString().isEmpty())
             _stringBuffer.append("#" + m_edtCopyer.getText().toString());
+
 //        if (!m_edtSupervisor.getText().toString().isEmpty())
 //            _stringBuffer.append("#" + m_edtSupervisor.getText().toString());
 
@@ -684,7 +697,45 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
     @Override
     public String getSection() {
-        return m_spSection.getSelectedItem().toString().trim();
+        String _trim = m_spSection.getSelectedItem().toString().trim();
+        String _s = null;
+        switch (_trim){
+            case "第1标段":
+                _s="TJ01";
+                break;
+            case "第2标段":
+                _s="TJ02";
+                break;
+            case "第3标段":
+                _s="TJ03";
+                break;
+            case "第4标段":
+                _s="TJ04";
+                break;
+            case "第5标段":
+                _s="TJ05";
+                break;
+            case "第6标段":
+                _s="TJ06";
+                break;
+            case "第7标段":
+                _s="TJ07";
+                break;
+            case "第8标段":
+                _s="TJ08";
+                break;
+            case "第9标段":
+                _s="TJ09";
+                break;
+            case "第10标段":
+                _s="TJ10";
+                break;
+            case "第11标段":
+                _s="TJ11";
+                break;
+
+        }
+        return _s;
 
     }
 
@@ -1038,7 +1089,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                         UsersList.clearList();
                     }
                     break;
-                case GET_CHECKMAN:
+                case GET_CHECKMAN://7
                     if (resultCode == RESULT_OK) {
                         String allNameList = "";
                         for (String name : UsersList.getList()) {
@@ -1046,8 +1097,10 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                             String _s1 = _s.substring(_s.lastIndexOf("#")+1);
                             allNameList += _s1 + "#";
                         }
-                        m_edtCheckMan.setText("");
-                        m_edtCheckMan.setText(UserSingleton.getUserInfo().getRealName()+"#"+allNameList.substring(0, allNameList.length() - 1));
+                        m_edtCheckMans.setText("");
+                        m_edtCheckMans.setText(allNameList.substring(0, allNameList.length() - 1));
+//                        m_edtCheckMans.setText(allNameList.substring(0, allNameList.length() - 1));
+
                         UsersList.clearList();
                     }
                     break;
@@ -1175,18 +1228,17 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
             isOk = false;
 
         }
-        if (m_edtConstruction.getText().toString().trim().length() > 5) {
 
+        if (m_edtConstruction.getText().toString().trim().length() > 5) {
             MyToast.showMyToast(NewRectifyNotifyInfoActivity.this, "施工方只能选一个人，请重新选择", 1);
+            isOk = false;
+        }
+        if (getReceiveMans().length() == 0) {
+
+            m_edtConstruction.setError("接收人不能为空");
             isOk = false;
 
         }
-//        if (getReceiveMans().length() == 0) {
-//
-//            m_edtCheckMan.setError("接收人不能为空");
-//            isOk = false;
-//
-//        }
 //        if (getSection().length() == 0) {
 //
 //            isOk = false;

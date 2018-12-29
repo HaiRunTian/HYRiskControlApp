@@ -2,10 +2,11 @@ package tianchi.com.risksourcecontrol2.presenter;
 
 import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyNotifyDraftInfo;
 import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyNotifyInfo;
+import tianchi.com.risksourcecontrol2.model.INewNoticeBiz;
 import tianchi.com.risksourcecontrol2.model.NewNoticeBiz;
 import tianchi.com.risksourcecontrol2.model.OnSubmitLogListener;
 import tianchi.com.risksourcecontrol2.model.OnUploadFileListener;
-import tianchi.com.risksourcecontrol2.model.INewNoticeBiz;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.view.IRectifyNotifyView;
 
 /**
@@ -73,6 +74,7 @@ public class RectifyNotifyInfoPresenter implements INewLogPresenter {
         info.setQuestion(m_notifyView.getQuestion());
         info.setRequest(m_notifyView.getRectifyRequest());
         info.setInspectorSign(m_notifyView.getCheckMan());
+        info.setInspectorSigns(m_notifyView.getCheckMans());
         info.setRectifyPeriod(m_notifyView.rectifyDate());
         info.setBeCheckedUnitSign(m_notifyView.getBeCheckUnit());
         info.setImages(m_notifyView.getPicture());
@@ -130,6 +132,11 @@ public class RectifyNotifyInfoPresenter implements INewLogPresenter {
         _rectifyNotifyInfo.setRequest(m_notifyView.getRectifyRequest()); //整改措施与方法
 
         _rectifyNotifyInfo.setInspectorSign(m_notifyView.getCheckMan()); //检查人
+
+        LogUtils.i("a",m_notifyView.getCheckMans());
+
+       _rectifyNotifyInfo.setInspectorSigns(m_notifyView.getCheckMans());//副检查人
+
 //        String s2 = m_notifyView.rectifyDate();
 //        LogUtils.i("整改时间", s2);
         _rectifyNotifyInfo.setRectifyPeriod(m_notifyView.rectifyDate()); //整改期限

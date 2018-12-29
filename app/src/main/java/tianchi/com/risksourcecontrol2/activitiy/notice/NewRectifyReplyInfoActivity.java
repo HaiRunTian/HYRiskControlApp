@@ -769,6 +769,11 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
         return null;
     }
 
+    @Override
+    public String getCheckMans() {
+        return null;
+    }
+
     /**
      * 整改期限
      *

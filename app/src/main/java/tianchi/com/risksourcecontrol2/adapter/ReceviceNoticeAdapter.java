@@ -5,14 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyNotifyInfo;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
-import tianchi.com.risksourcecontrol2.util.MyTime;
+
+import static tianchi.com.risksourcecontrol2.R.id.RLDelete;
 
 /**
  * Created by hairun.tian on 2018/4/1 0001.
@@ -35,6 +36,9 @@ public class ReceviceNoticeAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
+        if (m_readDataList!=null) {
+            m_readDataList.get(position);
+        }
         return m_readDataList.get(position);
     }
 
@@ -45,7 +49,7 @@ public class ReceviceNoticeAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder _viewHolder = null;
+        ViewHolder _viewHolder =null;
         if (convertView == null) {
             _viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(m_context).inflate(R.layout.list_view_item_notice, null);
@@ -53,43 +57,49 @@ public class ReceviceNoticeAdapter extends BaseAdapter {
             _viewHolder.m_tvTime = (TextView) convertView.findViewById(R.id.tvtime);
             _viewHolder.m_tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
             _viewHolder.m_tvIsRead = (TextView) convertView.findViewById(R.id.tv_is_read);
-
+            _viewHolder.m_RLDelete = (RelativeLayout) convertView.findViewById(RLDelete);
             convertView.setTag(_viewHolder);
         } else {
             _viewHolder = (ViewHolder) convertView.getTag();
         }
-        if (m_readDataList.get(position).isReply() != 1) {
+//        if (m_readDataList.get(position).isReply() != 1) {
+//
+////            _viewHolder.m_tvIsRead.setText("已回复");
+////            _viewHolder.m_tvIsRead.setTextColor(R.color.colorGreen);
+//        } else {
+////            _viewHolder.m_tvIsRead.setText("未回复");
+//        }
+
+//        if (m_readDataList.get(position).getLogState()==1 || m_readDataList.get(position).getLogState()==4) {
+//
+//        }else {
 //            _viewHolder.m_tvIsRead.setText("已回复");
-//            _viewHolder.m_tvIsRead.setTextColor(R.color.colorGreen);
-        } else {
-//            _viewHolder.m_tvIsRead.setText("未回复");
-        }
+//        }
+//
+//
+//        if (m_readDataList.get(position).getLogState()!=1 && m_readDataList.get(position).getLogState()!=4) {
+//            _viewHolder.m_tvIsRead.setText("已回复");
+//        }
+
         _viewHolder.m_tvAuther.setText("发送人:" + m_readDataList.get(position).getInspectorSign());
         _viewHolder.m_tvTitle.setText(m_readDataList.get(position).getLogId());
+//       _viewHolder.m_RLDelete
 
-        if (m_readDataList.get(position).getLogState()!=1 && m_readDataList.get(position).getLogState()!=4) {
-            _viewHolder.m_tvIsRead.setText("已回复");
-        }
 //        }else {
 //            _viewHolder.m_tvIsRead.setText("未审核");
 //        }
-
-        String _time = m_readDataList.get(position).getSubmitTime();
-
-        LogUtils.i("time ="+_time);
-        String _time1 = MyTime.getTime();
-        LogUtils.i("time1 ="+_time1);
-
-        String _timeExpend = MyTime.getTimeDifference(_time, _time1);
-        LogUtils.i("_timeExpend ="+_timeExpend);
-
-        String _s = "00:30:00";
-
-
+//          时间
+//        String _time = m_readDataList.get(position).getSubmitTime();
+//
+//        LogUtils.i("time ="+_time);
+//        String _time1 = MyTime.getTime();
+//        LogUtils.i("time1 ="+_time1);
+//
+//        String _timeExpend = MyTime.getTimeDifference(_time, _time1);
+//        LogUtils.i("_timeExpend ="+_timeExpend);
 
         if (m_readDataList.get(position).getCheckedTime().length()>10) {
-
-        _viewHolder.m_tvTime.setText(m_readDataList.get(position).getCheckedTime().substring(0,10));
+            _viewHolder.m_tvTime.setText(m_readDataList.get(position).getCheckedTime().substring(0,10));
         }else {
             _viewHolder.m_tvTime.setText(m_readDataList.get(position).getCheckedTime());
         }
@@ -101,5 +111,6 @@ public class ReceviceNoticeAdapter extends BaseAdapter {
         TextView m_tvAuther;
         TextView m_tvTime;
         TextView m_tvIsRead;
+        RelativeLayout m_RLDelete;
     }
 }

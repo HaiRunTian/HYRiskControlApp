@@ -160,14 +160,20 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
 
 //    @Override
 //    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-//        MyAlertDialog.showAlertDialog(MyselfRectifyNotifyListActivity.this, "温馨提示", "是否要删除？", "确定", "取消", false, new DialogInterface.OnClickListener()       {
+//
+//        MyAlertDialog.showAlertDialog(MyselfRectifyNotifyListActivity.this, "温馨提示", "是否要删除当前整改通知单？", "确定", "取消", false, new DialogInterface.OnClickListener()       {
 //            @Override
 //            public void onClick(DialogInterface dialog, int which) {
-//                //确认删除
-//                int _draftId = m_list.get(position).getId();
-//                deleteDraft(_draftId);
-//                m_list.remove(position);
-//                m_receviceNoticeAdapter.notifyDataSetChanged();
+//
+//                int _logState = m_list.get(position).getLogState();
+//                if (_logState) {
+//                    //确认删除
+//                    int _draftId = m_list.get(position).getId();
+//                    deleteDraft(_draftId);
+//                    m_list.remove(position);
+//                    m_receviceNoticeAdapter.notifyDataSetChanged();
+//                }
+//
 //            }
 //        }, new DialogInterface.OnClickListener() {
 //            @Override
@@ -182,24 +188,22 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
         JSONObject json = new JSONObject();
         try {
             json.put("id", draftId);
+            OkHttpUtils.postAsync(ServerConfig.URL_DELETE_NOTIFY_FOR_ID, json.toString(), new OkHttpUtils.InsertDataCallBack() {
+                @Override
+                public void requestFailure(Request request, IOException e) {
+                }
+                @Override
+                public void requestSuccess(String result) throws Exception {
+                    int status = GsonUtils.getIntNoteJsonString(result, "status");
+                    String msg = GsonUtils.getStringNodeJsonString(result, "msg");
 
-//            OkHttpUtils.postAsync(ServerConfig.URL_DELETE_DRAFT_RECTIFY_NOTIFY, json.toString(), new OkHttpUtils.InsertDataCallBack() {
-//                @Override
-//                public void requestFailure(Request request, IOException e) {
-//
-//                }
-//                @Override
-//                public void requestSuccess(String result) throws Exception {
-//                    int status = GsonUtils.getIntNoteJsonString(result, "status");
-//                    String msg = GsonUtils.getStringNodeJsonString(result, "msg");
-//
-//                    if (status == -1 || status == 0) {
-//                        MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
-//                    } else {
-//                        MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
-//                    }
-//                }
-//            });
+                    if (status == -1 || status == 0) {
+                        MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
+                    } else {
+                        MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
+                    }
+                }
+            });
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -38,6 +37,7 @@ import tianchi.com.risksourcecontrol2.model.OnUserListListener;
 import tianchi.com.risksourcecontrol2.presenter.LoadingNotifyInfoPresenter;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.CameraUtils;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.view.ILoadingNotifyView;
 import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
 
@@ -161,10 +161,18 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
                 m_edtCheckUnit.setText(_rectifyNotifyInfo.getInspectUnit());
                 m_edtBecheckUnit.setText(_rectifyNotifyInfo.getBeCheckedUnit());
                 m_edtSection.setText(_rectifyNotifyInfo.getSection());
-                m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign());
+                String _inspectorSign = _rectifyNotifyInfo.getInspectorSign();
+
+                String _inspectorSigns = _rectifyNotifyInfo.getInspectorSigns();
+                LogUtils.i("查看 = "+_inspectorSign+_inspectorSigns);
+                m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign()+"#"+_rectifyNotifyInfo.getInspectorSigns());
+
+
                 m_edtContent.setText(_rectifyNotifyInfo.getInspectContent());
                 m_edtFindPro.setText(_rectifyNotifyInfo.getQuestion());
+
                 userRealName = _rectifyNotifyInfo.getInspectorSign(); //检查人
+
                 m_edtReformMethod.setText(_rectifyNotifyInfo.getRequest());
                 m_receiveMans.setText(_rectifyNotifyInfo.getReceiverMans());
                 m_edtCheckDate.setText(_rectifyNotifyInfo.getCheckedTime().substring(0, 10));

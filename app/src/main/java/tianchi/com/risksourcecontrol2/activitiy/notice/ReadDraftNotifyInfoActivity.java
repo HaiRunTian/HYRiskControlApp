@@ -59,6 +59,7 @@ import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
 public class ReadDraftNotifyInfoActivity extends BaseActivity implements View.OnClickListener, ILoadingNotifyView, IRectifyNotifyView {
 
     private static final int GET_SUPERVISOR = 0;
+    private static final int GET_CHECKMAN = 7;
     private static final int GET_COPYER = 8;
     private static final int GET_CONSTRUCTION = 9;
     private EditText m_edtLogId; //日志编号
@@ -66,6 +67,7 @@ public class ReadDraftNotifyInfoActivity extends BaseActivity implements View.On
     private EditText m_edtBecheckUnit; //受检单位
     private EditText m_edtCheckDate; //检查时间
     private EditText m_edtCheckMan; //检查人
+    private EditText m_edtCheckMans; //检查人
     private EditText m_edtLogRectifyDate; //整改期限日期
     private Button m_btnAddPic; //添加照片
     private GridView m_gdvPic; //
@@ -183,9 +185,11 @@ public class ReadDraftNotifyInfoActivity extends BaseActivity implements View.On
                 m_edtBecheckUnit.setText(_draftInfo.getBeCheckedUnit());
                 m_edtSection.setText(_draftInfo.getSection());
                 m_edtCheckMan.setText(_draftInfo.getInspectorSign());
+
                 m_edtContent.setText(_draftInfo.getInspectContent());
                 m_edtFindPro.setText(_draftInfo.getQuestion());
                 userRealName = _draftInfo.getInspectorSign(); //检查人
+
                 m_edtReformMethod.setText(_draftInfo.getRequest());
                 m_edtCheckDate.setText(_draftInfo.getCheckTime().substring(0, 10));
                 m_edtLogRectifyDate.setText(_draftInfo.getRectifyPeriod().substring(0, 10));
@@ -347,6 +351,7 @@ public class ReadDraftNotifyInfoActivity extends BaseActivity implements View.On
         m_edtBecheckUnit = $(R.id.edtLogBeCheckUnit);
         m_edtCheckDate = $(R.id.edtLogCheckDate);
         m_edtCheckMan = $(R.id.edtLogCheckMan);
+        m_edtCheckMans = $(R.id.edtLogCheckMans);
         m_edtLogRectifyDate = $(R.id.edtLogRectifyDate);
 //        m_btnAddPic = $(R.id.btnAddPic);
         m_gdvPic = $(R.id.gridView1);
@@ -407,7 +412,9 @@ public class ReadDraftNotifyInfoActivity extends BaseActivity implements View.On
                     mReNoticePresenter.submit();
                 }
                 break;
-
+            case R.id.edtLogCheckMans:
+                startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.OWNER_ALL),GET_CHECKMAN);
+                break;
             case R.id.edtSupervisor:
 
                 if (m_roid == 17) {
@@ -513,6 +520,11 @@ public class ReadDraftNotifyInfoActivity extends BaseActivity implements View.On
     @Override
     public String getCheckMan() {
         return m_edtCheckMan.getText().toString().trim();
+    }
+
+    @Override
+    public String getCheckMans() {
+        return m_edtCheckMans.getText().toString().trim();
     }
 
     @Override

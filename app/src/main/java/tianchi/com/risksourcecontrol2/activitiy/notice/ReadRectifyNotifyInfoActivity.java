@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -113,6 +112,7 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
     LoadingNotifyInfoPresenter m_presenter = new LoadingNotifyInfoPresenter(this);
     private String _firstName;
     private String m_imgInfo;
+    private RectifyNotifyInfo _rectifyNotifyInfo;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,7 +126,7 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
     //初始化数据
     private void initValue() {
         initShowPicArea();
-        RectifyNotifyInfo _rectifyNotifyInfo = (RectifyNotifyInfo) getIntent().getSerializableExtra("data");
+        _rectifyNotifyInfo = (RectifyNotifyInfo) getIntent().getSerializableExtra("data");
         //照片备注
         m_imgInfo = _rectifyNotifyInfo.getImageInfos();
 //        LogUtils.i("_imgInfo", m_imgInfo +"");
@@ -159,7 +159,11 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
                 m_edtCheckUnit.setText(_rectifyNotifyInfo.getInspectUnit());
                 m_edtBecheckUnit.setText(_rectifyNotifyInfo.getBeCheckedUnit());
                 m_edtSection.setText(_rectifyNotifyInfo.getSection());
-                m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign());
+
+                LogUtils.i("查看 = "+_rectifyNotifyInfo.getInspectorSign()+"#"+_rectifyNotifyInfo.getInspectorSigns());
+
+                m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign()+"#"+_rectifyNotifyInfo.getInspectorSigns());
+
                 m_edtContent.setText(_rectifyNotifyInfo.getInspectContent());
                 m_edtFindPro.setText(_rectifyNotifyInfo.getQuestion());
                 userRealName = _rectifyNotifyInfo.getInspectorSign(); //检查人
@@ -359,16 +363,23 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvReply:
-                Bundle _bundle = new Bundle();
-                _bundle.putInt("dbID", dbID);
-                _bundle.putString("logId", m_logID);
-                _bundle.putString("checkUnit", m_checkUnit);
-                _bundle.putString("beCheckUnit", m_beCheckUnit);
-                _bundle.putString("checkMan", m_edtCheckMan.getText().toString());
-                _bundle.putString("imgInfo",m_imgInfo);
-                Intent _intent = new Intent(ReadRectifyNotifyInfoActivity.this, NewRectifyReplyInfoActivity.class);
-                _intent.putExtras(_bundle);
-                startActivity(_intent);
+                int _logState = _rectifyNotifyInfo.getLogState();
+
+                if (_logState==1 || _logState==4) {
+
+                    Bundle _bundle = new Bundle();
+                    _bundle.putInt("dbID", dbID);
+                    _bundle.putString("logId", m_logID);
+                    _bundle.putString("checkUnit", m_checkUnit);
+                    _bundle.putString("beCheckUnit", m_beCheckUnit);
+                    _bundle.putString("checkMan", m_edtCheckMan.getText().toString());
+                    _bundle.putString("imgInfo", m_imgInfo);
+                    Intent _intent = new Intent(ReadRectifyNotifyInfoActivity.this, NewRectifyReplyInfoActivity.class);
+                    _intent.putExtras(_bundle);
+                    startActivity(_intent);
+               }else {
+                    Toast.makeText(this, "已回复！", Toast.LENGTH_SHORT).show();
+                }
                 break;
 
             case R.id.tvBack:

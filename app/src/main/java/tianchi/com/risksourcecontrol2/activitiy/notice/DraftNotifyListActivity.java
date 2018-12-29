@@ -180,7 +180,7 @@ public class DraftNotifyListActivity extends BaseActivity implements View.OnClic
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
         MyToast.showMyToast(DraftNotifyListActivity.this, "删除草稿", Toast.LENGTH_SHORT);
 
-        MyAlertDialog.showAlertDialog(DraftNotifyListActivity.this, "温馨提示", "是否要删除草稿？", "确定", "取消", false, new DialogInterface.OnClickListener() {
+        MyAlertDialog.showAlertDialog(DraftNotifyListActivity.this, "温馨提示", "是否要删除草稿？", "确定", "取消", false, new DialogInterface.OnClickListener()    {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //确认删除

@@ -27,7 +27,7 @@ public class NewNoticeBiz implements INewNoticeBiz {
 //            SafetyLogInfo _logInfo = (SafetyLogInfo) baseLogInfo;
             String jsonString = GsonUtils.objectToJson(rectifyNotifyInfo);//实体转json
 
-//            LogUtils.i("json新建通知单",jsonString);
+            LogUtils.i("json新建通知单",jsonString);
             OkHttpUtils.postAsync(ServerConfig.URL_RECTIFYNOTIFYINFO,//向服务器提交请求
                     jsonString, new OkHttpUtils.InsertDataCallBack() {
                         @Override

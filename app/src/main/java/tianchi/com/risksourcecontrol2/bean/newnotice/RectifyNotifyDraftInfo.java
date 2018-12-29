@@ -19,6 +19,16 @@ public class RectifyNotifyDraftInfo implements Serializable {
     public String question; //问题
     public String request; //整改措施与方法
     public String inspectorSign;  //检查人签名
+    public String inspectorSigns;//副检查人
+
+    public String getInspectorSigns() {
+        return inspectorSigns;
+    }
+
+    public void setInspectorSigns(String inspectorSigns) {
+        this.inspectorSigns = inspectorSigns;
+    }
+
     public String rectifyPeriod;  //整改期限
     public String beCheckedUnitSign; // 受检单位签名
     public String images; //照片名字
@@ -27,6 +37,7 @@ public class RectifyNotifyDraftInfo implements Serializable {
     public String receiverMans; //接收人
     public int status; //草稿箱状态
     public String imageInfos;//照片备注
+
 
 
 

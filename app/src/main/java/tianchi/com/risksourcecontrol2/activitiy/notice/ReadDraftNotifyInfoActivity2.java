@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -59,7 +58,6 @@ import tianchi.com.risksourcecontrol2.util.CameraUtils;
 import tianchi.com.risksourcecontrol2.util.DateTimeUtils;
 import tianchi.com.risksourcecontrol2.util.FileUtils;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 import tianchi.com.risksourcecontrol2.view.ILoadingNotifyView;
 import tianchi.com.risksourcecontrol2.view.IRectifyNotifyView;
@@ -73,6 +71,7 @@ import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
 
 public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.OnClickListener, IRectifyNotifyView, MyTakePicDialog.OnItemClickListener, ILoadingNotifyView {
     private static final int GET_SUPERVISOR = 0;
+    private static final int GET_CHECKMAN = 7;
     private static final int GET_COPYER = 8;
     private static final int GET_CONSTRUCTION = 9;
     private int m_logState; //日志状态
@@ -81,6 +80,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     private EditText m_edtBecheckUnit; //受检单位
     private EditText m_edtCheckDate; //检查时间
     private EditText m_edtCheckMan; //检查人
+    private EditText m_edtCheckMans; //检查人
     private EditText m_edtLogRectifyDate; //整改期限日期
     private Button m_btnAddPic; //添加照片
     private GridView m_gdvPic; //
@@ -257,8 +257,10 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                 m_edtBecheckUnit.setText(m_info.getBeCheckedUnit() + "");
 //                m_edtSection.setText(_draftInfo.getSection()+"");
                 m_edtCheckMan.setText(m_info.getInspectorSign() + "");
+                m_edtCheckMans.setText(m_info.getInspectorSigns()+"");
                 m_edtContent.setText(m_info.getInspectContent() + "");
                 m_edtFindPro.setText(m_info.getQuestion() + "");
+
                 userRealName = m_info.getInspectorSign(); //检查人
                 m_edtReformMethod.setText(m_info.getRequest() + "");
                 m_edtCheckDate.setText(m_info.getCheckTime().substring(0, 10) + "");
@@ -339,6 +341,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
 //        m_receiveMans.setOnClickListener(this);
         m_edtLogRectifyDate.setOnClickListener(this);
         m_tvBack.setOnClickListener(this);
+        m_edtCheckMans.setOnClickListener(this);
 //        m_edtSupervisor.setOnClickListener(this);
         m_edtCopyer.setOnClickListener(this);
         m_edtConstruction.setOnClickListener(this);
@@ -353,6 +356,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
         m_edtBecheckUnit = $(R.id.edtLogBeCheckUnit);
         m_edtCheckDate = $(R.id.edtLogCheckDate);
         m_edtCheckMan = $(R.id.edtLogCheckMan);
+        m_edtCheckMans = $(R.id.edtLogCheckMans);
         m_edtLogRectifyDate = $(R.id.edtLogRectifyDate);
         m_btnAddPic = $(R.id.btnAddPic);
         m_gdvPic = $(R.id.gridView1);
@@ -470,10 +474,9 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                 uploadFirstPicture();
 //                }
                 break;
-
-
-            case R.id.edtRecorder:
+            case R.id.edtLogCheckMans:
 //                startActivityForResult(new Intent(this, RelationshipListActivity.class), GET_RELATIONSHIP);
+                startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.OWNER_ALL), GET_CHECKMAN);
                 break;
 
             case R.id.edtLogRectifyDate:
@@ -609,6 +612,11 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     @Override
     public String getCheckMan() {
         return m_edtCheckMan.getText().toString().trim();
+    }
+
+    @Override
+    public String getCheckMans() {
+        return null;
     }
 
     /**
@@ -1045,7 +1053,20 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                     }
                     break;
 
-                case GET_SUPERVISOR:
+                case GET_CHECKMAN:
+                    if (resultCode == RESULT_OK) {
+                        String allNameList = "";
+                        for (String name : UsersList.getList()) {
+                            String _s = name.toString();
+                            String _s1 = _s.substring(_s.lastIndexOf("#")+1);
+                            allNameList += _s1 + "#";
+                        }
+                        m_edtCheckMans.setText("");
+                        //                        m_edtCheckMans.setText(UserSingleton.getUserInfo().getRealName()+"#"+allNameList.substring(0, allNameList.length() - 1));
+                        m_edtCheckMans.setText(allNameList.substring(0, allNameList.length() - 1));
+
+                        UsersList.clearList();
+                    }
 //                    if (resultCode == RESULT_OK) {
 //                        String allNameList = "";
 //                        m_edtSupervisor.setText("");
@@ -1168,7 +1189,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
 //            isOk = false;
 //        }
         if (getReceiveMans().length() == 0) {
-            m_edtCheckMan.setError("接收人不能为空");
+            m_edtConstruction.setError("接收人不能为空");
             isOk = false;
         }
 //

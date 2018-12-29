@@ -47,6 +47,7 @@
             <include layout="@layout/layout_section"></include>
             <include layout="@layout/layout_check_date"></include>
             <include layout="@layout/layout_check_man_disable"></include>
+            <include layout="@layout/layout_check_man_disables"></include>
             <include layout="@layout/layout_check_deadline"></include>
             <include layout="@layout/layout_addpic_area2"></include>
             <include layout="@layout/layout_check_content"></include>

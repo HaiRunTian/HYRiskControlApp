@@ -16,9 +16,9 @@ public class ServerConfig {
     //内网ip=192.168.0.21
     //外网ip=120.77.41.216
 //  public static final String IP = "192.168.0.21"; //内网ip
-    public static final String IP = "119.23.66.213"; //外网ip
+//    public static final String IP = "119.23.66.213"; //外网ip
     //    public static final String IP = "192.168.0.53";  //依伦ip
-//    public static final String IP = "192.168.0.174"; //瑞珠ip
+    public static final String IP = "192.168.0.174"; //瑞珠ip
     public static final String URL = "http://" + IP + ":" + PORT_DATA;//外网服务器URL
     //    public static final String URL = "http://192.168.0.53" + ":" + PORT_DATA;//外网服务器URL
 //    public static final String URL = "http://119.23.66.213" + ":" + PORT_DATA;//外网服务器URL
@@ -95,7 +95,7 @@ public class ServerConfig {
     public static String URL_QUERY_REPLY = URL + "/hyrisk/rectifyNotifyReply/queryRectifyReplyNotfiy.json";//查询的回复通知单 可用于查别人关联的通知单
     public static String URL_QUERY_MYSELF_SEND_NOTIFY = URL + "/hyrisk/rectifyNotify/queryRectifyNotifyFromMyself.json";//根据名字查整改通知单
     public static String URL_QUERY_MYSELF_SEND_REPLY = URL + "/hyrisk/rectifyNotifyReply/queryRectifyReplyNotifyFromMyself.json";//根据ID查询整改回复通知单
-
+    public static String URL_DELETE_NOTIFY_FOR_ID = URL + "/hyrisk/rectifyNotify/deleteRectifyNotfiy.json";//删除整改通知单
     public static String URL_DELETE_DRAFT_RECTIFY_NOTIFY = URL + "/hyrisk/rectifyNotify/deleteDraftRectifyNotify.json";//删除整改通知单草稿
     public static Map<String, String> s_map = new HashMap<>();
     public static Map<String, String> s_mapMap = new HashMap<>();

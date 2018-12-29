@@ -19,6 +19,10 @@ public class RectifyNotifyInfo implements Serializable {
     public String inspectContent; //检查内容
     public String inspectUnit; //检查单位
     public String inspectorSign;  //检查人签名
+    public String inspectorSigns;  //副检查人
+
+
+
     public String logId;  //日志编号
     public int logState;  //日志状态
     public String question; //问题
@@ -123,6 +127,15 @@ public class RectifyNotifyInfo implements Serializable {
     public void setInspectUnit(String inspectUnit) {
         this.inspectUnit = inspectUnit;
     }
+
+    public String getInspectorSigns() {
+        return inspectorSigns;
+    }
+
+    public void setInspectorSigns(String inspectorSigns) {
+        this.inspectorSigns = inspectorSigns;
+    }
+
 
     public String getInspectorSign() {
         return inspectorSign;
