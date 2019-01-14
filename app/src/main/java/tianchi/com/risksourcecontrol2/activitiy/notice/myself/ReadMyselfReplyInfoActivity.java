@@ -180,7 +180,6 @@ public class ReadMyselfReplyInfoActivity extends BaseActivity implements View.On
 
 
     LoadingNotifyInfoPresenter m_presenter = new LoadingNotifyInfoPresenter(this);
-
     private void uploadPictures() {
         for (int i = 0; i < picNames.size(); i++) {
             if (picNames.get(i).equals("")) {

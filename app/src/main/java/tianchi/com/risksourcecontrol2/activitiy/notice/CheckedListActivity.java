@@ -93,7 +93,7 @@ public class CheckedListActivity extends BaseActivity implements View.OnClickLis
                             //监理审批意见
                             ReplySupervisorInfo _sinfo = new ReplySupervisorInfo();
                             if (_jsonArraySInfo.length() == 1) {
-                                JSONObject _objectSInfo = _jsonArraySInfo.getJSONObject(i);
+                                JSONObject _objectSInfo = _jsonArraySInfo.getJSONObject(0);
                                 _sinfo.setId(_objectSInfo.getInt("id"));
                                 _sinfo.setHasReaded(_objectSInfo.getBoolean("hasReaded"));
                                 _sinfo.setHasVerify(_objectSInfo.getInt("hasVerify"));
@@ -169,11 +169,11 @@ public class CheckedListActivity extends BaseActivity implements View.OnClickLis
         List<ReplySupervisorInfo> _oInfoList = _rectifyNotifyInfo.getReciversOwnerInfos();
 
         _bundle.putSerializable("data", _rectifyNotifyInfo);
-        if (_sInfoList.size() != 0 && _sInfoList != null) {
+        if (  _sInfoList.size() != 0 && _sInfoList != null ) {
             _bundle.putSerializable("sInfo", _sInfoList.get(_sInfoList.size()-position-1));
         } else _bundle.putSerializable("sInfo", null);
 
-        if (_oInfoList.size() != 0 &&_oInfoList != null) {
+        if ( _oInfoList.size() != 0  && _oInfoList != null ) {
             _bundle.putSerializable("oInfo", _oInfoList.get(_oInfoList.size()-position-1));
         } else _bundle.putSerializable("oInfo", null);
 

@@ -142,12 +142,12 @@ public class UserLoginBiz implements IUserLoginBiz {
                             //                            listener.loadingFailed("初始化人员关系列表失败");
                             //                        }
                             break;
-                        case 1: ////人员列表
+                        case 1: //用户人员列表
                             String beanString = GsonUtils.getNodeJsonString(jsonString, "Data");//解析数据
-//                            LogUtils.i("人员列表",beanString);
+                            LogUtils.i("人员列表",beanString);
                             Map<String, List<String>> relationshipMap = GsonUtils.gsonToMaps(beanString);
                             if (relationshipMap != null) {
-                                UserLoginWork.distributeRelationshipList(relationshipMap);
+                                UserLoginWork.distributeRelationshipList(relationshipMap);//初始化用户列表
                             }
                             if (listener != null) {
                                 listener.loadingSucceed();

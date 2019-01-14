@@ -62,6 +62,7 @@ import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
  * 监理或者业主 施工方 查看通知整改回复类 审批信息
  * 1.监理身份：
  * 2.业主身份：
+ * 已经审核过的整改回复单
  */
 
 public class ReadReplyInfoHasCheckActivity extends BaseActivity implements View.OnClickListener, ILoadingNotifyView {

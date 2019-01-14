@@ -35,7 +35,6 @@ public class BaiDuGPS implements BaseGPS {
     private String m_district;
     private String m_street;
     private String m_ddr;
-
     private boolean m_isFirst = true;
     /*****
      *
@@ -43,7 +42,6 @@ public class BaiDuGPS implements BaseGPS {
      *
      */
     private BDAbstractLocationListener BaiduListener = new BDAbstractLocationListener() {
-
         @Override
         public void onReceiveLocation(BDLocation location) {
             // TODO Auto-generated method stub
@@ -91,7 +89,7 @@ public class BaiDuGPS implements BaseGPS {
                 m_street = location.getStreet();
                 m_ddr = location.getAddrStr();
 
-//                LogUtils.i("地址信息",m_city+"\n"+m_district+"\n"+m_street+"\n"+m_ddr);
+                LogUtils.i("地址信息",m_city+"\n"+m_district+"\n"+m_street+"\n"+m_ddr);
 
                 if (location.getPoiList() != null && !location.getPoiList().isEmpty()) {
                     for (int i = 0; i < location.getPoiList().size(); i++) {
@@ -116,7 +114,7 @@ public class BaiDuGPS implements BaseGPS {
                    //
                     double[] scales =  m_mapCtrl.getMap().getVisibleScales();
                     m_mapCtrl.panTo(m_pos,300);
-                    boolean result = m_mapCtrl.zoomTo(scales[scales.length-4],1000);
+                    boolean result = m_mapCtrl.zoomTo(scales[scales.length-1],1000);
                     m_mapCtrl.getMap().refresh();
 //                    LogUtils.i(Double.toString(scales[scales.length-3])+",result "+ result);
                     m_isFirst = false;

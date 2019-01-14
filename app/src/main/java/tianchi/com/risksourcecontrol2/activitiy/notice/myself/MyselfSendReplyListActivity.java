@@ -36,6 +36,7 @@ import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
  * 整改回复通知单列表
  * 查询自己发出去的整改回复单
  * 发起人是自己
+ * 个人回复
  */
 
 public class MyselfSendReplyListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {

@@ -29,6 +29,9 @@ public class UserSingleton {
 
     }
 
+    /**
+     * 单例
+     */
     public static void getInstance() {
         if (!isInited) {
             m_Instance = new UserSingleton();
@@ -39,14 +42,26 @@ public class UserSingleton {
         }
     }
 
+    /**
+     * 获取用户bean
+     * @return
+     */
     public static UserInfo getUserInfo() {
         return m_user;
     }
 
+    /**
+     * 获取用户id
+     * @return
+     */
     public static int getUserRoid(){
         return m_user.getRoleId();
     }
 
+    /**
+     * 设置用户
+     * @param userInfo
+     */
     public static void setUserInfo(UserInfo userInfo) {
         m_user = userInfo;
     }

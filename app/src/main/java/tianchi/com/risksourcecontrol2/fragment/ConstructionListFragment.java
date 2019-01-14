@@ -145,6 +145,7 @@ public class ConstructionListFragment extends Fragment {
             if (i == position) {//将选中那项的背景设为灰色
                 m_lvConstructionLeft.getChildAt(i).setBackgroundColor(
                         Color.LTGRAY);
+
             } else {//将其他项的背景设为跟随父视图
                 m_lvConstructionLeft.getChildAt(i).setBackgroundColor(
                         Color.TRANSPARENT);

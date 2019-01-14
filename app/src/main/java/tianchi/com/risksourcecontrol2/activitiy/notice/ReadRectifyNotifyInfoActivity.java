@@ -43,11 +43,10 @@ import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
 
 /**
  * Created by hairun.tian on 2018/6/21 0021.
- * 查看整改通知类
+ * 查看隐患整改通知类
  */
 
 public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.OnClickListener, ILoadingNotifyView {
-
     private EditText m_edtLogId; //日志编号
     private EditText m_edtCheckUnit; //检查单位
     private EditText m_edtBecheckUnit; //受检单位

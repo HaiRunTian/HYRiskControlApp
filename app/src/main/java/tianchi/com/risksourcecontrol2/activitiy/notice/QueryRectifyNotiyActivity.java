@@ -186,7 +186,6 @@ public class QueryRectifyNotiyActivity extends BaseActivity implements View.OnCl
                 break;
 
             case R.id.btnQuery:
-
                 if (m_edtSubmiter.getText().toString().isEmpty()) {
                     MyToast.showMyToast(QueryRectifyNotiyActivity.this,"请输入提交人再查询",Toast.LENGTH_SHORT);
                     return;

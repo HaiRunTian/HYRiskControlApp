@@ -11,17 +11,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.adapter.ViewPagerAdapter;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
-
 public class  MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, RadioGroup.OnCheckedChangeListener{
     private ViewPager m_viewPager;//滑动页面控件
     private int index = 0;

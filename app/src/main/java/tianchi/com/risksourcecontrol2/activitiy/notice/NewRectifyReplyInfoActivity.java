@@ -90,7 +90,7 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
     private ProgressDialog m_progressDialog;//提交进度
     private File takPicFile;//用户头像拍照文件
     private File resultImgFile;//最终生成的img文件
-    private int remarkIndex = 0;
+
     private Uri fileUri;//生成拍照文件uri
     private Uri uri;//系统拍照或相册选取返回的uri
     //    private String downloadURL;//下载文件url
@@ -104,6 +104,7 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
     private String m_imgInfoN;
     private int uploadImgIndex = 0;//上传照片时的数量
     private int m_remarkIndex = 0; //照片备注序号
+    private int remarkIndex = 0;
     private Handler m_handler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -431,7 +432,6 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
             switch (requestCode) {  //拍照
                 case CameraUtils.PHOTO_REQUEST_TAKEPHOTO: {
                     StringBuffer _imgInfo = new StringBuffer();
-
                     uri = CameraUtils.getBitmapUriFromCG(requestCode, resultCode, data, fileUri);
                     if (uri != null) {
                         picBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);//拍摄返回的bitmap
@@ -505,7 +505,6 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
 
                 case CameraUtils.PHOTO_REQUEST_GALLERY: {
                     StringBuffer _imgInfo = new StringBuffer();
-
                     uri = CameraUtils.getBitmapUriFromCG(requestCode, resultCode, data, fileUri);
                     if (uri != null) {
                         String[] filePathColumns = {MediaStore.Images.Media.DATA};//取媒体文件路径集合

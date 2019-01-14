@@ -750,7 +750,6 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         try {
             switch (requestCode) {  //拍照
                 case CameraUtils.PHOTO_REQUEST_TAKEPHOTO:
-
                     uri = CameraUtils.getBitmapUriFromCG(requestCode, resultCode, data, fileUri);
                     if (uri != null) {
                         picBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);//拍摄返回的bitmap
@@ -764,7 +763,6 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                                 } else {
                                     pictureName = resultImgFile.getName();//拍摄返回的图片name
                                     HashMap<String, Object> _map = new HashMap<>();
-
                                     final EditText m_tv = new EditText(this);
                                     MyAlertDialog.showAlertDialog(NewRectifyNotifyInfoActivity.this, "请输入此照片存在问题，必填！", "确定", "取消", false, m_tv, new DialogInterface.OnClickListener() {
                                         @Override

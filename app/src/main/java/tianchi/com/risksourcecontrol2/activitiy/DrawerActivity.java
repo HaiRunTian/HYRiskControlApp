@@ -396,10 +396,20 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
 
 //            _section = "RiskSourceBt";
             String _port = "http://119.23.66.213:8090/iserver/services/map-RiskSource/rest/maps/China";
+//            String _port = "http://map.baidu.com";
             m_dsInfo.setServer(_port);
             m_dsInfo.setEngineType(EngineType.Rest);
             m_dsInfo.setAlias("China");
             m_ds = m_workspace.getDatasources().open(m_dsInfo);
+//            int ii = m_ds.getDatasets().getCount();
+//            LogUtils.i("datasetName = ", m_ds.getDatasets().get(0).getName());
+//            LogUtils.i("datasetName = ", m_ds.getDatasets().get(1).getName());
+//            LogUtils.i("datasetName = ", m_ds.getDatasets().get(2).getName());
+//            LogUtils.i("datasetName = ", m_ds.getDatasets().get(3).getName());
+//            LogUtils.i("datasetName = ", m_ds.getDatasets().get(4).getName());
+//            LogUtils.i("datasetName = ", m_ds.getDatasets().get(5).getName());
+//            LogUtils.i("Datasetcount " ,"Datasetcount = "+  m_ds.getDatasets().getCount());
+//            m_ds.getDatasets().get(0).setPrjCoordSys(m_MapControl.getMap().getPrjCoordSys());
 
 //            _section ="RiskSource00";
             String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + _section + "/rest/maps/" + _section;
@@ -408,13 +418,14 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
             m_t_dInfo.setEngineType(EngineType.Rest);
             m_t_dInfo.setAlias(_section);
             m_n_ds = m_workspace.getDatasources().open(m_t_dInfo);
-//            LogUtils.i("m_workspace datasources count=" + m_workspace.getDatasources().getCount() + ", open result=" + m_n_ds.toString());
+            LogUtils.i("m_workspace datasources count=" + m_workspace.getDatasources().getCount() + ", open result=" + m_n_ds.toString());
             if (m_ds != null && m_n_ds != null) {
-                Layer _btLayer = m_MapControl.getMap().getLayers().add(m_ds.getDatasets().get(0), true);
+//                if (m_ds != null ) {
+                Layer _btLayer = m_MapControl.getMap().getLayers().add(m_ds.getDatasets().get(0), false);
                 Layer _yLayer = m_MapControl.getMap().getLayers().add(m_n_ds.getDatasets().get(0), true);
                 double _ratio = 1.0 / 1500000;
                 _yLayer.setMinVisibleScale(_ratio);
-                // m_MapControl.getMap().setMinScale(0);
+                 m_MapControl.getMap().setMinScale(0);
                 m_MapControl.getMap().setVisibleScalesEnabled(false);
                 m_MapControl.getMap().setViewBoundsLocked(false);
 
@@ -450,7 +461,7 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                 m_MapControl.getMap().refresh();
                 m_PrjCoordSys = m_ds.getDatasets().get(0).getPrjCoordSys();
                 //百度地图定位初始化
-                m_GPS = new BaiDuGPS();
+                 m_GPS = new BaiDuGPS();
                 m_GPS.setApplication(this.getApplication());
                 m_GPS.setNavigationPanel(m_NavigationPanelView);
                 m_GPS.setPrjCoordSys(m_PrjCoordSys);
@@ -505,12 +516,10 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
         m_rdbtnNone = (RadioButton) findViewById(R.id.rdbtnNone);
         m_radioGroup = (RadioGroup) findViewById(R.id.radioGroup);
 
-
         //通知未读显示
         // m_btton = (Button) findViewById(R.id.btn_number);
 //        m_qBadgeView = new QBadgeView(this);
 //        m_qBadgeView.bindTarget(m_btton).setBadgeNumber(100).setBadgeTextSize(7, true).setBadgeGravity(Gravity.TOP | Gravity.CENTER);
-
 
         m_btnZoomOut = (Button) findViewById(R.id.btnZoomOut);
         m_btnZoomIn = (Button) findViewById(R.id.btnZoomIn);
@@ -713,20 +722,7 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                 showMeasureTv(0);
 
                 break;
-            //            //查询风险源
-            //            case R.id.btnQueryRisk:
-            //                showMeasureTv(0);
-            //                setAllBtnBgNor();
-            //                setBtnPanBg();
-            //                m_MapControl.deleteGestureDetector();
-            //                setActionPan();
-            //                if (getRiskStakeNum().isEmpty()) {
-            //                    MyToast.showMyToast(DrawerActivity.this, "请输入风险源桩号再查询", Toast.LENGTH_SHORT);
-            //                    return;
-            //                }
-            //                m_homePresenter.riskQuery();
-            //
-            //                break;
+
 
             //测量长度
             case R.id.btnLength:
@@ -770,9 +766,8 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                 break;
             //定位
             case R.id.btnLocal:
-
                 //设置定位图标是否可见
-                if (m_NavigationPanelView.getVisibility() == View.VISIBLE) {
+                if (m_NavigationPanelView.getVisibility()==View.VISIBLE) {
 //                    m_NavigationPanelView.setVisibility(View.GONE);
                     m_GPS.onStop();
                 } else {

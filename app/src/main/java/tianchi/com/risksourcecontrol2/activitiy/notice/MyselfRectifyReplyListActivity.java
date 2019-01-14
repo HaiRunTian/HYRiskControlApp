@@ -162,6 +162,7 @@ public class MyselfRectifyReplyListActivity extends BaseActivity implements View
 //                LogUtils.i("接收通知失败", request.body().toString());
                 m_progressDialog.setMessage("加载失败");
                 m_progressDialog.dismiss();
+
             }
 
             @Override
