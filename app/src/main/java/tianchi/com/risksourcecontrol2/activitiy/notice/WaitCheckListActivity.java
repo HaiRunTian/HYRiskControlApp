@@ -32,6 +32,7 @@ import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 /**
  * Created by HaiRun on 2018-09-13 9:22.
  * 待审核整改通知单列表
+ * 11
  */
 
 public class WaitCheckListActivity extends BaseActivity implements View.OnClickListener,AdapterView.OnItemClickListener{
