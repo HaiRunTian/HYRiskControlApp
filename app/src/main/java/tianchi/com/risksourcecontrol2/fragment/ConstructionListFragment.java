@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -27,10 +28,14 @@ import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
  */
 
 public class ConstructionListFragment extends Fragment {
+
     private ListView m_lvConstructionLeft;//左侧listview
     private ListView m_lvConstructionRight;//右侧listview
     private List<String> m_list_left;//左侧填充的文本list
     private List<String> m_list_right;//右侧填充的文本list
+    private List<String> m_list_rightText;
+
+
     private Map<String, List<String>> m_listHashMap;//数据容器,string对应左侧项，arraylist对应右侧子项列表
     private ConstructionAdapter m_rightAdapter;//右侧子项适配器
 //    private ArrayAdapter m_leftAdapter;//左侧列表适配器
@@ -39,16 +44,22 @@ public class ConstructionListFragment extends Fragment {
     private TextView m_tvUnSelectAll;
     private TextView m_tvTotalSelections;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View _view = inflater.inflate(R.layout.fragment_listview_construction, container, false);
+        initView(_view);
+
+        return _view;
+    }
+
+    private void initView(View _view) {
         m_lvConstructionLeft = (ListView) _view.findViewById(R.id.lvConstructionLeft);
         m_lvConstructionRight = (ListView) _view.findViewById(R.id.lvConstructionRight);
         m_tvSelectAll = (TextView) _view.findViewById(R.id.tvSelectAll);
         m_tvUnSelectAll = (TextView) _view.findViewById(R.id.tvUnSelectAll);
         m_tvTotalSelections = (TextView) _view.findViewById(R.id.tvTotalSelections);
-        return _view;
     }
 
     @Override
@@ -62,6 +73,10 @@ public class ConstructionListFragment extends Fragment {
         super.onStart();
         // 绑定listView的监听器
         initData();
+
+
+
+
         m_lvConstructionLeft.setAdapter(m_leftAdapter);
         m_lvConstructionLeft.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -75,6 +90,8 @@ public class ConstructionListFragment extends Fragment {
         m_lvConstructionRight.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+
                 // 取得ViewHolder对象，这样就省去了通过层层的findViewById去实例化我们需要的cb实例的步骤
                 ConstructionAdapter.ViewHolder _holder = (ConstructionAdapter.ViewHolder) view.getTag();
                 _holder.cbItem.toggle();//反选checbox
@@ -129,6 +146,7 @@ public class ConstructionListFragment extends Fragment {
             //selection是获取position前所有选项的子项总数
             for (int i = 0; i < position; i++) {
                 //计算当前选中项之前所有子项的总数
+
                 selection += m_listHashMap.get(m_list_left.get(i)).size();
             }
             m_lvConstructionRight.setSelection(selection);
@@ -155,7 +173,10 @@ public class ConstructionListFragment extends Fragment {
 
     private void initData() {
         m_list_left = new ArrayList<>();
+
         m_list_right = new ArrayList<>();
+
+        m_list_rightText = new ArrayList<>();
         //        m_listHashMap = new HashMap<>();
         //        /*测试数据*/
         //        for (int i = 1; i <= 3; i++) {
@@ -167,17 +188,27 @@ public class ConstructionListFragment extends Fragment {
         //            }
         //            m_listHashMap.put("施工方" + i, list);
         //        }
+        //获取施工方的
         m_listHashMap = UserSingleton.getConstructionList();
+
         for (String key : m_listHashMap.keySet()) {
+
             m_list_left.add(key);
+            Collections.sort(m_list_left);
+
             for (String name : m_listHashMap.get(key)) {
+
                 m_list_right.add(name);
+                m_list_rightText.add(key);
+                Collections.sort(m_list_right);
+                Collections.sort(m_list_rightText);
             }
         }
 //        m_leftAdapter = new ArrayAdapter(ConstructionListFragment.this.getActivity(), android.R.layout.simple_list_item_1, m_list_left);
+
         m_leftAdapter = new ListviewItemBaseAdapter(ConstructionListFragment.this
                 .getActivity(), m_list_left);
-        m_rightAdapter = new ConstructionAdapter(m_list_right, ConstructionListFragment.this
+        m_rightAdapter = new ConstructionAdapter(m_list_right,m_list_rightText, ConstructionListFragment.this
                 .getActivity());
         m_tvTotalSelections.setText("一共选择了" + UsersList.getList().size() + "人");
     }

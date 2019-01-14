@@ -53,7 +53,6 @@ import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.CameraUtils;
 import tianchi.com.risksourcecontrol2.util.FileUtils;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 import tianchi.com.risksourcecontrol2.view.ILoadingNotifyView;
 import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
@@ -236,12 +235,14 @@ public class ReadMyselfReplyInfoActivity extends BaseActivity implements View.On
                 public void onQuerySucceed(UserInfo userInfo) {
                     userId = userInfo.getUserId();
                     userLoginName = userInfo.getLoginName();
+
                     pictureName = m_notifyInfo.getImages();
                     if (pictureName != null && pictureName.length() > 0) {
                         _list = new ArrayList<>();
                         _list.addAll(Arrays.asList(pictureName.split("#")));
                         picNames.addAll(_list);
                         if (picNames.size() > 0) {//第一次下载第一张照片
+
                             downloadFirstPicture();
                         }
                     } else {
@@ -765,7 +766,7 @@ public class ReadMyselfReplyInfoActivity extends BaseActivity implements View.On
      */
     @Override
     public void showLoadingFailed(String msg) {
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+//        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);

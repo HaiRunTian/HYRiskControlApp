@@ -3,7 +3,6 @@ package tianchi.com.risksourcecontrol2.location;
 import android.app.Application;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
-import android.util.Log;
 import android.view.View;
 
 import com.baidu.location.BDAbstractLocationListener;
@@ -17,7 +16,6 @@ import com.supermap.data.PrjCoordSys;
 import com.supermap.mapping.MapControl;
 
 import tianchi.com.risksourcecontrol2.base.AppInitialization;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
 
 /**
  * Created by Los on 2018-08-23 15:23.

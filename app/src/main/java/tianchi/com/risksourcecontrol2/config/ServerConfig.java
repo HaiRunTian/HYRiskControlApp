@@ -1,5 +1,6 @@
 package tianchi.com.risksourcecontrol2.config;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,9 +16,9 @@ public class ServerConfig {
     //内网ip=192.168.0.21
     //外网ip=120.77.41.216
 //  public static final String IP = "192.168.0.21"; //内网ip
-    public static final String IP = "119.23.66.213"; //外网ip
+//    public static final String IP = "119.23.66.213"; //外网ip
     //    public static final String IP = "192.168.0.53";  //依伦ip
-//    public static final String IP = "192.168.0.174"; //瑞珠ip
+    public static final String IP = "192.168.0.174"; //瑞珠ip
     public static final String URL = "http://" + IP + ":" + PORT_DATA;//外网服务器URL
     //    public static final String URL = "http://192.168.0.53" + ":" + PORT_DATA;//外网服务器URL
 //    public static final String URL = "http://119.23.66.213" + ":" + PORT_DATA;//外网服务器URL
@@ -28,7 +29,9 @@ public class ServerConfig {
     public static String URL_CHECK_LOGIN = URL + "/hyrisk/login/checkUserInfo.json";//登录接口
     public static String URL_MODIFY_USERINFO = URL + "/hyrisk/admin/user/modifyUserInfo.json";//用户信息修改接口
     public static String URL_GET_USER_RELATIONSHIP = URL + "/hyrisk/admin/user/getUserRelationShip.json";//获取用户关系表接口
+
     public static String URL_GET_USERINFO = URL + "/hyrisk/admin/user/getUserInfoByRealName.json";//获取用户实体接口
+
     public static String URL_GET_SECTION_LIST = URL + "/hyrisk/log/getSectionList.json";//获取标段列表接口
     public static String URL_SUBMIT_PRO_SAFETY_LOG = URL + "/hyrisk/highwaylog/submitProSafetyLog.json";//提交生产安全日志接口
     public static String URL_SUBMIT_MODIFY_PRO_SAFETY_LOG = URL + "/hyrisk/highwaylog/modifyProSafetyLog.json";//提交修改生产安全日志接口
@@ -60,15 +63,21 @@ public class ServerConfig {
     public static String URl_DOWNLOAD_LICENSE = URL + "/hyrisk/file/license/";//许可证下载
     //整改下达单
     public static String URL_RECTIFYNOTIFYINFO = URL + "/hyrisk/rectifyNotify/submitRectifyNotify.json"; //提交整改通知单
+
     public static String URL_QUERYRECTIFYNOTIFY = URL + "/hyrisk/rectifyNotify/queryMyselfRectifyNotfiy.json"; //查询已读和未读整改通知单
+
     public static String URL_QUERY_RECTIFY_NOTFIY = URL + "/hyrisk/rectifyNotify/queryRectifyNotfiy.json";//查询整改通知单
     public static String URL_QUERY_REPLY_NOTIFY = URL + "/hyrisk/rectifyNotifyReply/queryRectifyReplyNotfiy.json"; //查询回复通知单
     public static String URL_SUBMIT_REPLY_NOTICE = URL + "/hyrisk/rectifyNotifyReply/submitRectifyReplyNotify.json"; //提交回复通知单
     public static String URL_QUERY_MYSELF__REPLY_NOTIFY = URL + "/hyrisk//rectifyNotifyReply/queryMyselfRectifyReplyNotfiy.json"; //查询已读和未读回复通知单
+
     public static String URL_NOTICEFY_FILE_UPLOAD = URL + "/hyrisk/file/recitynotify/"; //整改通知单文件下载
+
     public static String URL_QUERY_NEW_PATROL_LOG = URL + "/hyrisk/highwaylog/querySafetyPatrolNewest.json"; //查询最新的安全巡查日志
     public static String URL_QUERY_NEW_PRO_LOG = URL + "/hyrisk/highwaylog/queryProSafetyLogNewest.json"; //查询最新的生产安全日志
+
     public static String URL_UPDATE_NOTIFY_STATE_NOTIFY = URL + "/hyrisk/rectifyNotifyReply/updateNotifyStateForReceiver.json"; //修改整改通知单的状态，是否已回复，是否已读
+
     public static String URL_UPDATE_NOTIFY_STATE_REPLY = URL + "/hyrisk/rectifyNotifyReply/updateReplyNotifyStateForReceiver.json"; //修改整改通知单的状态，是否已回复，是否已读
     public static String URL_REFRESH_NOTIFY_DATA = URL + "/hyrisk/rectifyNotifyReply/refreshNotifyData.json";//查询相关业务数据
     public static String URL_QUERY_DRAFT_NOTICE = URL + "/hyrisk/rectifyNotify/queryDraftRectifyNotfiy.json"; //查询个人通知草稿
@@ -89,11 +98,19 @@ public class ServerConfig {
     public static String URL_QUERY_REPLY = URL + "/hyrisk/rectifyNotifyReply/queryRectifyReplyNotfiy.json";//查询的回复通知单 可用于查别人关联的通知单
     public static String URL_QUERY_MYSELF_SEND_NOTIFY = URL + "/hyrisk/rectifyNotify/queryRectifyNotifyFromMyself.json";//根据名字查整改通知单
     public static String URL_QUERY_MYSELF_SEND_REPLY = URL + "/hyrisk/rectifyNotifyReply/queryRectifyReplyNotifyFromMyself.json";//根据ID查询整改回复通知单
+    public static String URL_DELETE_NOTIFY_FOR_ID = URL + "/hyrisk/rectifyNotify/deleteRectifyNotfiy.json";//删除整改通知单
+    public static String URL_DELETE_DRAFT_RECTIFY_NOTFIY_REPLY = URL + "/hyrisk/rectifyNotifyReply/deleteRectifyNotfiyReply.json";//删除整改个人回复单
     public static String URL_DELETE_DRAFT_RECTIFY_NOTIFY = URL + "/hyrisk/rectifyNotify/deleteDraftRectifyNotify.json";//删除整改通知单草稿
+
+
+    public static String URL_QUERY__NOTFIY_REPLY =URL+"/hyrisk/rectifyNotify/queryRectifyNotfiyAndReply.json";// 12月 6号提出的问题 ： 整改通知单和回复单
+
     public static Map<String, String> s_map = new HashMap<>();
     public static Map<String, String> s_mapMap = new HashMap<>();
     public static Map<String, String> s_mapSection = new HashMap<>();
 
+    public static ArrayList<String> inspect_title = new ArrayList<>();
+    public static ArrayList<String> be_title = new ArrayList<>();
     public static Map<String, String> getMap() {
         s_map.put("0", "全部标段");
         s_map.put("1", "第1标段");
@@ -110,8 +127,26 @@ public class ServerConfig {
         return s_map;
 
     }
-
-
+    public static ArrayList<String> getInspect_title(){
+        inspect_title.add("中铁十四局集团第二工程有限公司");
+        inspect_title.add("中铁十二局集团第一工程有限公司");
+        inspect_title.add("中交二公局第三工程有限公司");
+        inspect_title.add("中铁太桥局集团有限公司");
+        inspect_title.add("龙建路桥股份有限公司");
+        inspect_title.add("中铁二十局集团有限公司");
+        inspect_title.add("广东省长大公路工程有限公司");
+        inspect_title.add("中交路桥建设有限公司");
+        return inspect_title;
+    }
+    public static ArrayList<String> getBe_title(){
+        be_title.add("广东翔飞公路工程监理有限公司");
+        be_title.add("江苏交通工程咨询监理有限公司");
+        be_title.add("北京路桥通国际工程咨询有限公司");
+        be_title.add("深圳高速工程检测有限公司");
+        be_title.add("苏交科集团股份有限公司");
+        be_title.add("山西省交通建设工程质量检测中心");
+        return be_title;
+    }
     public static Map<String, String> getMapSection() {
         s_mapSection.put("0", "全部标段");
         s_mapSection.put("1", "TJ01");
@@ -144,4 +179,5 @@ public class ServerConfig {
         s_mapMap.put("第11标段", "RiskSource11");
         return s_mapMap;
     }
+
 }

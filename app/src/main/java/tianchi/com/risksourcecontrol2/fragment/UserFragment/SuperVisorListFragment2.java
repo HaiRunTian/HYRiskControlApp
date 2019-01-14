@@ -163,6 +163,7 @@ public class SuperVisorListFragment2 extends Fragment{
 //            m_listHashMap.put("监理" + i, list);
 //        }
         m_listHashMap = UserSingleton.getSupervisorList();
+
         for (String key : m_listHashMap.keySet()) {
             m_list_left.add(key);
             for (String name : m_listHashMap.get(key)) {
@@ -171,9 +172,10 @@ public class SuperVisorListFragment2 extends Fragment{
         }
 
 //        m_leftAdapter = new ArrayAdapter(SupervisorListFragment.this.getActivity(), android.R.layout.simple_list_item_1, m_list_left);
+
         m_leftAdapter = new ListviewItemBaseAdapter(SuperVisorListFragment2.this.getActivity(), m_list_left);
-        m_rightAdapter = new SupervisorListviewAdapter(m_list_right, SuperVisorListFragment2.this
-                .getActivity());
+//        m_rightAdapter = new SupervisorListviewAdapter(m_list_right, SuperVisorListFragment2.this
+//                .getActivity());
         m_tvTotalSelections.setText("一共选择了" + UsersList.getList().size() + "人");
     }
 

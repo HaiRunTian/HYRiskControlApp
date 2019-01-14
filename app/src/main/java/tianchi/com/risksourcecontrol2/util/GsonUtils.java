@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+
 /**
  * Gson工具类
  * Created by Kevin on 2018/1/17.
@@ -60,7 +61,7 @@ public class GsonUtils {
     public static <T> T jsonToBean(String gsonString, Class<T> cls) {
         T t = null;
         if (gson != null) {
-            t = gson.fromJson(gsonString, cls);
+              t = gson.fromJson(gsonString, cls);
         }
         return t;
     }

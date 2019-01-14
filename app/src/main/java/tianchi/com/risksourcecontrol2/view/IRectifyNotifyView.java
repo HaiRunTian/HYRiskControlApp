@@ -39,6 +39,7 @@ public interface IRectifyNotifyView {
      */
     String getcheckDate();
 
+
     /**
      * 检查内容
      *
@@ -66,6 +67,12 @@ public interface IRectifyNotifyView {
      * @return
      */
     String getCheckMan();
+    /**
+     * 副检查人
+     *
+     * @returns
+     */
+    String getCheckMans();
 
     /**
      * 整改期限

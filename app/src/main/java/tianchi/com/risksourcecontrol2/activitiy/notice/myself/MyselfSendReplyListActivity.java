@@ -1,6 +1,7 @@
 package tianchi.com.risksourcecontrol2.activitiy.notice.myself;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,10 +25,12 @@ import tianchi.com.risksourcecontrol2.adapter.RectifyReplyAdapter;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyReplyInfo;
 import tianchi.com.risksourcecontrol2.config.ServerConfig;
+import tianchi.com.risksourcecontrol2.custom.MyAlertDialog;
 import tianchi.com.risksourcecontrol2.custom.MyToast;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
 import tianchi.com.risksourcecontrol2.util.LogUtils;
+import tianchi.com.risksourcecontrol2.util.MyTime;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 
 /**
@@ -39,11 +42,13 @@ import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
  * 个人回复
  */
 
-public class MyselfSendReplyListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MyselfSendReplyListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener ,AdapterView.OnItemLongClickListener {
     private TextView m_tvClose;
     private ListView m_lvReceive;
     private TextView m_mTvNoNotice;
+
     private List<RectifyReplyInfo> m_list;
+
     public RectifyReplyAdapter m_adapter;
     private ProgressDialog m_progressDialog;
 
@@ -99,8 +104,11 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
                             m_list.clear();
                             if (_infoList.size() != 0) {
                                 for (int i = _infoList.size() - 1; i >= 0; i--) {
-                                    _infoList.get(i).setRead(1);
-                                    m_list.add(_infoList.get(i));
+                                    //状态不为5的就加载
+                                    int _logState = _infoList.get(i).getLogState();
+                                    if (_logState!=5) {
+                                        m_list.add(_infoList.get(i));
+                                    }
                                 }
                             }
 //                        if (_ReadDatas.size() != 0) {
@@ -126,6 +134,7 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
             }
         });
         m_lvReceive.setOnItemClickListener(this);
+        m_lvReceive.setOnItemLongClickListener(this);
     }
 
     @Override
@@ -189,5 +198,74 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
     protected void onStart() {
         super.onStart();
 //        m_adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        MyAlertDialog.showAlertDialog(MyselfSendReplyListActivity.this, "温馨提示", "是否要删除个人回复单？", "确定", "取消", false, new DialogInterface.OnClickListener()    {
+            @Override
+            public void onClick(DialogInterface dialog,int which) {
+
+                int _logState = m_list.get(position).getLogState();
+
+                String _submitTime = m_list.get(position).getSubmitTime();
+                String _time = m_list.get(position).getCheckedTime();
+
+                String _tme1 = MyTime.getTime();
+                LogUtils.i("i=" + _time + "---" + _tme1);
+                boolean _b = MyTime.getTimeDifference(_time, _tme1);
+
+                String m_time = "0:0:30";
+                if (_logState != 1) {
+                    Toast.makeText(MyselfSendReplyListActivity.this, "通知单已受理不可删除", Toast.LENGTH_SHORT).show();
+
+                }else{
+                    if (_b) {
+                        //确认删除
+                        int _draftId = m_list.get(position).getId();
+                        deleteDraft(_draftId);
+                        m_list.remove(position);
+                        m_adapter.notifyDataSetChanged();
+                    }else {
+                        Toast.makeText(MyselfSendReplyListActivity.this, "时间已超过半小时不可删除", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //取消删除
+            }
+        });
+        return true;
+    }
+
+    private void deleteDraft(int draftId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", draftId);
+
+            OkHttpUtils.postAsync(ServerConfig.URL_DELETE_DRAFT_RECTIFY_NOTFIY_REPLY, json.toString(), new OkHttpUtils.InsertDataCallBack() {
+                @Override
+                public void requestFailure(Request request, IOException e) {
+
+                }
+                @Override
+                public void requestSuccess(String result) throws Exception {
+                    int status = GsonUtils.getIntNoteJsonString(result, "status");
+                    String msg = GsonUtils.getStringNodeJsonString(result, "msg");
+                    LogUtils.i("msg ="+msg);
+                    if (status == -1 || status == 0) {
+                        MyToast.showMyToast(MyselfSendReplyListActivity.this, msg, Toast.LENGTH_SHORT);
+                    } else {
+                        MyToast.showMyToast(MyselfSendReplyListActivity.this, msg, Toast.LENGTH_SHORT);
+                    }
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 }

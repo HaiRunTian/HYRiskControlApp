@@ -21,17 +21,20 @@ import tianchi.com.risksourcecontrol2.R;
 public class SupervisorListviewAdapter extends BaseAdapter {
     // 填充数据的list
     private List<String> list;
+    private List<String>listText;
     // 用来控制CheckBox的选中状况
-    private static HashMap<Integer, Boolean> isSelected;
+    private static HashMap<Integer, Boolean> isSelected ;
     // 上下文
     private Context context;
     // 用来导入布局
     private LayoutInflater inflater;
+    private int position = 0;
 
     // 构造器
-    public SupervisorListviewAdapter(List<String> list, Context context) {
+    public SupervisorListviewAdapter(List<String> list,List<String> listText, Context context) {
         this.context = context;
         this.list = list;
+        this.listText=listText;
         inflater = LayoutInflater.from(context);
         isSelected = new HashMap<>();
         initData();
@@ -39,9 +42,9 @@ public class SupervisorListviewAdapter extends BaseAdapter {
 
     // 初始化isSelected的数据,全部置为未选
     private void initData() {
-        for (int i = 0; i < list.size(); i++) {
-            isSelected.put(i, false);
-        }
+            for (int i = 0; i < list.size(); i++) {
+                isSelected.put(i, false);
+            }
     }
 
     @Override
@@ -66,11 +69,13 @@ public class SupervisorListviewAdapter extends BaseAdapter {
             _holder = new ViewHolder();
             convertView = inflater.inflate(R.layout.layout_item_listview_checkbox, null);
             _holder.tvItem = (TextView) convertView.findViewById(R.id.tvItemText);
+            _holder.tvText = (TextView) convertView.findViewById(R.id.tvText);
             _holder.cbItem = (CheckBox) convertView.findViewById(R.id.cbItemCheckbox);
             convertView.setTag(_holder);
         } else {
             _holder = (ViewHolder) convertView.getTag();
         }
+        _holder.tvText.setText(listText.get(position).toString());
         _holder.tvItem.setText(list.get(position));
         _holder.cbItem.setChecked(getIsSelected().get(position));
         return convertView;
@@ -83,9 +88,13 @@ public class SupervisorListviewAdapter extends BaseAdapter {
     public static void setIsSelected(HashMap<Integer, Boolean> isSelected) {
         SupervisorListviewAdapter.isSelected = isSelected;
     }
+    public void setSelectItem(int position) {
+        this.position = position;
+    }
 
     public class ViewHolder {
         public TextView tvItem;//选项左侧文本
+        public TextView tvText;
         public CheckBox cbItem;//选项右侧复选框
     }
 }

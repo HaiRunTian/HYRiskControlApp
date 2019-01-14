@@ -38,6 +38,7 @@ public class OwnerListFragment extends Fragment {
         m_tvSelectAll = (TextView) _view.findViewById(R.id.tvSelectAll);
         m_tvUnSelectAll = (TextView) _view.findViewById(R.id.tvUnSelectAll);
         m_tvTotalSelections = (TextView) _view.findViewById(R.id.tvTotalSelections);
+
         return _view;
     }
 

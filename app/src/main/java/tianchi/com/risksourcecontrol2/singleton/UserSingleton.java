@@ -110,6 +110,7 @@ public class UserSingleton {
      * @return
      */
     public static Map<String, List<String>> getSupervisorList() {
+
         if (s_supervisorList == null)
             s_supervisorList = new HashMap<>();
         return s_supervisorList;

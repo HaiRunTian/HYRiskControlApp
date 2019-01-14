@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,7 +37,6 @@ import tianchi.com.risksourcecontrol2.model.OnUserListListener;
 import tianchi.com.risksourcecontrol2.presenter.LoadingNotifyInfoPresenter;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.CameraUtils;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.view.ILoadingNotifyView;
 import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
 
@@ -112,6 +111,8 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
     LoadingNotifyInfoPresenter m_presenter = new LoadingNotifyInfoPresenter(this);
     private String _firstName;
     private String m_imgInfo;
+    private RectifyNotifyInfo _rectifyNotifyInfo;
+    private LinearLayout Notify_Reply;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -120,18 +121,29 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
         initView();
         initEvent();
         initValue();
+        //回复
+        int _logState = _rectifyNotifyInfo.getLogState();
+        if (_logState==1 || _logState==4) {
+            m_tvReply.setVisibility(View.VISIBLE);
+//            Notify_Reply.setVisibility(View.GONE);
+        }else{
+            m_tvReply.setVisibility(View.GONE);
+            Toast.makeText(this, "已回复！", Toast.LENGTH_SHORT).show();
+//            Notify_Reply.setVisibility(View.VISIBLE);
+        }
     }
 
     //初始化数据
     private void initValue() {
         initShowPicArea();
-        RectifyNotifyInfo _rectifyNotifyInfo = (RectifyNotifyInfo) getIntent().getSerializableExtra("data");
+        _rectifyNotifyInfo = (RectifyNotifyInfo) getIntent().getSerializableExtra("data");
         //照片备注
         m_imgInfo = _rectifyNotifyInfo.getImageInfos();
 //        LogUtils.i("_imgInfo", m_imgInfo +"");
         if (m_imgInfo.contains("#")){
             m_arrayPicRemark = m_imgInfo.split("#");
         }else m_arrayPicRemark = new String[]{m_imgInfo};
+
 
         String _firstName;
         //第一个接收人的名字
@@ -158,7 +170,14 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
                 m_edtCheckUnit.setText(_rectifyNotifyInfo.getInspectUnit());
                 m_edtBecheckUnit.setText(_rectifyNotifyInfo.getBeCheckedUnit());
                 m_edtSection.setText(_rectifyNotifyInfo.getSection());
-                m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign());
+                if (_rectifyNotifyInfo.getInspectorSigns()!=null) {
+                    m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign() + "#" + _rectifyNotifyInfo.getInspectorSigns());
+                }else {
+                    m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign());
+                }
+
+//                LogUtils.i("查看 = "+_rectifyNotifyInfo.getInspectorSign()+"#"+_rectifyNotifyInfo.getInspectorSigns());
+
                 m_edtContent.setText(_rectifyNotifyInfo.getInspectContent());
                 m_edtFindPro.setText(_rectifyNotifyInfo.getQuestion());
                 userRealName = _rectifyNotifyInfo.getInspectorSign(); //检查人
@@ -171,6 +190,7 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
             } catch (Exception e) {
                 String s = e.getMessage();
             }
+
             QueryUserListWork.queryUserInfo(userRealName, new OnUserListListener() {
                 @Override
                 public void onQuerySucceed(UserInfo userInfo) {
@@ -235,6 +255,7 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
     }
 
     private void downloadFirstPicture() {
+
         File picFile = new File(FoldersConfig.NOTICEFY, picNames.get(0));
         if (!picFile.exists()) {
             m_picIndex = 0;
@@ -242,8 +263,10 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
             canDownLoad = false;
             m_presenter.downloadLogPicture(picNames.size(), 0);
             picNames.set(0, "");
+
         } else {
 //            Bitmap _bitmap = BitmapFactory.decodeFile(FoldersConfig.NOTICEFY + picNames.get(0));
+
             Bitmap _bitmap = CameraUtils.getimage(FoldersConfig.NOTICEFY + picNames.get(0));
             HashMap<String, Object> _map = new HashMap<>();
             _map.put("itemImage", _bitmap);
@@ -342,8 +365,11 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
         m_btnSubmit = $(R.id.btnSubmit);
         m_receiveMans = $(R.id.edtRecorder);
         m_tvReply = $(R.id.tvReply);
+        Notify_Reply = $(R.id.Notify_Reply);
         m_progressDialog = new ProgressDialog(this);
         m_progressDialog.setCancelable(true);
+
+
 
 
     }
@@ -358,16 +384,22 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.tvReply:
-                Bundle _bundle = new Bundle();
-                _bundle.putInt("dbID", dbID);
-                _bundle.putString("logId", m_logID);
-                _bundle.putString("checkUnit", m_checkUnit);
-                _bundle.putString("beCheckUnit", m_beCheckUnit);
-                _bundle.putString("checkMan", m_edtCheckMan.getText().toString());
-                _bundle.putString("imgInfo",m_imgInfo);
-                Intent _intent = new Intent(ReadRectifyNotifyInfoActivity.this, NewRectifyReplyInfoActivity.class);
-                _intent.putExtras(_bundle);
-                startActivity(_intent);
+//                int _logState = _rectifyNotifyInfo.getLogState();
+//                if (_logState==1 || _logState==4) {
+
+                    Bundle _bundle = new Bundle();
+                    _bundle.putInt("dbID", dbID);
+                    _bundle.putString("logId", m_logID);
+                    _bundle.putString("checkUnit", m_checkUnit);
+                    _bundle.putString("beCheckUnit", m_beCheckUnit);
+                    _bundle.putString("checkMan", m_edtCheckMan.getText().toString());
+                    _bundle.putString("imgInfo", m_imgInfo);
+                    Intent _intent = new Intent(ReadRectifyNotifyInfoActivity.this, NewRectifyReplyInfoActivity.class);
+                    _intent.putExtras(_bundle);
+                    startActivity(_intent);
+//               }else {
+//                    Toast.makeText(this, "已回复！", Toast.LENGTH_SHORT).show();
+//                }
                 break;
 
             case R.id.tvBack:

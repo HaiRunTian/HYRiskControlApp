@@ -73,7 +73,7 @@
 
         <include layout="@layout/layout_check_opinion_owner"></include>
 
-        <!--<include layout="@layout/layout_owner"></include>-->
+        <include layout="@layout/layout_owner"></include>
 
         <!--<include layout="@layout/layout_pass_reject_btn"></include>-->
 

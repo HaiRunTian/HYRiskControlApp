@@ -5,14 +5,17 @@
 
 
     <RelativeLayout
+        android:id="@+id/RLDelete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:padding="5dp"
+        >
 
         <TextView
             android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLength="23"
             android:text="标题"/>
 
         <TextView
@@ -33,13 +36,13 @@
             android:textColor="@color/colorGrey"/>
 
         <TextView
-
             android:id="@+id/tv_is_read"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/tvtime"
-            android:text=""
+            android:visibility="gone"
+            android:text="已回复"
             android:textSize="@dimen/textsize_small1"
             android:textColor="@color/colorRed"/>
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/inspect_ll"
+              android:layout_marginTop="10dp"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="40dp">
     <TextView
         android:id="@+id/tvLogID"
         style="@style/CustomLayoutLeftText"
@@ -10,7 +12,25 @@
     <EditText
         android:id="@+id/edtLogCheckUnit"
         style="@style/CustomLayoutEditText1"
-        android:hint="请输入检查单位"/>
-
+        android:focusableInTouchMode="true"
+        android:hint="请输入检查单位"
+        />
+    <ImageButton
+        android:id="@+id/inspect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/selector_spinner"
+        android:contentDescription="@string/app_name"
+        />
+    <!--<com.z2wenfa.spinneredittext.SpinnerEditText-->
+        <!--android:id="@+id/edtLogCheckUnit"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:hint="请输入检查单位"-->
+        <!--/>-->
+    <!--<Spinner-->
+        <!--style="@style/CustomSpinnerStyle"-->
+        <!--/>-->
 
 </LinearLayout>

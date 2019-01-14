@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
@@ -19,16 +20,24 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import okhttp3.MediaType;
+import okhttp3.Request;
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.activitiy.LoginActivity;
 import tianchi.com.risksourcecontrol2.activitiy.mine.AboutActivity;
@@ -43,7 +52,7 @@ import tianchi.com.risksourcecontrol2.config.ServerConfig;
 import tianchi.com.risksourcecontrol2.custom.MyAlertDialog;
 import tianchi.com.risksourcecontrol2.custom.MyToast;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
-import tianchi.com.risksourcecontrol2.util.LogUtils;
+import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 
 /**
  * Created by Kevin on 2018-08-29.
@@ -63,7 +72,12 @@ public class OtherFuntionFragment extends Fragment implements View.OnClickListen
     private String pictureName;
     //    private static final MediaType MEDIA_TYPE_JPG = MediaType.parse("image/jpg");
     final MediaType FORM_CONTENT_TYPE = MediaType.parse("application/x-www-form-urlencoded; charset=utf-8");
-
+    private int m_serveVersionCode;
+    private String m_updateMsg;
+    private String m_serveVersionName;
+    private String m_localVersionName;
+    private int m_localVersionCode;
+    public boolean isOk = false;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -107,16 +121,166 @@ public class OtherFuntionFragment extends Fragment implements View.OnClickListen
                     }
                 });
                 break;
+            case R.id.upData:
+                if (ping()) {
+                    checkVersionCode();//测试版本号
+                }
+                break;
+            default:break;
         }
     }
 
+    private void checkVersionCode() {
+        OkHttpUtils.getAsync(ServerConfig.URL_GET_VERSION_CODE, new OkHttpUtils.InsertDataCallBack() {
+            @Override
+            public void requestFailure(Request request, IOException e) {
+                m_serveVersionCode = 0;
+                MyToast.showMyToast(getActivity(), "获取版本失败", Toast.LENGTH_SHORT);
+                isOk = false;
+
+            }
+
+            @Override
+            public void requestSuccess(String result) throws Exception {
+                JSONObject _jsonObject = new JSONObject(result);
+                int status = _jsonObject.getInt("status");
+                String msg = _jsonObject.getString("msg");
+                if (status == 1) {
+                    m_updateMsg = _jsonObject.getString("Message");
+                    m_serveVersionCode = _jsonObject.getInt("VersionCode");
+                    m_serveVersionName = _jsonObject.getString("VersionName");
+                    //                    LogUtils.i("VersionName=",m_serveVersionName);
+                    //                    LogUtils.i("URL=",ServerConfig.URL_UPDATE_APP+m_serveVersionName);
+                    //                    MyToast.showMyToast(LoginActivity.this, msg, Toast.LENGTH_SHORT);
+                    if (m_serveVersionCode > m_localVersionCode) { //服务器版本号大于本地版本号，则下载更新
+                        /**
+                         * 弹出对话框
+                         */
+                        showUpdataDialog();
+
+                    } else {
+                        //                        MyToast.showMyToast(LoginActivity.this, "已经是最版本", Toast.LENGTH_SHORT);
+                    }
+                } else {
+                    //                    MyToast.showMyToast(LoginActivity.this, msg, Toast.LENGTH_SHORT);
+                }
+
+            }
+        });
+
+    }
+
+
+    /**
+     * 通过ping判断服务器是否可用
+     *
+     * @return
+     */
+    public boolean ping() {
+        try {
+            //服务器ip地址
+            //            String ip = "192.168.0.21";
+            Process p = Runtime.getRuntime().exec("ping -c 1 -w 100 " + ServerConfig.IP);
+            InputStream input = p.getInputStream();
+            BufferedReader in = new BufferedReader(new InputStreamReader(input));
+            StringBuffer stringBuffer = new StringBuffer();
+            String content;
+            while ((content = in.readLine()) != null) {
+                stringBuffer.append(content);
+            }
+            int status = p.waitFor();
+            if (status == 0) {
+                return true;
+            }
+        } catch (IOException e) {
+            //            LogUtils.i(e.toString());
+        } catch (InterruptedException e) {
+            //            LogUtils.i(e.toString());
+        }
+        MyToast.showMyToast(getActivity(), "请查看网络是否打开", Toast.LENGTH_SHORT);
+        return false;
+    }
+    protected void showUpdataDialog() {
+        AlertDialog.Builder builer = new AlertDialog.Builder(getActivity());
+        builer.setTitle("版本升级");
+        builer.setMessage(m_updateMsg);
+        //当点确定按钮时从服务器上下载 新的apk 然后安装
+        builer.setPositiveButton("确定", (dialog, which) -> downLoadApk());
+        //当点取消按钮时不做任何举动
+        builer.setNegativeButton("取消", (dialogInterface, i) -> {
+        });
+        AlertDialog dialog = builer.create();
+        dialog.show();
+    }
+    private void downLoadApk() {
+
+        //进度条
+        final ProgressDialog pd;
+        pd = new ProgressDialog(getActivity());
+        pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        pd.setMessage("正在下载更新");
+        pd.show();
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    File file = getFileFromServer(ServerConfig.URL_UPDATE_APP + m_serveVersionName, pd);
+
+                    //安装APK
+                    installApk(file);
+                    pd.dismiss(); //结束掉进度条对话框
+                } catch (Exception e) {
+
+                }
+            }
+        }.start();
+    }
+    private File getFileFromServer(String path, ProgressDialog pd) throws Exception {
+        //如果相等的话表示当前的sdcard挂载在手机上并且是可用的
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            URL url = new URL(path);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setConnectTimeout(5000);
+            //获取到文件的大小
+            pd.setMax(conn.getContentLength());
+            InputStream is = conn.getInputStream();
+            File file = new File(FoldersConfig.APK_FLODE, m_serveVersionName);
+            FileOutputStream fos = new FileOutputStream(file);
+            BufferedInputStream bis = new BufferedInputStream(is);
+            byte[] buffer = new byte[1024];
+            int len;
+            int total = 0;
+            while ((len = bis.read(buffer)) != -1) {
+                fos.write(buffer, 0, len);
+                total += len;
+                //获取当前下载量
+                pd.setProgress(total);
+            }
+            fos.close();
+            bis.close();
+            is.close();
+            return file;
+        } else {
+            return null;
+        }
+    }
+    private void installApk(File file) {
+
+        Intent intent = new Intent();
+        //执行动作
+        intent.setAction(Intent.ACTION_VIEW);
+        //执行的数据类型
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        startActivity(intent);
+
+
+    }
     //下载文件接口
     public interface DownLoadFileListener {
         void downloadSucceed(Bitmap bitmap);
 
         void downloadFailed(String errorMsg);
     }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -135,6 +299,7 @@ public class OtherFuntionFragment extends Fragment implements View.OnClickListen
         _view.findViewById(R.id.linearAboutApp).setOnClickListener(this);
         _view.findViewById(R.id.linearQRcode).setOnClickListener(this);
         _view.findViewById(R.id.linearLogOut).setOnClickListener(this);
+        _view.findViewById(R.id.upData).setOnClickListener(this);
         initValue();
         return _view;
     }

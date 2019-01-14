@@ -71,13 +71,39 @@ public class UserLoginWork {
         }
         return _jsonObject.toString();
     }
-
-    /**
-     * 将取到的hashmap分配到对应的容器（业主，监理，施工方）
-     */
+//    public static void distributeUserList(UserBean userBean) {
+//
+//
+//        HashMap<String, List<String >> _hashMap = new HashMap<>();
+//        HashMap<String, List<String >> _hashMap1 = new HashMap<>();
+//            //业主
+//            List<String> _j0 = userBean.getJ0();
+//            UserSingleton.setOwnerList(_j0);
+//            //监理
+//            _hashMap.put("J1",userBean.getJ1());
+//            _hashMap.put("J2",userBean.getJ2());
+//            _hashMap.put("J3",userBean.getJ3());
+//            UserSingleton.setSupervisorList(_hashMap);
+//
+//            //施工方
+//            _hashMap1.put("TJ01",userBean.getTJ01());
+//            _hashMap1.put("TJ02",userBean.getTJ02());
+//            _hashMap1.put("TJ03",userBean.getTJ03());
+//            _hashMap1.put("TJ04",userBean.getTJ04());
+//            _hashMap1.put("TJ05",userBean.getTJ05());
+//            _hashMap1.put("TJ06",userBean.getTJ06());
+//            _hashMap1.put("TJ07",userBean.getTJ07());
+//            _hashMap1.put("TJ08",userBean.getTJ08());
+//            _hashMap1.put("TJ09",userBean.getTJ09());
+//            _hashMap1.put("TJ10",userBean.getTJ10());
+//            _hashMap1.put("TJ11",userBean.getTJ11());
+//            UserSingleton.setConstructionList(_hashMap1);
+//    }
+    //将取到的hashmap分配到对应的容器（业主，监理，施工方）
     public static void distributeRelationshipList(Map<String, List<String>> map) {
         for (String key : map.keySet()) {
             if (key.equals("J0")) {//业主
+
                 List<String> _list = new ArrayList<>();
                 if (map.get(key) != null) {
                     try {
@@ -89,7 +115,7 @@ public class UserLoginWork {
                 if (_list.size() != 0) {
                     UserSingleton.setOwnerList(_list);
                 }
-            } else if (key.equals("J1") || key.equals("J2") || key.equals("J3")) {//监理方
+            } else if (key.equals("J1") || key.equals("J2") || key.equals("J3") || key.equals("J4")) {//监理方
                 if (map.get(key) != null){
                     try {
                         UserSingleton.getSupervisorList().put(key, map.get(key));
@@ -157,5 +183,6 @@ public class UserLoginWork {
         allUserList = allUserList.substring(0, allUserList.length() - 1);
         return allUserList;
     }
+
 
 }

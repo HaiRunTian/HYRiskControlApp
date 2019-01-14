@@ -1,6 +1,7 @@
 package tianchi.com.risksourcecontrol2.activitiy.notice.myself;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,10 +25,12 @@ import tianchi.com.risksourcecontrol2.adapter.ReceviceNoticeAdapter;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyNotifyInfo;
 import tianchi.com.risksourcecontrol2.config.ServerConfig;
+import tianchi.com.risksourcecontrol2.custom.MyAlertDialog;
 import tianchi.com.risksourcecontrol2.custom.MyToast;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
 import tianchi.com.risksourcecontrol2.util.LogUtils;
+import tianchi.com.risksourcecontrol2.util.MyTime;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 
 /**
@@ -39,12 +42,13 @@ import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
  * 个人下达
  */
 
-public class MyselfSendNotifyListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class MyselfSendNotifyListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener ,AdapterView.OnItemLongClickListener{
     public TextView m_tvClose;
     public ListView m_lvReceive;
     public TextView m_mTvNoNotice;
     public List<RectifyNotifyInfo> m_list;
     private ProgressDialog m_progressDialog;
+    private ReceviceNoticeAdapter _adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -65,12 +69,14 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
 
         //依据接收者名字
         getNotice(UserSingleton.getUserInfo().getRealName(), new ReceiveNoticeListActivity.CallBack() {
+
             @Override
             public void getData(String string) {
 //                LogUtils.i("回调回来的数据", string);
                 String msg = GsonUtils.getNodeJsonString(string, "msg");
                 int status = GsonUtils.getIntNoteJsonString(string, "status");
                 m_progressDialog.setMessage(msg);
+
                 if (status == 0) {
                     MyToast.showMyToast(MyselfSendNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
                     m_mTvNoNotice.setVisibility(View.VISIBLE);
@@ -90,17 +96,24 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
                     } else { //否则把接收到的信息提取标题，放在list中
                         if (_unReplyDatas.size() != 0) {
                             for (int i = _unReplyDatas.size() - 1; i >= 0; i--) {
-                                m_list.add(_unReplyDatas.get(i));
+                                int _logState = _unReplyDatas.get(i).getLogState();
+
+                                if (_logState!=6) {
+                                    m_list.add(_unReplyDatas.get(i));
+                                }
+
                             }
                         }
                           MyToast.showMyToast(MyselfSendNotifyListActivity.this, "您已发送了" + m_list.size() + "条整改通知", Toast.LENGTH_SHORT);
-                        m_lvReceive.setAdapter(new ReceviceNoticeAdapter(MyselfSendNotifyListActivity.this, m_list));
+                        _adapter = new ReceviceNoticeAdapter(MyselfSendNotifyListActivity.this, m_list);
+                        m_lvReceive.setAdapter(_adapter);
                     }
                 }
                 m_progressDialog.dismiss();
             }
         });
         m_lvReceive.setOnItemClickListener(this);
+        m_lvReceive.setOnItemLongClickListener(this);
     }
 
     @Override
@@ -114,6 +127,8 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle _bundle = new Bundle();
         RectifyNotifyInfo _rectifyNotifyInfo = m_list.get(position);
+        String _inspectorSigns = _rectifyNotifyInfo.getInspectorSigns();
+        LogUtils.i("_inspectorSigns"+_inspectorSigns);
         String time = _rectifyNotifyInfo.getCheckedTime();
 //        LogUtils.i("time", time);
         _bundle.putSerializable("data", _rectifyNotifyInfo);
@@ -151,21 +166,85 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
 
             @Override
             public void requestSuccess(String result) throws Exception {
-//                LogUtils.i("...接收通知", result);
+                LogUtils.i("...接收通知", result);
                 if (result == null) {
                     m_progressDialog.setMessage("加载失败");
                     m_progressDialog.dismiss();
                 } else
                     callBack.getData(result);
-
             }
         });
     }
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        MyAlertDialog.showAlertDialog(MyselfSendNotifyListActivity.this, "温馨提示", "是否要删除当前整改通知单？", "确定", "取消", false, new DialogInterface.OnClickListener()    {
+            @Override
+            public void onClick(DialogInterface dialog,int which) {
+                int _logState = m_list.get(position).getLogState();
+                //                String _inspectorSign = m_list.get(position).getInspectorSign();
+                //                String _realName = UserSingleton.getUserInfo().getRealName();
 
+                String _time = m_list.get(position).getSubmitTime();
+                String _tme1 = MyTime.getTime();
+                LogUtils.i("i=" + _time + "---" + _tme1);
+                boolean _b = MyTime.getTimeDifference(_time, _tme1);
+                String m_time = "0:0:30";
+                if (_logState != 1) {
+                    Toast.makeText(MyselfSendNotifyListActivity.this, "通知单已受理不可删除", Toast.LENGTH_SHORT).show();
 
+                }else{
+                    if (_b) {
+                        //确认删除
+                        int _draftId = m_list.get(position).getId();
+                        deleteDraft(_draftId);
+                        m_list.remove(position);
+                        _adapter.notifyDataSetChanged();
+                    }else {
+                        Toast.makeText(MyselfSendNotifyListActivity.this, "时间已超过半小时不可删除", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+
+        }, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //取消删除
+            }
+        });
+
+        return true;
+    }
+
+    private void deleteDraft(int draftId) {
+        JSONObject json = new JSONObject();
+        try {
+            json.put("id", draftId);
+
+            OkHttpUtils.postAsync(ServerConfig.URL_DELETE_NOTIFY_FOR_ID, json.toString(), new OkHttpUtils.InsertDataCallBack() {
+                @Override
+                public void requestFailure(Request request, IOException e) {
+
+                }
+                @Override
+                public void requestSuccess(String result) throws Exception {
+                    int status = GsonUtils.getIntNoteJsonString(result, "status");
+                    String msg = GsonUtils.getStringNodeJsonString(result, "msg");
+                    if (status == -1 || status == 0) {
+                        MyToast.showMyToast(MyselfSendNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
+                    } else {
+                        MyToast.showMyToast(MyselfSendNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
+                    }
+                }
+            });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onClick(View v) {
         finish();
     }
+
 
 }

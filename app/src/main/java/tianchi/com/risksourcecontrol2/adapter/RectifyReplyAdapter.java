@@ -64,6 +64,7 @@ public class RectifyReplyAdapter extends BaseAdapter {
         }
         _viewHolder.m_tvAuther.setText("发送人:" + m_readDataList.get(position).getRectifyManSign());
         _viewHolder.m_tvTitle.setText(m_readDataList.get(position).getLogId());
+
         String _s = m_readDataList.get(position).getCheckedTime();
 
         if (m_readDataList.get(position).getCheckedTime().length()>10) {

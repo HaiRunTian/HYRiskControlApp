@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,9 +14,15 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +40,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -43,7 +54,9 @@ import okio.BufferedSink;
 import okio.Okio;
 import okio.Sink;
 import tianchi.com.risksourcecontrol2.R;
+import tianchi.com.risksourcecontrol2.adapter.SelectListAdapter;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
+import tianchi.com.risksourcecontrol2.bean.HistoryInfo;
 import tianchi.com.risksourcecontrol2.config.FoldersConfig;
 import tianchi.com.risksourcecontrol2.config.ServerConfig;
 import tianchi.com.risksourcecontrol2.config.SuperMapConfig;
@@ -57,12 +70,14 @@ import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 import tianchi.com.risksourcecontrol2.view.IUserLoginView;
 
+import static tianchi.com.risksourcecontrol2.R.id.edtUserName;
+
 /**
  * @描述 登录
  * @作者 kevin蔡跃.
  * @创建日期 2017/11/4  12:02.
  */
-public class LoginActivity extends BaseActivity implements IUserLoginView, View.OnClickListener {
+public class LoginActivity extends BaseActivity implements IUserLoginView, View.OnClickListener, PopupWindow.OnDismissListener, SelectListAdapter.OnItemClickListener, SelectListAdapter.OnDelBtnClickListener {
 
     //登录界面所有组件
     private EditText m_edtUserName;
@@ -94,7 +109,14 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
     private String m_localVersionName;
     private int m_localVersionCode;
     private boolean downloadIsOk = false;
+    private ImageView m_Arrow;
 
+    private ArrayList<HistoryInfo> mAccounts;
+    private PopupWindow mSelectWindow;
+    private RelativeLayout mInputLayout;
+    private SelectListAdapter adapter;
+    private SharedPreferences sharedPreferences;
+    private final String KEY = "Set";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -358,18 +380,56 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
         }
     }
 
+    public void onDownArrowClicked(View view)
+    {
+        if (mAccounts.size() != 0)
+        {
+            m_Arrow.setBackgroundResource(R.drawable.arrow_up);
+            showAccountChoiceWindow();
+        }
+    }
+
+
+
+    private void showAccountChoiceWindow()
+    {
+        View view = LayoutInflater.from(this).inflate(R.layout.down_account, null, false);
+        LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
+        ListView userlist = (ListView) view.findViewById(R.id.input_select_list);
+        userlist.setDividerHeight(0);
+        adapter = new SelectListAdapter(this, mAccounts);
+        adapter.setOnItemClickListener(this);
+        adapter.setOnDelBtnClickListener(this);
+        userlist.setAdapter(adapter);
+        mSelectWindow = new PopupWindow(contentview, mInputLayout.getMeasuredWidth(), RelativeLayout.LayoutParams.WRAP_CONTENT, true);
+        mSelectWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        mSelectWindow.setOutsideTouchable(true);
+        mSelectWindow.setFocusable(true);
+        mSelectWindow.setOnDismissListener(this);
+        mSelectWindow.showAsDropDown(mInputLayout, 0, 0);
+        m_Arrow.setBackgroundResource(R.drawable.arrow_up);
+    }
+
+
     /*
     * 初始化布局
     * */
     private void initView() {
+
+        mAccounts = new ArrayList<>();
+        sharedPreferences = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+
         m_tvVersion = (TextView) findViewById(R.id.tvVersionNum);
+        m_Arrow = ((ImageView) findViewById(R.id.input_arrow));
+
+        mInputLayout = ((RelativeLayout) findViewById(R.id.input_layout));
 
         //获取版本号
         m_localVersionCode = GetVersionNum.getLocalVersion(LoginActivity.this);
         //获取版本名字
         m_localVersionName = GetVersionNum.getLocalVersionName(LoginActivity.this);
         m_tvVersion.setText("版本：" + String.valueOf(m_localVersionName));
-        m_edtUserName = (EditText) findViewById(R.id.edtUserName);
+        m_edtUserName = (EditText) findViewById(edtUserName);
         m_edtPassWord = (EditText) findViewById(R.id.edtPassWord);
         //        m_cbPassWordVisible = (CheckBox) findViewById(R.id.cbPasswordVisible);
         //        m_imgvUserNameClear = (ImageView) findViewById(R.id.imgvUsernameClear);
@@ -433,7 +493,12 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
         switch (v.getId()) {
             case R.id.btLogin://登录
                 //                s_CurrentAccount = getUserName();
+
                 m_userLoginPresenter.login(isRemembered());
+
+
+
+
                 break;
             //            case R.id.btReset://重置
             //                m_userLoginPresenter.reset();
@@ -511,12 +576,40 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
     @Override
     public boolean getLocalUserInfo() {
         Intent intent = getIntent();
+
         isFromLogOut = intent.getBooleanExtra("isFromLogOut", false);
-        SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        Set<String> _set = sharedPreferences.getStringSet(KEY, new HashSet<>());
+
+        Iterator<String> _iterator1 = _set.iterator();
+        while (_iterator1.hasNext()){
+            String _next = _iterator1.next();
+            LogUtils.i("next",_next);
+        }
         isPassWordRemembered = sharedPreferences.getBoolean("isPassWordRemembered", false);
+
         if (isPassWordRemembered) {
-            m_edtUserName.setText(sharedPreferences.getString("userName", ""));
-            m_edtPassWord.setText(sharedPreferences.getString("passWord", ""));
+
+//            m_edtUserName.setText(sharedPreferences.getString("userName", ""));
+//            m_edtPassWord.setText(sharedPreferences.getString("passWord", ""));
+
+
+            if (_set != null && _set.size() != 0){
+
+                Iterator<String> _iterator = _set.iterator();
+                String _s = "";
+                while (_iterator.hasNext()){
+                     _s = _iterator.next();
+                    String[] _login = _s.split("#");
+                    mAccounts.add(new HistoryInfo(_login[0],_login[1]));
+                    m_edtUserName.setText(_login[0]);
+                    m_edtPassWord.setText(_login[1]);
+                }
+//                m_edtUserName.setText(_login[0]);
+//                m_edtPassWord.setText(_login[1]);
+
+            }
+
+
             if (!isFromLogOut) {
                 return true;
             } else {
@@ -532,15 +625,34 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
     @Override
     public void saveUserInfo2Local(boolean isSave) {
         if (isSave) {
-            SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
-            sharedPreferences.edit().putBoolean("isPassWordRemembered", true)
-                    .putString("userName", getUserName())
-                    .putString("passWord", getPassWord())
-                    .commit();
+
+//            SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+//            sharedPreferences.edit().putBoolean("isPassWordRemembered", true)
+//                    .putString("userName", getUserName())
+//                    .putString("passWord", getPassWord())
+//                    .commit();
+            Set<String> _set1 = sharedPreferences.getStringSet(KEY, new HashSet<>());
+            Iterator<String> _iterator1 = _set1.iterator();
+            while (_iterator1.hasNext()){
+                String _next = _iterator1.next();
+                LogUtils.i("next",_next);
+            }
+            HashSet<String> _set = new HashSet<>(_set1);
+            _set.add(getUserName()+"#" + getPassWord());
+
+           sharedPreferences.edit().putStringSet(KEY,_set)
+                    .putBoolean("isPassWordRemembered", true).commit();
+
+//            SharedPreferences sharedPreferencesUP = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+//            sharedPreferencesUP.edit().putBoolean("isPassWordRemembered", true)
+//                    .putStringSet("user_pass", up)
+//                    .apply();
+
         } else {
             SharedPreferences sharedPreferences = getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
-            sharedPreferences.edit().putBoolean("isPassWordRemembered", false)
-                    .putString("userName", getUserName()).commit();
+
+            sharedPreferences.edit().putString(KEY, getUserName())
+                    .putBoolean("isPassWordRemembered", false).commit();
         }
     }
 
@@ -644,5 +756,56 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
         }
         MyToast.showMyToast(this, "请查看网络是否打开", Toast.LENGTH_SHORT);
         return false;
+    }
+
+    @Override
+    public void onDismiss() {
+        m_Arrow.setBackgroundResource(R.drawable.arrow_up);
+    }
+
+
+    @Override
+    public void onItemClicked(int position) {
+        mSelectWindow.dismiss();
+        m_edtUserName.setText(mAccounts.get(position) .getName());
+        m_edtPassWord.setText(mAccounts.get(position).getPassword());
+
+    }
+
+    @Override
+    public void onDelBtnClicked(int position) {
+        mSelectWindow.dismiss();
+//        String inputAccount = m_edtUserName.getText().toString();
+//
+//        if (inputAccount == mAccounts.remove(position).getName())
+//        {
+            Set<String> _set1 = sharedPreferences.getStringSet(KEY, new HashSet<>());
+
+
+            String _s = mAccounts.get(position).getName() + "#" + mAccounts.get(position).getPassword();
+            Iterator<String> _iterator = _set1.iterator();
+            while (_iterator.hasNext()){
+                String _next = _iterator.next();
+                LogUtils.i("abc",_next);
+
+                if (_next.equals(_s)){
+                    _iterator.remove();
+                    mAccounts.remove(position);
+                    adapter.notifyDataSetChanged();
+                    sharedPreferences.edit().clear().commit();
+                }
+            }
+            HashSet<String> _set = new HashSet<>(_set1);
+            sharedPreferences.edit().putStringSet(KEY,_set)
+                    .putBoolean("isPassWordRemembered", true).commit();
+//            String nextAccount = "";
+//            if (mAccounts.size() != 0)
+//                nextAccount = mAccounts.get(0) + "";
+//
+//            m_edtUserName.setText(nextAccount);
+//        }
+        Toast.makeText(this, "删除账号成功", Toast.LENGTH_SHORT).show();
+
+
     }
 }
