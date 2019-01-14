@@ -30,15 +30,19 @@ public class QueryUserListWork {
             e.printStackTrace();
             listener.onQueryFailed(e.getClass().getSimpleName() + " error detail:" + e.getMessage());
         }
+
         OkHttpUtils.postAsync(ServerConfig.URL_GET_USERINFO, jsonString, new OkHttpUtils.QueryDataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
                 if (listener != null) {
                     if (e instanceof SocketTimeoutException) {//超时异常
+
                         listener.onQueryFailed("登录超时");
                     } else if (e instanceof ConnectException) {//连接异常
+
                         listener.onQueryFailed("连接服务器异常");
                     } else {
+
                         listener.onQueryFailed("服务器异常");
                     }
                 }

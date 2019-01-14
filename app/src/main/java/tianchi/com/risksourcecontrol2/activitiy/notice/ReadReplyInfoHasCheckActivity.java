@@ -220,9 +220,9 @@ public class ReadReplyInfoHasCheckActivity extends BaseActivity implements View.
             m_edtOpinionOwn.setVisibility(View.VISIBLE);
             m_edtOpinionOwn.setText("审核意见："+m_oInfo.getRemark()+" ");
             if (m_oInfo.getResult().contains("审核")){ //业主审核通过 显示通过盖章
-                m_edtOpinionOwn.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_pass),null);
-            }else { //业主审核驳回   显示驳回盖章
                 m_edtOpinionOwn.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_reject),null);
+            }else { //业主审核驳回   显示驳回盖章
+                m_edtOpinionOwn.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_pass),null);
             }
 
 

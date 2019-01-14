@@ -23,10 +23,12 @@ import tianchi.com.risksourcecontrol2.activitiy.message.ReceiveNoticeListActivit
 import tianchi.com.risksourcecontrol2.adapter.ReceviceNoticeAdapter;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyNotifyInfo;
+import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyReplyInfo;
 import tianchi.com.risksourcecontrol2.config.ServerConfig;
 import tianchi.com.risksourcecontrol2.custom.MyToast;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 
 /**
@@ -78,8 +80,12 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
                     MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
                 } else if (status == 1) {
                     String beanListUnReply = GsonUtils.getNodeJsonString(string, "UnReplys");//解析数据
+
                     List<RectifyNotifyInfo> _unReplyDatas = GsonUtils.parserJsonToArrayBeans(beanListUnReply, RectifyNotifyInfo.class);
-//                    如果两个为空，提示没有接收到任何消息
+
+                    List<RectifyReplyInfo> _rectifyReplyInfos = GsonUtils.parserJsonToArrayBeans(beanListUnReply, RectifyReplyInfo.class);
+
+                    //                    如果两个为空，提示没有接收到任何消息
                     if (_unReplyDatas.size() == 0) {
                         m_mTvNoNotice.setVisibility(View.VISIBLE);
                         m_lvReceive.setVisibility(View.GONE);
@@ -88,7 +94,12 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
                     } else { //否则把接收到的信息提取标题，放在list中
                         if (_unReplyDatas.size() != 0) {
                             for (int i = _unReplyDatas.size() - 1; i >= 0; i--) {
-                                m_list.add(_unReplyDatas.get(i));
+                                int _logState = _unReplyDatas.get(i).getLogState();
+
+                                if (_logState!=6){
+                                    m_list.add(_unReplyDatas.get(i));
+                                }
+
                             }
                         }
 
@@ -115,10 +126,14 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle _bundle = new Bundle();
         RectifyNotifyInfo _rectifyNotifyInfo = m_list.get(position);
-        String time = _rectifyNotifyInfo.getCheckedTime();
+
+//        String time = _rectifyNotifyInfo.getCheckedTime();
 //        LogUtils.i("time" ,time);
-        _bundle.putSerializable("data", _rectifyNotifyInfo);
-        Intent _intent = new Intent(MyselfRectifyNotifyListActivity.this, ReadRectifyNotifyInfoActivity.class);
+//        _bundle.putSerializable("data", _rectifyNotifyInfo);
+//        Intent _intent = new Intent(MyselfRectifyNotifyListActivity.this, ReadRectifyNotifyInfoActivity.class);
+        int _id = _rectifyNotifyInfo.getId();
+        _bundle.putInt("id",_id);
+        Intent _intent = new Intent(MyselfRectifyNotifyListActivity.this, QueryNotfiyReplyActivity.class);
         _intent.putExtras(_bundle);
         startActivity(_intent);
 
@@ -146,7 +161,7 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
             }
             @Override
             public void requestSuccess(String result) throws Exception {
-//                LogUtils.i("接收通知", result);
+                LogUtils.i("接收通知", result);
                 callBack.getData(result);
 
             }
@@ -183,29 +198,29 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
 //        });
 //        return true;
 //
+////    }
+//    private void deleteDraft(int draftId) {
+//        JSONObject json = new JSONObject();
+//        try {
+//            json.put("id", draftId);
+//            OkHttpUtils.postAsync(ServerConfig.URL_DELETE_NOTIFY_FOR_ID, json.toString(), new OkHttpUtils.InsertDataCallBack() {
+//                @Override
+//                public void requestFailure(Request request, IOException e) {
+//                }
+//                @Override
+//                public void requestSuccess(String result) throws Exception {
+//                    int status = GsonUtils.getIntNoteJsonString(result, "status");
+//                    String msg = GsonUtils.getStringNodeJsonString(result, "msg");
+//
+//                    if (status == -1 || status == 0) {
+//                        MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
+//                    } else {
+//                        MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
+//                    }
+//                }
+//            });
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 //    }
-    private void deleteDraft(int draftId) {
-        JSONObject json = new JSONObject();
-        try {
-            json.put("id", draftId);
-            OkHttpUtils.postAsync(ServerConfig.URL_DELETE_NOTIFY_FOR_ID, json.toString(), new OkHttpUtils.InsertDataCallBack() {
-                @Override
-                public void requestFailure(Request request, IOException e) {
-                }
-                @Override
-                public void requestSuccess(String result) throws Exception {
-                    int status = GsonUtils.getIntNoteJsonString(result, "status");
-                    String msg = GsonUtils.getStringNodeJsonString(result, "msg");
-
-                    if (status == -1 || status == 0) {
-                        MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
-                    } else {
-                        MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
-                    }
-                }
-            });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-    }
 }

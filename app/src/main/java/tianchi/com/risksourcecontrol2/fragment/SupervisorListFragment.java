@@ -323,8 +323,10 @@ public class SupervisorListFragment extends Fragment {
             Collections.sort(m_list_left);
             for (String name : m_listHashMap.get(key)) {
                 m_list_rightText.add(key);
+
                 m_list_right.add(name);
                 Collections.sort(m_list_right);
+                Collections.sort(m_list_rightText);
             }
 
         }

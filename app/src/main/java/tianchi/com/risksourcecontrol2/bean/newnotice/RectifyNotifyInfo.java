@@ -1,6 +1,7 @@
 package tianchi.com.risksourcecontrol2.bean.newnotice;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by hairun.tian on 2018/6/13 0013.
@@ -15,14 +16,11 @@ public class RectifyNotifyInfo implements Serializable {
     public String checkedTime;  //检查时间
     public int id; //id
     public String images; //照片名字
-    //    private List<String> infos; //
+    private List<String> infos; //
     public String inspectContent; //检查内容
     public String inspectUnit; //检查单位
     public String inspectorSign;  //检查人签名
     public String inspectorSigns;  //副检查人
-
-
-
     public String logId;  //日志编号
     public int logState;  //日志状态
     public String question; //问题

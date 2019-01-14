@@ -4,12 +4,12 @@
               android:layout_height="match_parent">
 
     <EditText
-        android:enabled="false"
         android:id="@+id/edtReCheck"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="5dp"
         android:background="@color/colorLightGrey"
+        android:enabled="false"
         android:gravity="top"
         android:hint="复核："
         android:padding="5dp"

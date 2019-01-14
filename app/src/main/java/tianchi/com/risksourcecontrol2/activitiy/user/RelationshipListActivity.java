@@ -126,7 +126,6 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
                         break;
                     case R.id.rdbConstruction://施工方
                         if (m_roid == 19 && m_permission == UserPermission.SUPERVISON_SECOND) {
-
                             MyToast.showMyToast(RelationshipListActivity.this, "您没有权限查看施工方人员名单", Toast.LENGTH_SHORT);
                         } else if (m_roid == 17 && m_permission == UserPermission.SUPERVISON_THREE) {
                             MyToast.showMyToast(RelationshipListActivity.this, "您没有权限查看施工方人员名单", Toast.LENGTH_SHORT);

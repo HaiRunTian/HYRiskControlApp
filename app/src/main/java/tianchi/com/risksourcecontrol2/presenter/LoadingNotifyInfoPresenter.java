@@ -23,6 +23,7 @@ public class LoadingNotifyInfoPresenter {
 
     public void downloadLogPicture(int amount, int i) {
         m_loadingLogView.showLoadingPiture("加载" + "第" + (i + 1) + "张图片，共" + amount + "张");
+
         m_loadingNotifyInfoBiz.downloadLogPicture(m_loadingLogView.getDownLoadURL(),
                 m_loadingLogView.getPictureName(), new OnDownloadFileListener() {
                     @Override

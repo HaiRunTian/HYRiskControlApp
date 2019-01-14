@@ -93,7 +93,7 @@ public class CheckedListActivity extends BaseActivity implements View.OnClickLis
                             //监理审批意见
                             ReplySupervisorInfo _sinfo = new ReplySupervisorInfo();
                             if (_jsonArraySInfo.length() == 1) {
-                                JSONObject _objectSInfo = _jsonArraySInfo.getJSONObject(i);
+                                JSONObject _objectSInfo = _jsonArraySInfo.getJSONObject(0);
                                 _sinfo.setId(_objectSInfo.getInt("id"));
                                 _sinfo.setHasReaded(_objectSInfo.getBoolean("hasReaded"));
                                 _sinfo.setHasVerify(_objectSInfo.getInt("hasVerify"));

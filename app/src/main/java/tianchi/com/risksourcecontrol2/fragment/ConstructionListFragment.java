@@ -200,6 +200,7 @@ public class ConstructionListFragment extends Fragment {
                 m_list_right.add(name);
                 m_list_rightText.add(key);
                 Collections.sort(m_list_right);
+                Collections.sort(m_list_rightText);
             }
         }
 //        m_leftAdapter = new ArrayAdapter(ConstructionListFragment.this.getActivity(), android.R.layout.simple_list_item_1, m_list_left);

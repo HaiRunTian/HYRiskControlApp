@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/titleBarLayout"
+        style="@style/TitleBarStyle"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+        <TextView
+            android:id="@+id/tvBack"
+            style="@style/TitleBarStyleLeftText2"
+            android:drawableLeft="@mipmap/ic_btn_return"
+            />
+        <TextView
+            android:id="@+id/tvTitles"
+            style="@style/TitleBarStyleMiddleText"
+            android:text="隐患整改通知"/>
+        <TextView
+            android:id="@+id/tvReply"
+            style="@style/TitleBarStyleRightText"
+            android:visibility="gone"
+            android:text="回复"/>
+    </RelativeLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/titleBarLayout"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_margin="5dp"
+            android:visibility="visible"
+            >
+
+            <LinearLayout
+                android:id="@+id/linearCustomContentLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:padding="10dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="通知单"
+                    android:textSize="25dp"
+                    android:gravity="center"
+                    />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/tvlogid1"
+                        style="@style/CustomLayoutLeftText"
+                        android:text="@string/string_newPatrolLogid"/>
+
+                    <EditText
+                        android:id="@+id/edtlogid"
+                        style="@style/CustomLayoutEditTextDisable"/>
+                </LinearLayout>
+                <include layout="@layout/layout_check_unit_disable"></include>
+
+                <include layout="@layout/layout_be_check_unit_disable"></include>
+
+                <include layout="@layout/layout_section_disable"></include>
+
+                <include layout="@layout/layout_check_date"></include>
+
+                <include layout="@layout/layout_check_man_disable"></include>
+
+                <include layout="@layout/layout_check_deadline"></include>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp">
+                        <GridView
+                            android:id="@+id/gridView1"
+                            android:layout_width="match_parent"
+                            android:layout_height="280dp"
+                            android:layout_marginLeft="5dp"
+                            android:horizontalSpacing="5dp"
+                            android:verticalSpacing="15dp"
+                            android:numColumns="3"
+                            android:columnWidth="60dp"
+                            android:stretchMode="columnWidth"
+                            android:gravity="center">
+
+                        </GridView>
+                    </LinearLayout>
+                </LinearLayout>
+
+                <include layout="@layout/layout_check_content_disable"></include>
+
+                <include layout="@layout/layout_check_find_problem_disable"></include>
+
+                <include layout="@layout/layout_reform_method_require_disable"></include>
+
+                <include layout="@layout/layout_recorder2"></include>
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/Notify_Reply"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:text="回复单"
+                        android:textSize="25dp"
+                        android:gravity="center"
+                        />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            style="@style/CustomLayoutLeftText"
+                            android:text="@string/string_newPatrolLogid"/>
+
+                        <EditText
+                            android:id="@+id/edtlogidReply"
+                            style="@style/CustomLayoutEditTextDisable"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            style="@style/CustomLayoutLeftText"
+                            android:text="@string/string_newnoitfyid"/>
+
+                        <EditText
+                            android:id="@+id/edtnotifyreplyidReply"
+                            style="@style/CustomLayoutEditTextDisable"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            style="@style/CustomLayoutLeftText"
+                            android:text="@string/string_check_unit"/>
+
+                        <EditText
+                            android:id="@+id/edtLogCheckUnitReply"
+                            style="@style/CustomLayoutEditText1_disable"
+                            android:hint="请输入检查单位"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            style="@style/CustomLayoutLeftText"
+                            android:text="@string/string_be_check_unit"/>
+
+                        <EditText
+                            android:id="@+id/edtLogBeCheckUnitReply"
+                            style="@style/CustomLayoutEditText1_disable"
+                            android:hint="请输入受检单位"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            style="@style/CustomLayoutLeftText"
+                            android:text="@string/string_check_date"/>
+
+                        <EditText
+                            android:enabled="false"
+                            android:id="@+id/edtLogCheckDateReply"
+                            style="@style/CustomLayoutEditText1_disable"
+                            android:hint="整改日期"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            style="@style/CustomLayoutLeftText"
+                            android:text="@string/string_reform_man"/>
+
+                        <EditText
+                            android:id="@+id/edtNotifyLogReformManReply"
+                            style="@style/CustomLayoutEditText1_disable"
+                            android:hint="请输入整改人"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        >
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="5dp">
+                            <GridView
+                                android:id="@+id/gridView1Reply"
+                                android:layout_width="match_parent"
+                                android:layout_height="280dp"
+                                android:layout_marginLeft="5dp"
+                                android:horizontalSpacing="5dp"
+                                android:verticalSpacing="15dp"
+                                android:numColumns="3"
+                                android:columnWidth="60dp"
+                                android:stretchMode="columnWidth"
+                                android:gravity="center">
+                            </GridView>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:id="@+id/edtNotifyReformConditionReply"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorLightGrey"
+                            android:enabled="false"
+                            android:gravity="top"
+                            android:hint="请输入整改情况："
+                            android:padding="5dp"
+                            android:textSize="@dimen/textsize_text"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <EditText
+                            android:enabled="false"
+                            android:id="@+id/edtNotifyReCheckReply"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginTop="5dp"
+                            android:background="@color/colorLightGrey"
+                            android:gravity="top"
+                            android:hint="复核："
+                            android:padding="5dp"
+                            android:textSize="@dimen/textsize_text"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <TextView
+                            android:id="@+id/tvLogID"
+                            style="@style/CustomLayoutLeftText"
+                            android:text="@string/string_recheck_man"/>
+
+                        <EditText
+                            android:id="@+id/edtNotifyLogReCheckManReply"
+                            style="@style/CustomLayoutEditText1_disable"
+                            android:hint="请输入复核人"/>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/tvSupervisor"
+                            style="@style/CustomLayoutLeftText"
+                            android:text="@string/string_supervivisor"/>
+
+                        <EditText
+                            android:id="@+id/edtSupervisor"
+                            style="@style/CustomLayoutEditText1"
+                            android:editable="false"
+                            android:focusableInTouchMode="false"
+                            android:hint=""/>
+                </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:id="@+id/tvOwner"
+                            style="@style/CustomLayoutLeftText"
+                            android:text="@string/string_owner"/>
+
+                        <EditText
+                            android:id="@+id/edtOwner"
+                            style="@style/CustomLayoutEditText1"
+                            android:editable="false"
+                            android:focusableInTouchMode="false"
+                            android:hint=""/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

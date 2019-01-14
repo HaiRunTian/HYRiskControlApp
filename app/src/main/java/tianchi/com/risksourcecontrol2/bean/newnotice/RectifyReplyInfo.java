@@ -9,12 +9,15 @@ import java.util.List;
  */
 
 public class RectifyReplyInfo implements Serializable {
+
     private static final long serialVersionUID = -7620435178023928259L;
     public int id; //整改通知单ID
     public String logId;  //回复通知单编号
     public String inspectUnit; //检查单位
-    public String beCheckedUnit; //被检查单位
+
+    public String beCheckedUnit; //受检查单位
     public String checkedTime; //检查时间
+
     public String rectifySituation; //整改情况
     public String reviewSituation; //复核情况
     public String rectifyManSign; //整改人签名
@@ -27,8 +30,10 @@ public class RectifyReplyInfo implements Serializable {
     public int dbID;
     public String imageInfos;//照片备注
     public int isRead; //是否阅读
+
     public String supervisorMans;
     public String ownerMans;
+
     public int notifyType;
     public List<ReplySupervisorInfo> supervisionInfos;
     public List<ReplySupervisorInfo> reciversOwnerInfos;

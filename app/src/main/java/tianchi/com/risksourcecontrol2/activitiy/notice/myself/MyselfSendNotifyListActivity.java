@@ -39,6 +39,7 @@ import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
  * 整改通知单列表
  * 查询自己发出去的整改通知单列表
  * 发起人是自己
+ * 下达
  */
 
 public class MyselfSendNotifyListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener ,AdapterView.OnItemLongClickListener{
@@ -75,6 +76,7 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
                 String msg = GsonUtils.getNodeJsonString(string, "msg");
                 int status = GsonUtils.getIntNoteJsonString(string, "status");
                 m_progressDialog.setMessage(msg);
+
                 if (status == 0) {
                     MyToast.showMyToast(MyselfSendNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
                     m_mTvNoNotice.setVisibility(View.VISIBLE);
@@ -95,9 +97,11 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
                         if (_unReplyDatas.size() != 0) {
                             for (int i = _unReplyDatas.size() - 1; i >= 0; i--) {
                                 int _logState = _unReplyDatas.get(i).getLogState();
-                                if (_logState!=5) {
+
+                                if (_logState!=6) {
                                     m_list.add(_unReplyDatas.get(i));
                                 }
+
                             }
                         }
                           MyToast.showMyToast(MyselfSendNotifyListActivity.this, "您已发送了" + m_list.size() + "条整改通知", Toast.LENGTH_SHORT);
@@ -167,7 +171,6 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
                     m_progressDialog.dismiss();
                 } else
                     callBack.getData(result);
-
             }
         });
     }

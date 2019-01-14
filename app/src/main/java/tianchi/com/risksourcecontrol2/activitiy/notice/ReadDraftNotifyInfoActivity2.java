@@ -257,7 +257,9 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                 m_edtBecheckUnit.setText(m_info.getBeCheckedUnit() + "");
 //                m_edtSection.setText(_draftInfo.getSection()+"");
                 m_edtCheckMan.setText(m_info.getInspectorSign() + "");
-                m_edtCheckMans.setText(m_info.getInspectorSigns()+"");
+                if (m_info.getInspectorSigns()!=null) {
+                    m_edtCheckMans.setText(m_info.getInspectorSigns() + "");
+                }
                 m_edtContent.setText(m_info.getInspectContent() + "");
                 m_edtFindPro.setText(m_info.getQuestion() + "");
 

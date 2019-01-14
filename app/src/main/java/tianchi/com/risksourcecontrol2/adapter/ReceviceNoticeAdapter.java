@@ -71,32 +71,19 @@ public class ReceviceNoticeAdapter extends BaseAdapter {
 //        }
 
 //        if (m_readDataList.get(position).getLogState()==1 || m_readDataList.get(position).getLogState()==4) {
-//
+//            _viewHolder.m_tvIsRead.setVisibility(View.GONE);
 //        }else {
-//            _viewHolder.m_tvIsRead.setText("已回复");
+//            _viewHolder.m_tvIsRead.setVisibility(View.VISIBLE);
 //        }
+
 //
 //
 //        if (m_readDataList.get(position).getLogState()!=1 && m_readDataList.get(position).getLogState()!=4) {
-//            _viewHolder.m_tvIsRead.setText("已回复");
+//
 //        }
 
         _viewHolder.m_tvAuther.setText("发送人:" + m_readDataList.get(position).getInspectorSign());
         _viewHolder.m_tvTitle.setText(m_readDataList.get(position).getLogId());
-//       _viewHolder.m_RLDelete
-
-//        }else {
-//            _viewHolder.m_tvIsRead.setText("未审核");
-//        }
-//          时间
-//        String _time = m_readDataList.get(position).getSubmitTime();
-//
-//        LogUtils.i("time ="+_time);
-//        String _time1 = MyTime.getTime();
-//        LogUtils.i("time1 ="+_time1);
-//
-//        String _timeExpend = MyTime.getTimeDifference(_time, _time1);
-//        LogUtils.i("_timeExpend ="+_timeExpend);
 
         if (m_readDataList.get(position).getCheckedTime().length()>10) {
             _viewHolder.m_tvTime.setText(m_readDataList.get(position).getCheckedTime().substring(0,10));

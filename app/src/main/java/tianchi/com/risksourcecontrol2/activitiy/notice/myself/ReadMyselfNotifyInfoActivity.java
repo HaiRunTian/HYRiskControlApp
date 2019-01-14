@@ -165,8 +165,11 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
 
                 String _inspectorSigns = _rectifyNotifyInfo.getInspectorSigns();
                 LogUtils.i("查看 = "+_inspectorSign+_inspectorSigns);
-                m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign()+"#"+_rectifyNotifyInfo.getInspectorSigns());
-
+                if (_rectifyNotifyInfo.getInspectorSigns()!=null){
+                    m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign()+"#"+_rectifyNotifyInfo.getInspectorSigns());
+                }else {
+                    m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign());
+                }
 
                 m_edtContent.setText(_rectifyNotifyInfo.getInspectContent());
                 m_edtFindPro.setText(_rectifyNotifyInfo.getQuestion());
@@ -261,7 +264,9 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
                 _map.put("remark",m_arrayPicRemark[0]);
             }else  _map.put("remark","");
             imageItem.add(_map);
+
             refreshGridviewAdapter();
+
             picNames.set(0, "");
             canDownLoad = true;
             Message msg = new Message();

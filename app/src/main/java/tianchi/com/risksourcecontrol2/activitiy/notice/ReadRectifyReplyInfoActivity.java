@@ -236,6 +236,7 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
                     userId = userInfo.getUserId();
                     userLoginName = userInfo.getLoginName();
                     pictureName = m_notifyInfo.getImages();
+
                     if (pictureName != null && pictureName.length() > 0) {
                         _list = new ArrayList<>();
                         _list.addAll(Arrays.asList(pictureName.split("#")));
@@ -455,14 +456,14 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
 //                    m_imgSupervisor.setImageResource(R.mipmap.owner_pass);
                     //监理审核通过
                     m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.supervisor_pass),null);
-                    m_LogState = 3;
+                    m_LogState = 4;
 
                 } else{
                     //业主审核通过
 //                    m_imgOwner.setVisibility(View.VISIBLE);
 //                    m_imgOwner.setImageResource(R.mipmap.supervisor_pass);
                     m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_pass),null);
-                    m_LogState = 5;
+                    m_LogState = 4;
                 } //施工方自己审核
                 submit(m_LogState);
                 break;
@@ -474,13 +475,13 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
 //                    m_imgSupervisor.setVisibility(View.VISIBLE);
                     //监理审核驳回
                     m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.supervisor_reject),null);
-                    m_LogState = 4;
+                    m_LogState = 1;
                 } else {
                     //业主审核驳回
 //                    m_imgOwner.setVisibility(View.VISIBLE);
 //                    m_imgOwner.setImageResource(R.mipmap.supervisor_reject);
                     m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_reject),null);
-                    m_LogState = 6;
+                    m_LogState = 2;
                 }
                 submit(m_LogState);
                 break;

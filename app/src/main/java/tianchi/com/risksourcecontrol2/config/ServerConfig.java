@@ -29,7 +29,9 @@ public class ServerConfig {
     public static String URL_CHECK_LOGIN = URL + "/hyrisk/login/checkUserInfo.json";//登录接口
     public static String URL_MODIFY_USERINFO = URL + "/hyrisk/admin/user/modifyUserInfo.json";//用户信息修改接口
     public static String URL_GET_USER_RELATIONSHIP = URL + "/hyrisk/admin/user/getUserRelationShip.json";//获取用户关系表接口
+
     public static String URL_GET_USERINFO = URL + "/hyrisk/admin/user/getUserInfoByRealName.json";//获取用户实体接口
+
     public static String URL_GET_SECTION_LIST = URL + "/hyrisk/log/getSectionList.json";//获取标段列表接口
     public static String URL_SUBMIT_PRO_SAFETY_LOG = URL + "/hyrisk/highwaylog/submitProSafetyLog.json";//提交生产安全日志接口
     public static String URL_SUBMIT_MODIFY_PRO_SAFETY_LOG = URL + "/hyrisk/highwaylog/modifyProSafetyLog.json";//提交修改生产安全日志接口
@@ -63,11 +65,14 @@ public class ServerConfig {
     public static String URL_RECTIFYNOTIFYINFO = URL + "/hyrisk/rectifyNotify/submitRectifyNotify.json"; //提交整改通知单
 
     public static String URL_QUERYRECTIFYNOTIFY = URL + "/hyrisk/rectifyNotify/queryMyselfRectifyNotfiy.json"; //查询已读和未读整改通知单
+
     public static String URL_QUERY_RECTIFY_NOTFIY = URL + "/hyrisk/rectifyNotify/queryRectifyNotfiy.json";//查询整改通知单
     public static String URL_QUERY_REPLY_NOTIFY = URL + "/hyrisk/rectifyNotifyReply/queryRectifyReplyNotfiy.json"; //查询回复通知单
     public static String URL_SUBMIT_REPLY_NOTICE = URL + "/hyrisk/rectifyNotifyReply/submitRectifyReplyNotify.json"; //提交回复通知单
     public static String URL_QUERY_MYSELF__REPLY_NOTIFY = URL + "/hyrisk//rectifyNotifyReply/queryMyselfRectifyReplyNotfiy.json"; //查询已读和未读回复通知单
+
     public static String URL_NOTICEFY_FILE_UPLOAD = URL + "/hyrisk/file/recitynotify/"; //整改通知单文件下载
+
     public static String URL_QUERY_NEW_PATROL_LOG = URL + "/hyrisk/highwaylog/querySafetyPatrolNewest.json"; //查询最新的安全巡查日志
     public static String URL_QUERY_NEW_PRO_LOG = URL + "/hyrisk/highwaylog/queryProSafetyLogNewest.json"; //查询最新的生产安全日志
 
@@ -86,9 +91,7 @@ public class ServerConfig {
     public static String URL_GET_MSG_CHECK_ONCHECK = URL + "/hyrisk/rectifyNotifyReply/setNotifyMessagesReaded.json";//未回复的通知单数量
     public static String URL_UPDATE_NOTIFY_TYPE = URL + "/hyrisk/rectifyNotifyReply/updateNotifyStateForReceiver.json";//更新整改通知单阅读
     public static String URL_QUERY_USER_LIST = URL + "/hyrisk/admin/user/getSuperVisorNameList.json";//获取相关用户名单
-
     public static String URL_QUERY_USER_LIST2 = URL + "/hyrisk/admin/user/getUsersNameList.json";//获取相关用户名单
-
     public static String URL_QUERY_MSG = URL + "/hyrisk/rectifyNotifyReply/queryNotifyMessages.json";//获取用户已读未读消息
     public static String URL_QUERY_NOTIFY_FOR_ID = URL + "/hyrisk/rectifyNotify/queryNotifyInfo.json";//根据ID查询整改通知单
     public static String URL_QUERY_REPLY_FOR_ID = URL + "/hyrisk/rectifyNotifyReply/queryNotifyInfo.json";//根据ID查询整改回复通知单
@@ -96,7 +99,12 @@ public class ServerConfig {
     public static String URL_QUERY_MYSELF_SEND_NOTIFY = URL + "/hyrisk/rectifyNotify/queryRectifyNotifyFromMyself.json";//根据名字查整改通知单
     public static String URL_QUERY_MYSELF_SEND_REPLY = URL + "/hyrisk/rectifyNotifyReply/queryRectifyReplyNotifyFromMyself.json";//根据ID查询整改回复通知单
     public static String URL_DELETE_NOTIFY_FOR_ID = URL + "/hyrisk/rectifyNotify/deleteRectifyNotfiy.json";//删除整改通知单
+    public static String URL_DELETE_DRAFT_RECTIFY_NOTFIY_REPLY = URL + "/hyrisk/rectifyNotifyReply/deleteRectifyNotfiyReply.json";//删除整改个人回复单
     public static String URL_DELETE_DRAFT_RECTIFY_NOTIFY = URL + "/hyrisk/rectifyNotify/deleteDraftRectifyNotify.json";//删除整改通知单草稿
+
+
+    public static String URL_QUERY__NOTFIY_REPLY =URL+"/hyrisk/rectifyNotify/queryRectifyNotfiyAndReply.json";// 12月 6号提出的问题 ： 整改通知单和回复单
+
     public static Map<String, String> s_map = new HashMap<>();
     public static Map<String, String> s_mapMap = new HashMap<>();
     public static Map<String, String> s_mapSection = new HashMap<>();
