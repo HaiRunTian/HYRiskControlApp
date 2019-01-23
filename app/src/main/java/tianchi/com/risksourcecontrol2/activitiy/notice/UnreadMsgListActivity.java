@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.opengl.ETC1;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
@@ -18,6 +19,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Handler;
 
 import okhttp3.Request;
 import tianchi.com.risksourcecontrol2.R;
@@ -51,7 +53,24 @@ public class UnreadMsgListActivity extends BaseActivity implements AdapterView.O
     private List<NotifyMessagesInfo> m_msglist;
     private ReplySupervisorInfo _sInfo;
     private ReplySupervisorInfo _oInfo;
+    private android.os.Handler m_handler = new android.os.Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 0:
 
+                    break;
+                case 1:
+                    m_list.clear();
+                    m_adapter.notifyDataSetChanged();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    };
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -430,6 +449,7 @@ public class UnreadMsgListActivity extends BaseActivity implements AdapterView.O
                     } else if (status == 1) {
 //                        LogUtils.i("msg", msg + status);
                         MyToast.showMyToast(UnreadMsgListActivity.this, "一键设置已读成功", Toast.LENGTH_SHORT);
+                        m_handler.sendEmptyMessage(status);
                     }
                 }
             });

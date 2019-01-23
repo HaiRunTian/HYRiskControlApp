@@ -44,16 +44,16 @@ public class MyPopupWindow extends PopupWindow {
         // mPopupWindow.setAnimationStyle(android.R.style.Animation_Dialog);
         // 设置SelectPicPopupWindow弹出窗体动画效果
         this.setAnimationStyle(R.style.AnimationPreview);
-
-        conentView.findViewById(R.id.item_riskQuery).setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View arg0) {
-                //do something you need here
-                MyPopupWindow.this.dismiss();
-                context.startActivity(new Intent(context, RiskQueryActivity.class));
-            }
-        });
+//
+//        conentView.findViewById(R.id.item_riskQuery).setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View arg0) {
+//                //do something you need here
+//                MyPopupWindow.this.dismiss();
+//                context.startActivity(new Intent(context, RiskQueryActivity.class));
+//            }
+//        });
         conentView.findViewById(R.id.item_patrolSignIn).setOnClickListener(new View.OnClickListener() {
 
             @Override

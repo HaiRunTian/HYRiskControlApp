@@ -31,13 +31,13 @@ public class GetNewNotifyUtils {
         OkHttpUtils.postAsync(url, str, new OkHttpUtils.InsertDataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
-                LogUtils.i("接收通知失败", request.body().toString());
+//                LogUtils.i("接收通知失败", request.body().toString());
 
             }
 
             @Override
             public void requestSuccess(String result) throws Exception {
-                LogUtils.i("接收通知", result);
+//                LogUtils.i("接收通知", result);
                 callBack.getData(result);
 
             }

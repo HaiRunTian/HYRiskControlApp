@@ -162,7 +162,7 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
                 String _inspectorSign = _rectifyNotifyInfo.getInspectorSign();
 
                 String _inspectorSigns = _rectifyNotifyInfo.getInspectorSigns();
-                LogUtils.i("查看 = "+_inspectorSign+_inspectorSigns);
+//                LogUtils.i("查看 = "+_inspectorSign+_inspectorSigns);
                 if (_rectifyNotifyInfo.getInspectorSigns()!=null){
                     m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign()+"#"+_rectifyNotifyInfo.getInspectorSigns());
                 }else {

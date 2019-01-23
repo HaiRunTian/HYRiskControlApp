@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import tianchi.com.risksourcecontrol2.bean.login.UserInfo;
 import tianchi.com.risksourcecontrol2.config.ServerConfig;
@@ -112,7 +113,7 @@ public class UserSingleton {
     public static Map<String, List<String>> getSupervisorList() {
 
         if (s_supervisorList == null)
-            s_supervisorList = new HashMap<>();
+            s_supervisorList = new TreeMap<>();
         return s_supervisorList;
     }
 
@@ -130,7 +131,7 @@ public class UserSingleton {
      */
     public static Map<String, List<String>> getConstructionList() {
         if (s_constructionList == null)
-            s_constructionList = new HashMap<>();
+            s_constructionList = new TreeMap<>();
         return s_constructionList;
     }
 

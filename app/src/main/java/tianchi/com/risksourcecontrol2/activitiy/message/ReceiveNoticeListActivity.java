@@ -61,7 +61,7 @@ public class ReceiveNoticeListActivity extends BaseActivity implements View.OnCl
         getNotice(UserSingleton.getUserInfo().getRealName(), new CallBack() {
             @Override
             public void getData(String string) {
-                LogUtils.i("回调回来的数据", string);
+//                LogUtils.i("回调回来的数据", string);
                 String msg = GsonUtils.getNodeJsonString(string, "msg");
                 int status = GsonUtils.getIntNoteJsonString(string, "status");
 
@@ -150,13 +150,13 @@ public class ReceiveNoticeListActivity extends BaseActivity implements View.OnCl
         OkHttpUtils.postAsync(ServerConfig.URL_RECEIVE_NOTICE, str, new OkHttpUtils.InsertDataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
-                LogUtils.i("接收通知失败", request.body().toString());
+//                LogUtils.i("接收通知失败", request.body().toString());
 
             }
 
             @Override
             public void requestSuccess(String result) throws Exception {
-                LogUtils.i("接收通知", result);
+//                LogUtils.i("接收通知", result);
                 callBack.getData(result);
 
             }

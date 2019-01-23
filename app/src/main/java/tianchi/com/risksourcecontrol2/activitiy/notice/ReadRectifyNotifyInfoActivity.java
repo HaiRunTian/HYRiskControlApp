@@ -512,7 +512,12 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
      */
     @Override
     public void showLoadingFailed(String msg) {
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReadRectifyNotifyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);

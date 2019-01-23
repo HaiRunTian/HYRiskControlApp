@@ -32,7 +32,6 @@ public class UserLoginPresenter {
                 m_handler.post(new Runnable() {
                     @Override
                     public void run() {
-
                         m_userLoginView.hideLoading();
                         m_userLoginView.toHomeActivity();
                         m_userLoginView.saveUserInfo2Local(isSaveInfo);

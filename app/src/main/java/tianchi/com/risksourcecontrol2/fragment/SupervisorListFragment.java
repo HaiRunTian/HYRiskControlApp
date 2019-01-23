@@ -320,13 +320,12 @@ public class SupervisorListFragment extends Fragment {
 
         for (String key : m_listHashMap.keySet()) {
             m_list_left.add(key);
-            Collections.sort(m_list_left);
+//            Collections.sort(m_list_left);
             for (String name : m_listHashMap.get(key)) {
                 m_list_rightText.add(key);
-
                 m_list_right.add(name);
-                Collections.sort(m_list_right);
-                Collections.sort(m_list_rightText);
+//                Collections.sort(m_list_right);
+//                Collections.sort(m_list_rightText);
             }
 
         }

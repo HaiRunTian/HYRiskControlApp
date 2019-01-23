@@ -255,7 +255,7 @@ public class MinePageActivity extends BaseActivity implements View.OnClickListen
                     //关闭输入输出流
                     is.close();
                     os.close();
-                    LogUtils.i("inputstringsuccess!");
+//                    LogUtils.i("inputstringsuccess!");
                     if (bmp != null) {
                         if (listener != null) {
                             listener.downloadSucceed(bmp);

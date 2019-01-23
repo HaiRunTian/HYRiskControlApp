@@ -109,7 +109,7 @@ public class UserLoginWork {
                     try {
                         _list = map.get(key);
                     }catch (Exception e){
-                        LogUtils.i(e.toString());
+//                        LogUtils.i(e.toString());
                     }
                 }
                 if (_list.size() != 0) {
@@ -120,7 +120,7 @@ public class UserLoginWork {
                     try {
                         UserSingleton.getSupervisorList().put(key, map.get(key));
                     }catch (Exception e){
-                        LogUtils.i(e.toString());
+//                        LogUtils.i(e.toString());
                     }
 
                 }
@@ -130,7 +130,7 @@ public class UserLoginWork {
                     try{
                         UserSingleton.getConstructionList().put(key, map.get(key));
                     }catch (Exception e){
-                        LogUtils.i(e.toString());
+//                        LogUtils.i(e.toString());
                     }
                 }
 

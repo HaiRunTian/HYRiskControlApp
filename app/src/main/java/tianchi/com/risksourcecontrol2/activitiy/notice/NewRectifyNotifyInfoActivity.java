@@ -49,6 +49,7 @@ import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.login.UsersList;
 import tianchi.com.risksourcecontrol2.config.FoldersConfig;
 import tianchi.com.risksourcecontrol2.config.ServerConfig;
+import tianchi.com.risksourcecontrol2.config.SuperMapConfig;
 import tianchi.com.risksourcecontrol2.custom.MyAlertDialog;
 import tianchi.com.risksourcecontrol2.custom.MyDatePicker;
 import tianchi.com.risksourcecontrol2.custom.MyTakePicDialog;
@@ -66,14 +67,14 @@ import tianchi.com.risksourcecontrol2.view.IRectifyNotifyView;
  * 权限:业主、监理、施工方都可以创建
  */
 
-public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.OnClickListener, IRectifyNotifyView, MyTakePicDialog.OnItemClickListener,InputAdapter.OnItemClickListener,BeAdapter.OnItemClickListener{
+public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.OnClickListener, IRectifyNotifyView, MyTakePicDialog.OnItemClickListener, InputAdapter.OnItemClickListener, BeAdapter.OnItemClickListener {
     private static final int GET_SUPERVISOR = 0;
     private static final int GET_COPYER = 8;
     private static final int GET_CONSTRUCTION = 9;
     private static final int GET_CHECKMAN = 7;
     private int m_logState; //日志状态
     private EditText m_edtLogId; //日志编号
-//    private SpinnerEditText m_edtCheckUnit; //检查单位
+    //    private SpinnerEditText m_edtCheckUnit; //检查单位
 //    private SpinnerEditText m_edtBecheckUnit; //受检单位
     private EditText m_edtCheckUnit;//检查单位
     private EditText m_edtBecheckUnit; //受检单位
@@ -99,7 +100,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
     //    private EditText m_receiveMans; //接收人  @弃用
     private TextView m_tvBack; //返回
-//    private EditText m_edtSupervisor; //监理
+    //    private EditText m_edtSupervisor; //监理
     private EditText m_edtCopyer; //抄送着
     private EditText m_edtConstruction;//施工方
     private List<File> picFiles;             //临时图片文件数组
@@ -108,7 +109,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     private SimpleAdapter simpleAdapter;     //适配器
     private File takPicFile;//用户头像拍照文件
     private File resultImgFile;//最终生成的img文件
-//    private Bitmap picBitmap;//存储拍照的照片
+    //    private Bitmap picBitmap;//存储拍照的照片
     private Uri fileUri;//生成拍照文件uri
     private Uri uri;//系统拍照或相册选取返回的uri
     //    private String downloadURL;//下载文件url
@@ -128,25 +129,25 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     private ImageButton be_arrow;
     private ImageButton input_arrow;
 
-    private String[] inspect_Title = {
-            "中铁十四局集团第二工程有限公司",
-            "中铁十二局集团第一工程有限公司",
-            "中交二公局第三工程有限公司",
-            "中铁太桥局集团有限公司",
-            "龙建路桥股份有限公司",
-            "中铁二十局集团有限公司",
-            "广东省长大公路工程有限公司",
-            "中交路桥建设有限公司"
-    };
-
-    private String[] be_Title= {
-            "广东翔飞公路工程监理有限公司",
-            "江苏交通工程咨询监理有限公司",
-            "北京路桥通国际工程咨询有限公司",
-            "深圳高速工程检测有限公司",
-            "苏交科集团股份有限公司",
-            "山西省交通建设工程质量检测中心"
-    };
+//    private String[] inspect_Title = {
+//            "中铁十四局集团第二工程有限公司",
+//            "中铁十二局集团第一工程有限公司",
+//            "中交二公局第三工程有限公司",
+//            "中铁太桥局集团有限公司",
+//            "龙建路桥股份有限公司",
+//            "中铁二十局集团有限公司",
+//            "广东省长大公路工程有限公司",
+//            "中交路桥建设有限公司"
+//    };
+//
+//    private String[] be_Title = {
+//            "广东翔飞公路工程监理有限公司",
+//            "江苏交通工程咨询监理有限公司",
+//            "北京路桥通国际工程咨询有限公司",
+//            "深圳高速工程检测有限公司",
+//            "苏交科集团股份有限公司",
+//            "山西省交通建设工程质量检测中心"
+//    };
 
     RectifyNotifyInfoPresenter mReNoticePresenter = new RectifyNotifyInfoPresenter(this);
     private Handler m_handler = new Handler(new Handler.Callback() {
@@ -156,6 +157,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
             return false;
         }
     });
+    private String[] m_spData;
 
 
     private void uploadPictures() {
@@ -164,15 +166,15 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //                continue;
 //            }
 //            if (uploadImgIndex < picNames.size()) continue; //如果照片为上传完成，
-            //            File picFile = new File(FoldersConfig.PRO_SAFETY_PIC_PATH, picNames.get(i));
-            if (picFiles.get(uploadImgIndex).getName().equals(picNames.get(uploadImgIndex))) {
-                if (canUpload) {
-                    canUpload = false;
-                    mReNoticePresenter.uploadFile(picFiles.size(), uploadImgIndex);
-                    m_picIndex = uploadImgIndex;
+        //            File picFile = new File(FoldersConfig.PRO_SAFETY_PIC_PATH, picNames.get(i));
+        if (picFiles.get(uploadImgIndex).getName().equals(picNames.get(uploadImgIndex))) {
+            if (canUpload) {
+                canUpload = false;
+                mReNoticePresenter.uploadFile(picFiles.size(), uploadImgIndex);
+                m_picIndex = uploadImgIndex;
 //                    picNames.set(i, "");
 //                    break;
-                }
+            }
 //            } else {
 //                MyToast.showMyToast(this, "请检查上传的图片是否被手动删除！", Toast.LENGTH_SHORT);
 //                break;
@@ -188,7 +190,6 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         initEvent();
         initValue();
     }
-
 
 
     private void initValue() {
@@ -270,7 +271,6 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
         m_edtCheckMan.setText(UserSingleton.getUserInfo().getRealName());
 
 
-
     }
 
 
@@ -289,16 +289,20 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                 return;
             }
 
+            if (m_section.substring(0,1).equals("0")){
+                m_section = m_section.substring(2);
+            }
             m_arrSection = m_section.split("#");  //字符串转成数组
-            String[] _spData = new String[m_arrSection.length];
-            //多选标段数据
-            m_spSction = new String[m_arrSection.length];
+                 m_spData = new String[m_arrSection.length];
+                //多选标段数据
+                m_spSction = new String[m_arrSection.length];
+
             for (int _i = 0; _i < m_arrSection.length; _i++) {
-                _spData[_i] = ServerConfig.getMap().get(m_arrSection[_i]);
+                m_spData[_i] = ServerConfig.getMap().get(m_arrSection[_i]);
                 m_spSction[_i] = ServerConfig.getMapSection().get(m_arrSection[_i]);
             }
             m_spSection.setSelection(0, false);
-            m_spSection.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, _spData));
+            m_spSection.setAdapter(new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, m_spData));
             //m_spSection.setAdapter(new SectionAdapter(DrawerActivity.this, m_arrSection));
         }
         // m_riskTypeList = Arrays.asList(getResources().getStringArray(R.array.riskType));//取到风险源类型列表
@@ -385,7 +389,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                 if (checkInfo()) {
                     if (getPicture().length() != 0) {
                         uploadFirstPicture();
-                    }else {
+                    } else {
                         mReNoticePresenter.submit();
                     }
                 }
@@ -395,7 +399,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                 m_logState = 2;
                 if (getPicture().length() != 0) {
                     uploadFirstPicture();
-                }else {
+                } else {
                     mReNoticePresenter.saveToDraft();
                 }
 //                if (checkInfo()) {
@@ -433,7 +437,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //                if (m_roid == 17) {
 //                    startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.SUPERVISON_FIRST), GET_COPYER);
 //                } else
-                    startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.OWNER_ALL), GET_COPYER);
+                startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.OWNER_ALL), GET_COPYER);
                 break;
 
             //如果是监理或者施工方，可以选择施工方
@@ -442,37 +446,32 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //                    startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.SUPERVISON_FIRST), GET_SUPERVISOR);
 ////                    LogUtils.i("UserPermission = ",UserPermission.SUPERVISON_THREE+"");
 //                }else {
-                    startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.CONSTRU_SECOND), GET_CONSTRUCTION);
+                startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.CONSTRU_SECOND), GET_CONSTRUCTION);
 //                }
 
                 break;
-            case R.id.inspect:
-                if (inspect_Title.length!= 0)
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.down_account, null, false);
-                    LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
-                    ListView listView = (ListView) view.findViewById(R.id.input_select_list);
-                    listView.setDividerHeight(0);
-                    m_inputAdapter = new InputAdapter(this, inspect_Title);
-                    m_inputAdapter.setOnItemClickListener(this);
-                    listView.setAdapter(m_inputAdapter);
-                    initSpinnerEditText(contentview,be_ll);
-
-                }
+            case R.id.inspect: {
+                View view = LayoutInflater.from(this).inflate(R.layout.down_account, null, false);
+                LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
+                ListView listView = (ListView) view.findViewById(R.id.input_select_list);
+                listView.setDividerHeight(0);
+                m_inputAdapter = new InputAdapter(this, ServerConfig.getInspectedUnit());
+                m_inputAdapter.setOnItemClickListener(this);
+                listView.setAdapter(m_inputAdapter);
+                initSpinnerEditText(contentview, inspect_ll);
+            }
                 break;
-            case R.id.be:
-                if (be_Title.length != 0)
-                {
-                    View view = LayoutInflater.from(this).inflate(R.layout.down_account, null, false);
-                    LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
-                    ListView listView = (ListView) view.findViewById(R.id.input_select_list);
-                    listView.setDividerHeight(0);
+            case R.id.be: {
+                View view = LayoutInflater.from(this).inflate(R.layout.down_account, null, false);
+                LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
+                ListView listView = (ListView) view.findViewById(R.id.input_select_list);
+                listView.setDividerHeight(0);
 
-                    m_beAdapter = new BeAdapter(this, be_Title);
-                    m_beAdapter.setOnBeClickListener(this);
-                    listView.setAdapter(m_beAdapter);
-                    initSpinnerEditText(contentview,inspect_ll);
-                }
+                m_beAdapter = new BeAdapter(this, ServerConfig.getBelogUnit());
+                m_beAdapter.setOnBeClickListener(this);
+                listView.setAdapter(m_beAdapter);
+                initSpinnerEditText(contentview, be_ll);
+            }
                 break;
             default:
                 break;
@@ -481,23 +480,27 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
 
     }
-    private void initSpinnerEditText( LinearLayout contentview, LinearLayout mInputLayout) {
+
+    private void initSpinnerEditText(LinearLayout contentview, LinearLayout mInputLayout) {
         mSelectWindow = new PopupWindow(contentview, mInputLayout.getMeasuredWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
         mSelectWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         mSelectWindow.setOutsideTouchable(true);
         mSelectWindow.showAsDropDown(mInputLayout, 0, 0);
     }
+
     @Override
     public void onItemClicked(int position) {
         closePopWindow();
-        m_edtCheckUnit.setText(inspect_Title[position].toString());
+        m_edtCheckUnit.setText(ServerConfig.getInspectedUnit()[position].toString());
     }
+
     @Override
     public void onBeClicked(int position) {
         closePopWindow();
-        m_edtBecheckUnit.setText(be_Title[position].toString());
+        m_edtBecheckUnit.setText(ServerConfig.getBelogUnit()[position].toString());
     }
-    private void closePopWindow(){
+
+    private void closePopWindow() {
         mSelectWindow.dismiss();
         mSelectWindow = null;
     }
@@ -699,39 +702,42 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     public String getSection() {
         String _trim = m_spSection.getSelectedItem().toString().trim();
         String _s = null;
-        switch (_trim){
+        switch (_trim) {
             case "第1标段":
-                _s="TJ01";
+                _s = "TJ01";
                 break;
             case "第2标段":
-                _s="TJ02";
+                _s = "TJ02";
                 break;
             case "第3标段":
-                _s="TJ03";
+                _s = "TJ03";
                 break;
             case "第4标段":
-                _s="TJ04";
+                _s = "TJ04";
                 break;
             case "第5标段":
-                _s="TJ05";
+                _s = "TJ05";
                 break;
             case "第6标段":
-                _s="TJ06";
+                _s = "TJ06";
                 break;
             case "第7标段":
-                _s="TJ07";
+                _s = "TJ07";
                 break;
             case "第8标段":
-                _s="TJ08";
+                _s = "TJ08";
                 break;
             case "第9标段":
-                _s="TJ09";
+                _s = "TJ09";
                 break;
             case "第10标段":
-                _s="TJ10";
+                _s = "TJ10";
                 break;
             case "第11标段":
-                _s="TJ11";
+                _s = "TJ11";
+                break;
+            default:
+                _s = "TJ01";
                 break;
 
         }
@@ -767,7 +773,13 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     @Override
     public void showSubmitSucceed(String msg) {
         hideInSubmiting();
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(NewRectifyNotifyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
+
         finish();
     }
 
@@ -775,7 +787,12 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     public void showSubmitFailed(String msg) {
         hideInSubmiting();
         uploadImgIndex = 0; //上传失败，初始化重新提交
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(NewRectifyNotifyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         //        finish();
     }
 
@@ -793,9 +810,9 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //                isFinish = true;
 //            }
 //        }
-        if (picNames.size() > uploadImgIndex){  //如果集合中的照片还有未上传的，继续上传
+        if (picNames.size() > uploadImgIndex) {  //如果集合中的照片还有未上传的，继续上传
             isFinish = false;
-        }else {
+        } else {
             isFinish = true;
         }
         if (!isFinish) {//上传未完成，继续发送下载指令
@@ -814,8 +831,12 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     public void uploadFileFailed(String msg) {
         hideInSubmiting();
         uploadImgIndex = 0; //如果上传失败，照片上传数量初始化
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
-        //        resetParams();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(NewRectifyNotifyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override
@@ -888,9 +909,9 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 
     @Override
     public String getImgInfo() {
-        if (m_imgInfo.length()>0){
+        if (m_imgInfo.length() > 0) {
 //            LogUtils.i("m_imgInfo",m_imgInfo.toString());
-            return m_imgInfo.substring(0,m_imgInfo.length()-1);
+            return m_imgInfo.substring(0, m_imgInfo.length() - 1);
         }
         return "";
     }
@@ -971,10 +992,10 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                                             picNames.add(pictureName);  //照片名字列表
                                             picFiles.add(resultImgFile); //照片文件
                                             _map.put("itemImage", _bitmap);
-                                            _map.put("remark",m_remark);
+                                            _map.put("remark", m_remark);
                                             imageItem.add(_map);
 //                                            m_imgInfo.append(String.valueOf(m_remarkIndex)+m_remark+"#");
-                                            m_listRemark.add(String.valueOf(m_remarkIndex)+m_remark);
+                                            m_listRemark.add(String.valueOf(m_remarkIndex) + m_remark);
 //                                            m_edtFindPro.setText(m_imgInfo.toString());
 //                                            LogUtils.i("adapter m_imgInfo",m_imgInfo.toString());
                                             refreshGridviewAdapter();
@@ -1009,7 +1030,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                         int colindex = c.getColumnIndex(filePathColumns[0]);//取索引
                         String imgpath = c.getString(colindex);//取文件相对手机路径
                         c.close();
-                       Bitmap _picBitmap = CameraUtils.getimage(imgpath);
+                        Bitmap _picBitmap = CameraUtils.getimage(imgpath);
 //                        picBitmap = BitmapFactory.decodeFile(imgpath);//拍摄返回的bitmap
                         if (_picBitmap != null) {
                             resultImgFile = new File(imgpath);//拍摄返回的图片file
@@ -1036,9 +1057,9 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                                             picNames.add(pictureName);
                                             picFiles.add(resultImgFile);
                                             _map.put("itemImage", _picBitmap);
-                                            _map.put("remark",m_remark);
+                                            _map.put("remark", m_remark);
                                             imageItem.add(_map);
-                                            m_listRemark.add(String.valueOf(m_remarkIndex)+m_remark);
+                                            m_listRemark.add(String.valueOf(m_remarkIndex) + m_remark);
 //                                            m_imgInfo.append(String.valueOf(m_remarkIndex)+m_remark+"#");
 //                                            m_edtFindPro.setText(m_imgInfo.toString());
 //                                            dialog.dismiss();
@@ -1079,7 +1100,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                         String allNameList = "";
                         for (String name : UsersList.getList()) {
                             String _s = name.toString();
-                            String _s1 = _s.substring(_s.lastIndexOf("#")+1);
+                            String _s1 = _s.substring(_s.lastIndexOf("#") + 1);
                             allNameList += _s1 + "#";
                         }
                         m_edtCopyer.setText("");
@@ -1092,7 +1113,7 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                         String allNameList = "";
                         for (String name : UsersList.getList()) {
                             String _s = name.toString();
-                            String _s1 = _s.substring(_s.lastIndexOf("#")+1);
+                            String _s1 = _s.substring(_s.lastIndexOf("#") + 1);
                             allNameList += _s1 + "#";
                         }
                         m_edtCheckMans.setText("");
@@ -1104,14 +1125,14 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
                     break;
                 case GET_CONSTRUCTION:
                     if (resultCode == RESULT_OK) {
-                        if (UsersList.getList().size()>1){
-                            MyToast.showMyToast(NewRectifyNotifyInfoActivity.this,"只能选择一人发送，剩下的只能选择抄送，请重新选择",1);
+                        if (UsersList.getList().size() > 1) {
+                            MyToast.showMyToast(NewRectifyNotifyInfoActivity.this, "只能选择一人发送，剩下的只能选择抄送，请重新选择", 1);
                             return;
                         }
                         String allNameList = "";
                         for (String name : UsersList.getList()) {
                             String _s = name.toString();
-                            String _s1 = _s.substring(_s.lastIndexOf("#")+1);
+                            String _s1 = _s.substring(_s.lastIndexOf("#") + 1);
                             allNameList += _s1 + "#";
                         }
                         m_edtConstruction.setText("");
@@ -1142,11 +1163,11 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
     }
 
     private void initedtFindPro() {
-        if (m_imgInfo.length()>0){
-            m_imgInfo.delete(0,m_imgInfo.length());
+        if (m_imgInfo.length() > 0) {
+            m_imgInfo.delete(0, m_imgInfo.length());
         }
         for (int i = 0; i < m_listRemark.size(); i++) {
-            m_imgInfo.append(m_listRemark.get(i)+"#");
+            m_imgInfo.append(m_listRemark.get(i) + "#");
         }
         m_edtFindPro.setText(m_imgInfo.toString());
     }
@@ -1247,7 +1268,6 @@ public class NewRectifyNotifyInfoActivity extends BaseActivity implements View.O
 //        }
         return isOk;
     }
-
 
 
 }

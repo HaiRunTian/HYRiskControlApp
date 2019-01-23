@@ -256,7 +256,12 @@ public class  QueryReformLogActivity extends BaseActivity implements IQueryLogVi
                 hideQuerying();
             }
         });
-        MyToast.showMyToast(this,msg, Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(QueryReformLogActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
     }
 
 //    @Override

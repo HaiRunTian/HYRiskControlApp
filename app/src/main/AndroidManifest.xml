@@ -356,10 +356,8 @@
         <activity android:name=".activitiy.notice.myself.ReadMyselfReplyInfoActivity"/>
         <!-- 查看回复单内容，无审核功能 -->
         <activity android:name=".activitiy.notice.SeeReplyInfoActivity"/>
-
-
-        <activity android:name=".activitiy.notice.QueryNotfiyReplyActivity">
-        </activity>
+        <activity android:name=".activitiy.notice.QueryNotfiyReplyActivity"/>
+       <activity android:name=".activitiy.notice.myself.ReadMyselfNotifyInfoActivity2"/>
     </application>
 
 </manifest>

@@ -286,7 +286,12 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
         switch (v.getId()) {
             case R.id.btnSubmit:
                 if (checkInfo()) {
-                    uploadFirstPicture();
+                    if (getPicture().length() != 0){
+                        uploadFirstPicture();
+                    }else {
+                        m_presenter.submit();
+                    }
+
                 }
 
                 break;
@@ -357,10 +362,10 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
 //            isOk = false;
 //        }
 
-        if (getPicture().length() == 0) {
-            Toast.makeText(this, "请添加图片", Toast.LENGTH_SHORT).show();
-            isOk = false;
-        }
+//        if (getPicture().length() == 0) {
+//            Toast.makeText(this, "请添加图片", Toast.LENGTH_SHORT).show();
+//            isOk = false;
+//        }
 
         if (getReformCon().length() == 0) {
             m_edtReformCon.setError("整改情况不能空");
@@ -895,7 +900,12 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
     @Override
     public void showSubmitSucceed(String msg) {
         hideInSubmiting();
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(NewRectifyReplyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         finish();
     }
 
@@ -909,7 +919,12 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
     public void showSubmitFailed(String msg) {
         hideInSubmiting();
         uploadImgIndex = 0;
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(NewRectifyReplyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         //        finish();
     }
 
@@ -958,7 +973,12 @@ public class NewRectifyReplyInfoActivity extends BaseActivity implements IRectif
     public void uploadFileFailed(String msg) {
         hideInSubmiting();
         uploadImgIndex = 0;
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(NewRectifyReplyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         //        resetParams();
     }
 

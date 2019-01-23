@@ -133,7 +133,7 @@ public class RectifyNotifyInfoPresenter implements INewLogPresenter {
 
         _rectifyNotifyInfo.setInspectorSign(m_notifyView.getCheckMan()); //检查人
 
-        LogUtils.i("a",m_notifyView.getCheckMans());
+//        LogUtils.i("a",m_notifyView.getCheckMans());
 
        _rectifyNotifyInfo.setInspectorSigns(m_notifyView.getCheckMans());//副检查人
 

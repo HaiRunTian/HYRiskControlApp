@@ -124,6 +124,7 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
         OkHttpUtils.postAsync(ServerConfig.URL_REFRESH_NOTIFY_DATA, _jsonObj.toString(), new OkHttpUtils.QueryDataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
+
                 Toast.makeText(getActivity(), "查询失败", Toast.LENGTH_SHORT).show();
                 m_progressDialog.setMessage("刷新失败");
                 m_progressDialog.dismiss();
@@ -142,11 +143,11 @@ public class MessageFragment extends Fragment implements View.OnClickListener {
                     //消息数量显示
                     tvMsgDraft.setText("个人草稿(" + _dataState.getDraft() + ")");
                     tvMsgRefyNum.setText("个人收到(" + _dataState.getRecify() + ")");
-                    tvMsgWaitCheck.setText("待审核(" + _dataState.getUnChecked() + ")");
+                    tvMsgWaitCheck.setText(" 待审核(" + _dataState.getUnChecked() + ")");
                     tvMsgChecked.setText("已审核(" + _dataState.getChecked() + ")");
                     tvMsgUnRead.setText("未读消息(" + _dataState.getUnReadMsg() + ")");
-                    tvMsgSendNum.setText("个人下达");
-                    tvMsgSend.setText("个人回复");
+                    tvMsgSendNum.setText("个人下达(" + _dataState.getRecify1() + ")");
+                    tvMsgSend.setText("个人回复(" + _dataState.getReplys() + ")");
 
                     m_progressDialog.setMessage("刷新完成");
                     m_progressDialog.dismiss();

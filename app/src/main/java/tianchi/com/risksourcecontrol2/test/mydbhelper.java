@@ -27,7 +27,7 @@ public class mydbhelper extends DataBaseOpenHelper {
         for (String _s : m_list) {
             db.execSQL(_s);
         }
-        LogUtils.i("create db Successful");
+//        LogUtils.i("create db Successful");
     }
 
     @Override

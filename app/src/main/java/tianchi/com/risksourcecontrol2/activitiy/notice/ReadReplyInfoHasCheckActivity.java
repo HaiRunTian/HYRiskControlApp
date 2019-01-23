@@ -85,7 +85,7 @@ public class ReadReplyInfoHasCheckActivity extends BaseActivity implements View.
     private EditText m_edtLogId;
     //private Button m_btnSubmit;
     private TextView m_btnBack;
-    private List<String> _list;              //图片文件名数组
+    private List<String> _list;     //图片文件名数组
     private String itemPicName = "";//子图片文件名
     private String userRealName = "";//用于取日志图片的用户真实姓名
     private int userId;
@@ -116,6 +116,7 @@ public class ReadReplyInfoHasCheckActivity extends BaseActivity implements View.
     private RectifyReplyInfo m_notifyInfo;
     private String[] m_arrayPicRemark;
     private int m_picIndex; //照片下标
+    private View m_owerView;
     private Handler m_handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -234,10 +235,10 @@ public class ReadReplyInfoHasCheckActivity extends BaseActivity implements View.
         if (m_sInfo != null && m_sInfo.getHasVerify() == 1){
             m_edtOpinionSup.setVisibility(View.VISIBLE);
             m_edtOpinionSup.setText("审核意见："+m_sInfo.getRemark()+" ");
-            if (m_sInfo.getResult().contains("审核")){ //业主审核通过 显示通过盖章
-                m_edtOpinionSup.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.supervisor_pass),null);
-            }else { //业主审核驳回   显示驳回盖章
-                m_edtOpinionSup.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.supervisor_reject),null);
+            if (m_sInfo.getResult().contains("审核")){ //监理审核通过 显示通过盖章
+                m_edtOpinionSup.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.ic_pervisor_pass),null);
+            }else { //监理审核驳回   显示驳回盖章
+                m_edtOpinionSup.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.ic_supervisor_reject),null);
             }
         }
 //        int _replyid = getIntent().getIntExtra("replyId", 0);
@@ -440,6 +441,8 @@ public class ReadReplyInfoHasCheckActivity extends BaseActivity implements View.
 //        m_btnPass.setOnClickListener(this);
         m_progressDialog = new ProgressDialog(this);
         m_progressDialog.setCancelable(true);
+        m_owerView = $(R.id.layoutCon);
+        m_owerView.setVisibility(View.GONE);
 
 
     }
@@ -811,7 +814,12 @@ public class ReadReplyInfoHasCheckActivity extends BaseActivity implements View.
      */
     @Override
     public void showLoadingFailed(String msg) {
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReadReplyInfoHasCheckActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);

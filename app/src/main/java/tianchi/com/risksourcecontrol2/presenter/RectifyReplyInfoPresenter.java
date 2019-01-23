@@ -89,7 +89,6 @@ public class RectifyReplyInfoPresenter implements INewLogPresenter {
     private RectifyReplyInfo getSafetyLog() {
 
         try {
-
             RectifyReplyInfo _rectifyReplyInfo = new RectifyReplyInfo();
             _rectifyReplyInfo.setRectifyLogID(m_notifyView.getLogID()+"");  //整改日志id
             _rectifyReplyInfo.setInspectUnit(m_notifyView.getCheckUnit()+""); //检查单位

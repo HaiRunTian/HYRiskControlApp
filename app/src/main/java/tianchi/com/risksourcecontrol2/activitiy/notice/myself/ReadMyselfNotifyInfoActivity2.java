@@ -1,4 +1,4 @@
-package tianchi.com.risksourcecontrol2.activitiy.notice;
+package tianchi.com.risksourcecontrol2.activitiy.notice.myself;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -28,6 +28,7 @@ import java.util.HashMap;
 
 import okhttp3.Request;
 import tianchi.com.risksourcecontrol2.R;
+import tianchi.com.risksourcecontrol2.activitiy.notice.NewRectifyReplyInfoActivity;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.login.UserInfo;
 import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyNotifyInfo;
@@ -47,7 +48,7 @@ import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
 
 import static tianchi.com.risksourcecontrol2.util.GsonUtils.jsonToBean;
 
-public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnClickListener,ILoadingNotifyView {
+public class ReadMyselfNotifyInfoActivity2 extends BaseActivity implements View.OnClickListener, ILoadingNotifyView {
     private ProgressDialog m_progressDialog;//提交进度
     private EditText m_edtLogId; //日志编号
     private EditText m_edtCheckUnit; //检查单位
@@ -57,7 +58,6 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
     private EditText m_edtLogRectifyDate; //整改期限日期
     private GridView m_gdvPic; //
     private GridView m_gridViewReply;
-
     private EditText m_edtContent; //检查内容
     private EditText m_edtFindPro; //发现问题
     private EditText m_edtReformMethod; // 整改措施与要求
@@ -98,8 +98,6 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
     private String[] m_arrayPicRemarkReply;
     private SimpleAdapter simpleAdapter;     //适配器
     private SimpleAdapter simpleAdapterReply;     //适配器
-    private View m_OwerViwe;
-
     private String m_reply_loginName;
     private int m_reply_userId;
     private ArrayList<Object> m_reply_list;
@@ -156,19 +154,19 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
         m_tvReply = ((TextView) findViewById(R.id.tvReply));
         m_tvReply.setOnClickListener(this);
         //通知单
-        m_edtLogId =((EditText) findViewById(R.id.edtlogid));
+        m_edtLogId = ((EditText) findViewById(R.id.edtlogid));
         m_edtCheckUnit = ((EditText) findViewById(R.id.edtLogCheckUnit));
-        m_edtBecheckUnit =((EditText) findViewById(R.id.edtLogBeCheckUnit));
+        m_edtBecheckUnit = ((EditText) findViewById(R.id.edtLogBeCheckUnit));
         m_edtSection = ((EditText) findViewById(R.id.edtSection));
         m_edtCheckDate = ((EditText) findViewById(R.id.edtLogCheckDate));
         m_edtCheckMan = ((EditText) findViewById(R.id.edtLogCheckMan));
         m_edtLogRectifyDate = ((EditText) findViewById(R.id.edtLogRectifyDate));
-        m_gdvPic =((GridView) findViewById(R.id.gridView1));
+        m_gdvPic = ((GridView) findViewById(R.id.gridView1));
 
         m_edtContent = ((EditText) findViewById(R.id.edtCheckContent));
         m_edtFindPro = ((EditText) findViewById(R.id.edtFindProblem));
         m_edtReformMethod = ((EditText) findViewById(R.id.edtReformMethod));
-        m_receiveMans =((EditText) findViewById(R.id.edtRecorder));
+        m_receiveMans = ((EditText) findViewById(R.id.edtRecorder));
         //回复单显示
         Notify_Reply = $(R.id.Notify_Reply);
         edtlogidReply = ((EditText) findViewById(R.id.edtlogidReply));
@@ -183,8 +181,7 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
         edtNotifyLogReCheckManReply = ((EditText) findViewById(R.id.edtNotifyLogReCheckManReply));
         edtSupervisor = ((EditText) findViewById(R.id.edtSupervisor));
         edtOwnerReply = ((EditText) findViewById(R.id.edtOwner));
-        m_OwerViwe = findViewById(R.id.owerView);
-        m_OwerViwe.setVisibility(View.GONE);
+
 
     }
 
@@ -194,13 +191,12 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
         initShowPicArea();
         Bundle _bundle = getIntent().getExtras();
         int _id = _bundle.getInt("id");
-        getNotice(_id, new QueryNotfiyReplyActivity.CallBack() {
+        getNotice(_id, new ReadMyselfNotifyInfoActivity2.CallBack() {
             @Override
             public void getData(String string) {
-//                LogUtils.i("string =" +string);
+//                LogUtils.i("string =" + string);
                 int status = GsonUtils.getIntNoteJsonString(string, "status");
                 String msg = GsonUtils.getStringNodeJsonString(string, "msg");
-
                 m_progressDialog.setMessage(msg);
                 //回复
                 String rectifyNotify = GsonUtils.getStringNodeJsonString(string, "rectifyNotify");
@@ -208,31 +204,32 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
 
                 //可回复不可回复
                 int _logState = rectifyNotifyInfo.getLogState();
-                if (_logState == 1 || _logState==4) {
-                    m_tvReply.setVisibility(View.VISIBLE);
-                    //                    Notify_Reply.setVisibility(View.GONE);
-                }else{
-                    m_tvReply.setVisibility(View.GONE);
-                    Toast.makeText(QueryNotfiyReplyActivity.this, "该通知到已回复", Toast.LENGTH_SHORT).show();
-                    //                    Notify_Reply.setVisibility(View.VISIBLE);
-                }
+//                if (_logState==1 || _logState==4) {
+//                    m_tvReply.setVisibility(View.VISIBLE);
+//                    //                    Notify_Reply.setVisibility(View.GONE);
+//                }else{
+                m_tvReply.setVisibility(View.GONE);
+//                    Toast.makeText(ReadMyselfNotifyInfoActivity2.this, "已回复！", Toast.LENGTH_SHORT).show();
+                //                    Notify_Reply.setVisibility(View.VISIBLE);
+//                }
+
                 m_InspectorSign = rectifyNotifyInfo.getInspectorSign();
-//                LogUtils.i("logName ="+m_InspectorSign);
+//                LogUtils.i("logName =" + m_InspectorSign);
 
                 //照片备注
                 m_imgInfo = rectifyNotifyInfo.getImageInfos();
-//                 LogUtils.i("_imgInfo", m_imgInfo +"");
-                if (m_imgInfo.contains("#")){
+//                LogUtils.i("_imgInfo", m_imgInfo + "");
+                if (m_imgInfo.contains("#")) {
                     m_arrayPicRemark = m_imgInfo.split("#");
-                }else m_arrayPicRemark = new String[]{m_imgInfo};
+                } else m_arrayPicRemark = new String[]{m_imgInfo};
 
                 if (status == -1) {
-                    MyToast.showMyToast(QueryNotfiyReplyActivity.this, msg, Toast.LENGTH_SHORT);
+                    MyToast.showMyToast(ReadMyselfNotifyInfoActivity2.this, msg, Toast.LENGTH_SHORT);
 //                    Notify_Reply.setVisibility(View.GONE);
 
                 } else if (status == 0) {
-                    MyToast.showMyToast(QueryNotfiyReplyActivity.this, msg, Toast.LENGTH_SHORT);
-                    //隐藏回复单布局，展示通知单
+                    MyToast.showMyToast(ReadMyselfNotifyInfoActivity2.this, msg, Toast.LENGTH_SHORT);
+                    //展示通知单 未回复
                     rectifyNotify(rectifyNotifyInfo);
 
                     QueryUserListWork.queryUserInfo(m_InspectorSign, new OnUserListListener() {
@@ -253,13 +250,14 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                                     downloadFirstPicture(0);
                                 }
                             } else {
-                                MyToast.showMyToast(QueryNotfiyReplyActivity.this, "该日志无照片", Toast.LENGTH_SHORT);
+                                MyToast.showMyToast(ReadMyselfNotifyInfoActivity2.this, "该日志无照片", Toast.LENGTH_SHORT);
                                 //                imgvPicture.setImageResource(R.mipmap.ic_image_disable);
                             }
                         }
+
                         @Override
                         public void onQueryFailed(String msg) {
-                            MyToast.showMyToast(QueryNotfiyReplyActivity.this, msg, Toast.LENGTH_SHORT);
+                            MyToast.showMyToast(ReadMyselfNotifyInfoActivity2.this, msg, Toast.LENGTH_SHORT);
                         }
                     });
 
@@ -273,11 +271,11 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                         public void onQuerySucceed(UserInfo userInfoList) {
                             m_userName = userInfoList.getLoginName();
                             m_userId = userInfoList.getUserId();
-//                            LogUtils.i("logName = -"+m_userName );
-//                            LogUtils.i("logName = -"+m_userId );
+//                            LogUtils.i("logName = -" + m_userName);
+//                            LogUtils.i("logName = -" + m_userId);
 
                             pictureName = rectifyNotifyInfo.getImages();
-//                            LogUtils.i("logName = -"+pictureName );
+//                            LogUtils.i("logName = -" + pictureName);
                             if (pictureName != null && pictureName.length() > 0) {
                                 _list = new ArrayList<>();
                                 _list.addAll(Arrays.asList(pictureName.split("#")));
@@ -286,13 +284,14 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                                     downloadFirstPicture(0);
                                 }
                             } else {
-                                MyToast.showMyToast(QueryNotfiyReplyActivity.this, "该日志无照片", Toast.LENGTH_SHORT);
+                                MyToast.showMyToast(ReadMyselfNotifyInfoActivity2.this, "该日志无照片", Toast.LENGTH_SHORT);
                                 //                imgvPicture.setImageResource(R.mipmap.ic_image_disable);
                             }
                         }
+
                         @Override
                         public void onQueryFailed(String msg) {
-                            MyToast.showMyToast(QueryNotfiyReplyActivity.this, msg, Toast.LENGTH_SHORT);
+                            MyToast.showMyToast(ReadMyselfNotifyInfoActivity2.this, msg, Toast.LENGTH_SHORT);
                         }
                     });
 
@@ -303,7 +302,7 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                 m_progressDialog.dismiss();
             }
 
-         });
+        });
     }
 
     private void rectifyNotify(RectifyNotifyInfo rectifyNotifyInfo) {
@@ -312,9 +311,9 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
         m_edtBecheckUnit.setText(rectifyNotifyInfo.getBeCheckedUnit());
         m_edtSection.setText(rectifyNotifyInfo.getSection());
         m_edtCheckDate.setText(rectifyNotifyInfo.getCheckedTime());
-        if (rectifyNotifyInfo.getInspectorSigns()!=null){
-            m_edtCheckMan.setText(rectifyNotifyInfo.getInspectorSign()+"#"+rectifyNotifyInfo.getInspectorSigns());
-        }else {
+        if (rectifyNotifyInfo.getInspectorSigns() != null) {
+            m_edtCheckMan.setText(rectifyNotifyInfo.getInspectorSign() + "#" + rectifyNotifyInfo.getInspectorSigns());
+        } else {
             m_edtCheckMan.setText(rectifyNotifyInfo.getInspectorSign());
         }
 
@@ -344,10 +343,10 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
         edtOwnerReply.setText(_rectifyReplyInfo.getOwnerMans());
 
         m_imgInfoReply = _rectifyReplyInfo.getImageInfos();
-//        LogUtils.i("_imgInfo", m_imgInfoReply +"");
-        if (m_imgInfoReply.contains("#")){
+//        LogUtils.i("_imgInfo", m_imgInfoReply + "");
+        if (m_imgInfoReply.contains("#")) {
             m_arrayPicRemarkReply = m_imgInfoReply.split("#");
-        }else m_arrayPicRemarkReply = new String[]{m_imgInfoReply};
+        } else m_arrayPicRemarkReply = new String[]{m_imgInfoReply};
 
         QueryUserListWork.queryUserInfo(rectifyManSign, new OnUserListListener() {
             @Override
@@ -362,16 +361,17 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
 
                     picNamesReply.addAll(_listReply);
                     if (picNamesReply.size() > 0) {//第一次下载第一张照片
-                       downloadFirstPicture(1);
+                        downloadFirstPicture(1);
                     }
                 } else {
-                    MyToast.showMyToast(QueryNotfiyReplyActivity.this, "该日志无照片", Toast.LENGTH_SHORT);
+                    MyToast.showMyToast(ReadMyselfNotifyInfoActivity2.this, "该日志无照片", Toast.LENGTH_SHORT);
                     //                imgvPicture.setImageResource(R.mipmap.ic_image_disable);
                 }
             }
+
             @Override
             public void onQueryFailed(String msg) {
-                MyToast.showMyToast(QueryNotfiyReplyActivity.this, msg, Toast.LENGTH_SHORT);
+                MyToast.showMyToast(ReadMyselfNotifyInfoActivity2.this, msg, Toast.LENGTH_SHORT);
             }
         });
     }
@@ -404,7 +404,7 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
 
 
     private void downloadPictures(int status) {
-        if (status == 0){ //整改单
+        if (status == 0) { //整改单
             for (int i = 0; i < picNames.size(); i++) {
                 if (picNames.get(i).equals("")) {
                     continue;
@@ -422,12 +422,12 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                     }
                 } else {
                     //                Bitmap _bitmap = BitmapFactory.decodeFile(FoldersConfig.NOTICEFY + picNames.get(i));
-                    Bitmap _bitmap =CameraUtils.getimage(FoldersConfig.NOTICEFY + picNames.get(i));
+                    Bitmap _bitmap = CameraUtils.getimage(FoldersConfig.NOTICEFY + picNames.get(i));
                     HashMap<String, Object> _map = new HashMap<>();
                     _map.put("itemImage", _bitmap);
-                    if (!m_imgInfo.isEmpty()){
-                        _map.put("remark",m_arrayPicRemark[i]);
-                    }else  _map.put("remark","");
+                    if (!m_imgInfo.isEmpty()) {
+                        _map.put("remark", m_arrayPicRemark[i]);
+                    } else _map.put("remark", "");
                     imageItem.add(_map);
                     //                picFiles.add(picFile);
                     refreshGridviewAdapter();
@@ -439,7 +439,7 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                     //                                m_lock.unlock();
                 }
             }
-        }else { //回复单
+        } else { //回复单
             for (int i = 0; i < picNamesReply.size(); i++) {
                 if (picNamesReply.get(i).equals("")) {
                     continue;
@@ -457,12 +457,12 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                     }
                 } else {
                     //                Bitmap _bitmap = BitmapFactory.decodeFile(FoldersConfig.NOTICEFY + picNames.get(i));
-                    Bitmap _bitmap =CameraUtils.getimage(FoldersConfig.NOTICEFY + picNamesReply.get(i));
+                    Bitmap _bitmap = CameraUtils.getimage(FoldersConfig.NOTICEFY + picNamesReply.get(i));
                     HashMap<String, Object> _map = new HashMap<>();
                     _map.put("itemImage", _bitmap);
-                    if (!m_imgInfoReply.isEmpty()){
-                        _map.put("remark",m_arrayPicRemarkReply[i]);
-                    }else  _map.put("remark","");
+                    if (!m_imgInfoReply.isEmpty()) {
+                        _map.put("remark", m_arrayPicRemarkReply[i]);
+                    } else _map.put("remark", "");
                     imageItemReply.add(_map);
                     //                picFiles.add(picFile);
                     refreshGridviewAdapterReply();
@@ -512,7 +512,7 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                 });
 
             }
-        }else if (status ==1){ //回复单
+        } else if (status == 1) { //回复单
             File picFile = new File(FoldersConfig.NOTICEFY, picNamesReply.get(0));
             if (!picFile.exists()) {
                 m_picIndex = 0;
@@ -546,10 +546,11 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
             }
         }
     }
+
     //整改通知单刷新图片区域gridview
     private void refreshGridviewAdapter() {
         simpleAdapter = new SimpleAdapter(this, imageItem,
-                R.layout.layout_griditem_addpic2, new String[]{"itemImage","remark"}, new int[]{R.id.imageView1, R.id.tv1});
+                R.layout.layout_griditem_addpic2, new String[]{"itemImage", "remark"}, new int[]{R.id.imageView1, R.id.tv1});
         simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -578,10 +579,11 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
         });
 
     }
+
     //整改回复单刷新图片区域gridview
     private void refreshGridviewAdapterReply() {
         simpleAdapterReply = new SimpleAdapter(this, imageItemReply,
-                R.layout.layout_griditem_addpic2, new String[]{"itemImage","remark"}, new int[]{R.id.imageView1, R.id.tv1});
+                R.layout.layout_griditem_addpic2, new String[]{"itemImage", "remark"}, new int[]{R.id.imageView1, R.id.tv1});
         simpleAdapterReply.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -636,6 +638,7 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
         });
 
     }
+
     private void initShowPicAreaReply() {
         picNamesReply = new ArrayList<>();
         imageItemReply = new ArrayList<>();
@@ -685,14 +688,15 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                         m_progressDialog.setMessage("加载失败");
                         m_progressDialog.dismiss();
                     }
+
                     @Override
                     public void requestSuccess(String result) throws Exception {
 //                        LogUtils.i("result =", result);
-                        if (result==null){
+                        if (result == null) {
                             m_progressDialog.setMessage("加载失败");
                             m_progressDialog.dismiss();
-                        }else
-                        callBack.getData(result);
+                        } else
+                            callBack.getData(result);
 
                     }
                 });
@@ -702,18 +706,18 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tvReply:
                 //                int _logState = _rectifyNotifyInfo.getLogState();
                 //                if (_logState==1 || _logState==4) {
                 Bundle _bundle = new Bundle();
                 _bundle.putInt("dbID", rectifyNotifyInfo.getId());
-                _bundle.putString("logId",rectifyNotifyInfo.getLogId());
+                _bundle.putString("logId", rectifyNotifyInfo.getLogId());
                 _bundle.putString("checkUnit", rectifyNotifyInfo.getInspectUnit());
-                _bundle.putString("beCheckUnit",rectifyNotifyInfo.getBeCheckedUnit());
+                _bundle.putString("beCheckUnit", rectifyNotifyInfo.getBeCheckedUnit());
                 _bundle.putString("checkMan", m_edtCheckMan.getText().toString());
                 _bundle.putString("imgInfo", m_imgInfo);
-                Intent _intent = new Intent(QueryNotfiyReplyActivity.this, NewRectifyReplyInfoActivity.class);
+                Intent _intent = new Intent(ReadMyselfNotifyInfoActivity2.this, NewRectifyReplyInfoActivity.class);
                 _intent.putExtras(_bundle);
                 startActivity(_intent);
                 //               }else {
@@ -727,6 +731,7 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
         }
 
     }
+
     public interface CallBack {
         void getData(String string);
     }
@@ -738,10 +743,10 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
     public String getDownLoadURL() {
 
 //        LogUtils.i(getIdLoginName());
-        if (m_notifyStatus == 0){
+        if (m_notifyStatus == 0) {
             return ServerConfig.URL_NOTICEFY_FILE_UPLOAD +
                     getIdLoginName() + "/" + itemPicName;
-        }else {
+        } else {
 
             return ServerConfig.URL_NOTICEFY_FILE_UPLOAD +
                     getIdLoginName() + "/" + itemPicNameReply;
@@ -754,9 +759,9 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
     @Override
     public String getIdLoginName() {
 //        return "669test3";
-        if (m_notifyStatus == 0){
+        if (m_notifyStatus == 0) {
             return m_userId + m_userName;
-        }else {
+        } else {
             return m_reply_userId + m_reply_loginName;
         }
     }
@@ -766,11 +771,11 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
      */
     @Override
     public String getPictureName() {
-        if (m_notifyStatus ==0){
+        if (m_notifyStatus == 0) {
             if (itemPicName != null && itemPicName.length() > 0)
 
                 return itemPicName;
-        }else {
+        } else {
             if (itemPicNameReply != null && itemPicNameReply.length() > 0)
 
                 return itemPicNameReply;
@@ -807,16 +812,16 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
      */
     @Override
     public void showLoadingSucceed(Bitmap bitmap) {
-        if (m_notifyStatus == 0){
+        if (m_notifyStatus == 0) {
             if (bitmap != null) {
                 picBitmap = bitmap;
                 //            picFiles.add(CameraUtils.bitMapToFile(picBitmap,
                 //                    FoldersConfig.PRO_SAFETY_PIC_PATH, itemPicName));
                 HashMap<String, Object> _map = new HashMap<>();
                 _map.put("itemImage", picBitmap);
-                if (!m_imgInfo.isEmpty()){
-                    _map.put("remark",m_arrayPicRemark[m_picIndex]);
-                }else  _map.put("remark","");
+                if (!m_imgInfo.isEmpty()) {
+                    _map.put("remark", m_arrayPicRemark[m_picIndex]);
+                } else _map.put("remark", "");
                 imageItem.add(_map);
                 refreshGridviewAdapter();
                 //            MyToast.showMyToast(this, "成功加载" + itemPicName, Toast.LENGTH_SHORT);
@@ -837,16 +842,16 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
                 msg.what = 0;
                 m_handler.sendMessageDelayed(msg, 500);
             }
-        }else {
+        } else {
             if (bitmap != null) {
                 picBitmap = bitmap;
                 //            picFiles.add(CameraUtils.bitMapToFile(picBitmap,
                 //                    FoldersConfig.PRO_SAFETY_PIC_PATH, itemPicName));
                 HashMap<String, Object> _map = new HashMap<>();
                 _map.put("itemImage", picBitmap);
-                if (!m_imgInfoReply.isEmpty()){
-                    _map.put("remark",m_arrayPicRemarkReply[m_picIndex]);
-                }else  _map.put("remark","");
+                if (!m_imgInfoReply.isEmpty()) {
+                    _map.put("remark", m_arrayPicRemarkReply[m_picIndex]);
+                } else _map.put("remark", "");
                 imageItemReply.add(_map);
                 refreshGridviewAdapterReply();
                 //            MyToast.showMyToast(this, "成功加载" + itemPicName, Toast.LENGTH_SHORT);
@@ -880,9 +885,10 @@ public class QueryNotfiyReplyActivity extends BaseActivity implements View.OnCli
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                MyToast.showMyToast(QueryNotfiyReplyActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+                MyToast.showMyToast(ReadMyselfNotifyInfoActivity2.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
             }
         });
+
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);

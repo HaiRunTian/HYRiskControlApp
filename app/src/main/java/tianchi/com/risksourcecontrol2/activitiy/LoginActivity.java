@@ -583,7 +583,7 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
         Iterator<String> _iterator1 = _set.iterator();
         while (_iterator1.hasNext()){
             String _next = _iterator1.next();
-            LogUtils.i("next",_next);
+//            LogUtils.i("next",_next);
         }
         isPassWordRemembered = sharedPreferences.getBoolean("isPassWordRemembered", false);
 
@@ -635,7 +635,7 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
             Iterator<String> _iterator1 = _set1.iterator();
             while (_iterator1.hasNext()){
                 String _next = _iterator1.next();
-                LogUtils.i("next",_next);
+//                LogUtils.i("next",_next);
             }
             HashSet<String> _set = new HashSet<>(_set1);
             _set.add(getUserName()+"#" + getPassWord());
@@ -786,7 +786,7 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
             Iterator<String> _iterator = _set1.iterator();
             while (_iterator.hasNext()){
                 String _next = _iterator.next();
-                LogUtils.i("abc",_next);
+//                LogUtils.i("abc",_next);
 
                 if (_next.equals(_s)){
                     _iterator.remove();

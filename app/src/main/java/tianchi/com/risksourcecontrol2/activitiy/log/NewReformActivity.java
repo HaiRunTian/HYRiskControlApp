@@ -28,6 +28,7 @@ import java.util.Date;
 import java.util.Random;
 
 import tianchi.com.risksourcecontrol2.R;
+import tianchi.com.risksourcecontrol2.activitiy.notice.NewRectifyReplyInfoActivity;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.custom.MyAlertDialog;
 import tianchi.com.risksourcecontrol2.custom.MyTakePicDialog;
@@ -365,35 +366,48 @@ public class NewReformActivity extends BaseActivity implements MyTakePicDialog.O
 
     @Override
     public void showSubmitSucceed(String msg) {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                hideInSubmiting();
+//            }
+//        });
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                MyToast.showMyToast(NewReformActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
                 hideInSubmiting();
             }
         });
-        MyToast.showMyToast(this, msg, Toast.LENGTH_SHORT);
         finish();
     }
 
     @Override
     public void showSubmitFailed(String msg) {
+//        runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                hideInSubmiting();
+//            }
+//        });
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 hideInSubmiting();
+                MyToast.showMyToast(NewReformActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
             }
         });
-        MyToast.showMyToast(this, msg, Toast.LENGTH_SHORT);
         finish();
     }
 
     @Override
     public void uploadFileSucceed(String msg) {
-        MyToast.showMyToast(this, msg, Toast.LENGTH_SHORT);
+
         runOnUiThread(new Runnable() {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void run() {
+                MyToast.showMyToast(NewReformActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
                 hideInSubmiting();
                 btnAddPic.setBackground(new BitmapDrawable(picBitmap));
             }
@@ -406,9 +420,10 @@ public class NewReformActivity extends BaseActivity implements MyTakePicDialog.O
             @Override
             public void run() {
                 hideInSubmiting();
+                MyToast.showMyToast(NewReformActivity.this, msg, Toast.LENGTH_SHORT);
             }
         });
-        MyToast.showMyToast(this, msg, Toast.LENGTH_SHORT);
+
         picBitmap = null;
     }
 

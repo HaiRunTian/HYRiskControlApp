@@ -570,15 +570,26 @@ public class NewSafetyLogActivity extends BaseActivity implements MyTakePicDialo
     @Override
     public void showSubmitSucceed(String msg) {
         hideInSubmiting();
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
-        finish();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                hideInSubmiting();
+                MyToast.showMyToast(NewSafetyLogActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override
     public void showSubmitFailed(String msg) {
         hideInSubmiting();
         uploadImgIndex = 0;
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                hideInSubmiting();
+                MyToast.showMyToast(NewSafetyLogActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         //        finish();
     }
 
@@ -614,7 +625,13 @@ public class NewSafetyLogActivity extends BaseActivity implements MyTakePicDialo
     public void uploadFileFailed(String msg) {
         hideInSubmiting();
         uploadImgIndex = 0;
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                hideInSubmiting();
+                MyToast.showMyToast(NewSafetyLogActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         //        resetParams();
     }
 

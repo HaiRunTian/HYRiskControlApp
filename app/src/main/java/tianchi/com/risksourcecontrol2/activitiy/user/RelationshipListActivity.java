@@ -76,7 +76,7 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
     private void init() {
         m_permission = getIntent().getIntExtra("Type", 0);
         m_manager = getSupportFragmentManager();
-        LogUtils.i("m_permission = ",m_permission+"");
+//        LogUtils.i("m_permission = ",m_permission+"");
     }
 
     private void initView() {

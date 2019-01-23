@@ -54,6 +54,7 @@ import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.CameraUtils;
 import tianchi.com.risksourcecontrol2.util.DateTimeUtils;
 import tianchi.com.risksourcecontrol2.util.FileUtils;
+import tianchi.com.risksourcecontrol2.util.GpsUtils;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 import tianchi.com.risksourcecontrol2.view.IPatrolSignInView;
@@ -628,8 +629,13 @@ public class PatrolSignInActivity extends BaseActivity implements AdapterView.On
                     MyToast.showMyToast(this, "请勿重复签到", Toast.LENGTH_SHORT);
                     return;
                 }
+
+                if (AppInitialization.getInstance().getGPS().getPoint2D() == null){
+                    MyToast.showMyToast(PatrolSignInActivity.this,"请开启定位功能",Toast.LENGTH_SHORT);
+                    return;
+                }
                 if (getX().length() == 0 || getY().length() == 0) {
-                    getXY();
+                     getXY();
                 } else if (getPicture().length() > 0) {
                     uploadFirstPicture();
                 } else {

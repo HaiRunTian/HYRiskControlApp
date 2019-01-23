@@ -684,7 +684,7 @@ public class SeeReplyInfoActivity extends BaseActivity implements View.OnClickLi
      * @return 获取登录名 id
      */
     @Override
-    public String getIdLoginName() {
+        public String getIdLoginName() {
         return userId + userLoginName;
     }
 
@@ -764,7 +764,13 @@ public class SeeReplyInfoActivity extends BaseActivity implements View.OnClickLi
      */
     @Override
     public void showLoadingFailed(String msg) {
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(SeeReplyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
+
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);

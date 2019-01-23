@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.location.Criteria;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -53,6 +55,9 @@ import com.supermap.mapping.CalloutAlignment;
 import com.supermap.mapping.GeometrySelectedEvent;
 import com.supermap.mapping.GeometrySelectedListener;
 import com.supermap.mapping.Layer;
+import com.supermap.mapping.LayerSetting;
+import com.supermap.mapping.LayerSettingImage;
+import com.supermap.mapping.Layers;
 import com.supermap.mapping.Map;
 import com.supermap.mapping.MapControl;
 import com.supermap.mapping.MapParameterChangedListener;
@@ -73,12 +78,12 @@ import java.util.List;
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.activitiy.message.ReceiveNoticeListActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksource.RiskResultListActivity;
-import tianchi.com.risksourcecontrol2.activitiy.risksource.TakingSoilFieldTypeActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.BridgeTypeformMapActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.HighLowTypeRiskForMapActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.LowFillFormMapActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.ServiceZoneFromActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.SpecialSoilFromActivity;
+import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.TakingSoilFieldTypeFromActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.TunnelTypeFromActivity;
 import tianchi.com.risksourcecontrol2.base.AppInitialization;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
@@ -99,8 +104,12 @@ import tianchi.com.risksourcecontrol2.notification.MyNotification;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.ActivityCollector;
 import tianchi.com.risksourcecontrol2.util.GetNewNotifyUtils;
+import tianchi.com.risksourcecontrol2.util.GpsUtils;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.view.IHomeView;
+
+import static tianchi.com.risksourcecontrol2.location.BaiDuGPS.m_isFirst;
 
 /**
  * @描述 底层侧滑活动
@@ -130,15 +139,16 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
     private Workspace m_workspace;//工作空间
     private MapView m_mapView; //地图view
     private static MapControl m_MapControl; //地图控件类
-    private Button m_btnZoomOut;//放大按钮
-    private Button m_btnZoomIn;//缩小按钮
+//    private Button m_btnZoomOut;//放大按钮
+//    private Button m_btnZoomIn;//缩小按钮
     private Button m_btnFull;//全图按钮
     private Button m_btnPan;//漫游按钮
     private ProgressDialog m_loadingDialog;//加载进度条
     private ProgressDialog m_queryingDialog;//查询进度条
     private Button m_btnMeaLength;//测量长度
     private Button m_btnMeaArea; //测量面积
-    private RadioGroup m_radioGroup2; //测量容器
+//    private Button m_btnMapChange;//切换地图
+//    private RadioGroup m_radioGroup2; //测量容器
     private Button m_btnLocation; //定位
     private TextView m_tvMeasure; //测量容器
     private Spinner m_spSection;//标段
@@ -170,6 +180,13 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
     private BaseGPS m_GPS = null;
     private DatasourceConnectionInfo m_t_dInfo;
     private Datasource m_n_ds;
+    private int mapIndex = 0; //0 = 常规地图  1 影像
+    private ImageButton m_btnMapChange; //地图切换按钮
+    private ImageButton m_imgBtnMap; //常规地图
+    private ImageButton m_imgBtnImage;//影像地图
+    private View m_mapCon; //地图切换按钮容器
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -178,7 +195,6 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
         Environment.initialization(this);
         setContentView(R.layout.activity_drawer);
 //        LogUtils.i("DrawerActivity", "-------------------onCreate");
-
         initView();
         init();
         setDefaultSelected();
@@ -187,8 +203,6 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
         if (!licenseStatus())
             Toast.makeText(DrawerActivity.this, "许可证不可使用，请联系技术员", Toast.LENGTH_LONG).show();
     }
-
-
 
 
     //请求网络、查看信息 通知发送
@@ -291,6 +305,9 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (m_GPS != null && m_NavigationPanelView.getVisibility() == View.VISIBLE ) {
+            m_GPS.onStop();
+        }
         // m_LocationManager.removeUpdates(locationListener);
     }
 
@@ -344,10 +361,12 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
             Log.e("m_GPS", "initial gps faild...");
             return;
         }
+//        m_SensorManager.registerListener(m_GPS.getSensorListener(),
+//                SensorManager.SENSOR_ORIENTATION,
+//                SensorManager.SENSOR_DELAY_GAME);
         m_SensorManager.registerListener(m_GPS.getSensorListener(),
-                SensorManager.SENSOR_ORIENTATION,
-                SensorManager.SENSOR_DELAY_GAME);
-
+                m_SensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION),
+                SensorManager.SENSOR_DELAY_UI);
 
         SharedPreferences _preferences = getSharedPreferences("riskSource_Location", MODE_PRIVATE);
         float location_X = _preferences.getFloat("X", 0);
@@ -360,7 +379,10 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
 
     @Override
     protected void onStop() {
-        m_SensorManager.unregisterListener(m_GPS.getSensorListener());
+        if (m_GPS != null && m_NavigationPanelView.getVisibility() == View.VISIBLE) {
+            m_SensorManager.unregisterListener(m_GPS.getSensorListener());
+            m_GPS.onStop();
+        }
         super.onStop();
     }
 
@@ -395,11 +417,13 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
             }
 
 //            _section = "RiskSourceBt";
-            String _port = "http://119.23.66.213:8090/iserver/services/map-RiskSource/rest/maps/China";
+//            String _port = "http://119.23.66.213:8090/iserver/services/map-RiskSource/rest/maps/China";
+            String _port = "http://www.google.cn/maps";
 //            String _port = "http://map.baidu.com";
             m_dsInfo.setServer(_port);
-            m_dsInfo.setEngineType(EngineType.Rest);
-            m_dsInfo.setAlias("China");
+            m_dsInfo.setEngineType(EngineType.GoogleMaps);
+//            m_dsInfo.setAlias("China");
+            m_dsInfo.setAlias("GoogleMap");
             m_ds = m_workspace.getDatasources().open(m_dsInfo);
 //            int ii = m_ds.getDatasets().getCount();
 //            LogUtils.i("datasetName = ", m_ds.getDatasets().get(0).getName());
@@ -412,28 +436,38 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
 //            m_ds.getDatasets().get(0).setPrjCoordSys(m_MapControl.getMap().getPrjCoordSys());
 
 //            _section ="RiskSource00";
-            String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + _section + "/rest/maps/" + _section;
-            m_t_dInfo = new DatasourceConnectionInfo();
-            m_t_dInfo.setServer(_port1);
-            m_t_dInfo.setEngineType(EngineType.Rest);
-            m_t_dInfo.setAlias(_section);
-            m_n_ds = m_workspace.getDatasources().open(m_t_dInfo);
-            LogUtils.i("m_workspace datasources count=" + m_workspace.getDatasources().getCount() + ", open result=" + m_n_ds.toString());
-            if (m_ds != null && m_n_ds != null) {
+//            String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + _section + "/rest/maps/" + _section;
+            String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + "RiskSource012" + "/rest/maps/" + "RiskSource01";
+//            m_t_dInfo = new DatasourceConnectionInfo();
+//            m_t_dInfo.setServer(_port1);
+//            m_t_dInfo.setEngineType(EngineType.Rest);
+//            m_t_dInfo.setAlias(_section);
+//            m_n_ds = m_workspace.getDatasources().open(m_t_dInfo);
+//            LogUtils.i("m_workspace datasources count=" + m_workspace.getDatasources().getCount() + ", open result=" + m_n_ds.toString());
+            if (m_ds != null) {
 //                if (m_ds != null ) {
-                Layer _btLayer = m_MapControl.getMap().getLayers().add(m_ds.getDatasets().get(0), false);
-                Layer _yLayer = m_MapControl.getMap().getLayers().add(m_n_ds.getDatasets().get(0), true);
-                double _ratio = 1.0 / 1500000;
-                _yLayer.setMinVisibleScale(_ratio);
-                 m_MapControl.getMap().setMinScale(0);
+//                Layer _btLayer = m_MapControl.getMap().getLayers().add(m_ds.getDatasets().get(0), false);
+                Layers _layers = m_MapControl.getMap().getLayers();
+                _layers.add(m_ds.getDatasets().get(0), true);
+                _layers.add(m_ds.getDatasets().get(1), false).setVisible(false);
+//                Layer _yLayer = _layers.add(m_n_ds.getDatasets().get(0), true);
+////                _layers.moveUp(1);
+//
+//                LayerSettingImage _layerSettingImage = (LayerSettingImage) _yLayer.getAdditionalSetting();
+//                _layerSettingImage.setTransparent(true);
+//                _yLayer.setAdditionalSetting(_layerSettingImage);
+
+//                double _ratio = 1.0 / 50000;
+//                _yLayer.setMinVisibleScale(_ratio);
+//                m_MapControl.getMap().setMinScale(0);
                 m_MapControl.getMap().setVisibleScalesEnabled(false);
                 m_MapControl.getMap().setViewBoundsLocked(false);
 
 //                LogUtils.i("max=" + m_MapControl.getMap().getMinScale() + ", min=" + m_MapControl.getMap().getMaxScale() + "view bound lock = " + m_MapControl.getMap().getVisibleScales().toString() + ",current scale=" + m_MapControl.getMap().getLockedViewBounds().toString());
-                double[] _scale = m_MapControl.getMap().getVisibleScales();
-                for (int i = 0; i < _scale.length; ++i) {
-//                    LogUtils.i("scale i=" + _scale[i]);
-                }
+//                double[] _scale = m_MapControl.getMap().getVisibleScales();
+//                for (int i = 0; i < _scale.length; ++i) {
+////                    LogUtils.i("scale i=" + _scale[i]);
+//                }
 
 //                LogUtils.i("max=" + _yLayer.getMaxVisibleScale() + ", min=" + _yLayer.getMinVisibleScale());
                 m_MapControl.getMap().refresh();
@@ -457,25 +491,26 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                 getWindow().setFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON,
                         WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
                 m_NavigationPanelView = new NavigationPanelView(this);
+                m_NavigationPanelView.setVisibility(View.GONE);
                 m_mapView.addView(m_NavigationPanelView);
                 m_MapControl.getMap().refresh();
                 m_PrjCoordSys = m_ds.getDatasets().get(0).getPrjCoordSys();
                 //百度地图定位初始化
-                 m_GPS = new BaiDuGPS();
+                m_GPS = new BaiDuGPS();
                 m_GPS.setApplication(this.getApplication());
                 m_GPS.setNavigationPanel(m_NavigationPanelView);
                 m_GPS.setPrjCoordSys(m_PrjCoordSys);
                 m_GPS.setMap(m_MapControl);
                 AppInitialization.getInstance().setGPS(m_GPS);
-                double[] scales = m_MapControl.getMap().getVisibleScales();
-                for (int i = 0; i < scales.length; ++i) {
-//                    LogUtils.i("i: scale " + Double.valueOf(scales[i]));
-                }
+//                double[] scales = m_MapControl.getMap().getVisibleScales();
+//                for (int i = 0; i < scales.length; ++i) {
+////                    LogUtils.i("i: scale " + Double.valueOf(scales[i]));
+//                }
                 // m_CoordSysTranslator = new CoordSysTranslator();
 //                LogUtils.i("投影名字", m_PrjCoordSys.getName());
-                PrjCoordSysType _prjCoordSysType = m_PrjCoordSys.getType();
+//                PrjCoordSysType _prjCoordSysType = m_PrjCoordSys.getType();
 //                LogUtils.i("访问服务成功.....");
-                m_GPS.onStart();
+//                m_GPS.onStart();
             } else {
                 hideLoading();
                 openWorkSpaceListener.onOpenFailed("访问服务失败");
@@ -494,6 +529,12 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
     * 初始化布局
     * */
     private void initView() {
+
+        m_mapCon = findViewById(R.id.imgBtnCon);
+        m_imgBtnImage = (ImageButton) findViewById(R.id.imgBtnMapImage);
+        m_imgBtnMap = (ImageButton) findViewById(R.id.imgBtnMap);
+        m_imgBtnMap.setOnClickListener(this);
+        m_imgBtnImage.setOnClickListener(this);
         m_realName = UserSingleton.getUserInfo().getRealName();
         m_mapView = (MapView) findViewById(R.id.mvMap);
         //地图标注
@@ -521,8 +562,8 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
 //        m_qBadgeView = new QBadgeView(this);
 //        m_qBadgeView.bindTarget(m_btton).setBadgeNumber(100).setBadgeTextSize(7, true).setBadgeGravity(Gravity.TOP | Gravity.CENTER);
 
-        m_btnZoomOut = (Button) findViewById(R.id.btnZoomOut);
-        m_btnZoomIn = (Button) findViewById(R.id.btnZoomIn);
+//        m_btnZoomOut = (Button) findViewById(R.id.btnZoomOut);
+//        m_btnZoomIn = (Button) findViewById(R.id.btnZoomIn);
         m_btnFull = (Button) findViewById(R.id.btnViewEntire);
         m_btnPan = (Button) findViewById(R.id.btnPan);
         //状态
@@ -530,6 +571,7 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
         m_btnMeaArea = (Button) findViewById(R.id.btnArea);
         m_btnMeaLength = (Button) findViewById(R.id.btnLength);
         m_btnLocation = (Button) findViewById(R.id.btnLocal);
+        m_btnMapChange = (ImageButton) findViewById(R.id.btnMapChange);
         m_tvMeasure = (TextView) findViewById(R.id.tvMeasure);
         //        m_btnRiskQuery = (Button) findViewById(R.id.btnQueryRisk);
         //        m_autoRiskQuery = (AutoCompleteTextView) findViewById(R.id.autoRiskQuery);
@@ -543,10 +585,10 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
         //        m_edtPileOrName = (EditText) findViewById(R.id.edtPileOrName);
         m_edtSection = (EditText) findViewById(R.id.edtSection);
         //测量容器
-        m_radioGroup2 = (RadioGroup) findViewById(R.id.rdg_btn_measure);
-//        m_rbtnMeaArea = (RadioButton) findViewById(R.id.rdg_btn_mea_area);
-//        m_rbtnMeaLeng = (RadioButton) findViewById(R.id.rdg_btn_mea_length);
-        m_radioGroup2.setOnCheckedChangeListener(this);
+//        m_radioGroup2 = (RadioGroup) findViewById(R.id.rdg_btn_measure);
+////        m_rbtnMeaArea = (RadioButton) findViewById(R.id.rdg_btn_mea_area);
+////        m_rbtnMeaLeng = (RadioButton) findViewById(R.id.rdg_btn_mea_length);
+//        m_radioGroup2.setOnCheckedChangeListener(this);
         //初始化加载进度条
         m_loadingDialog = new ProgressDialog(this);
         m_loadingDialog.setMessage("工作空间加载中...");
@@ -558,14 +600,15 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
         //        m_tvUserProfile.setOnClickListener(this);
         m_tvSignIn.setOnClickListener(this);
         m_radioGroup.setOnCheckedChangeListener(this);
-        m_btnZoomOut.setOnClickListener(this);
-        m_btnZoomIn.setOnClickListener(this);
+//        m_btnZoomOut.setOnClickListener(this);
+//        m_btnZoomIn.setOnClickListener(this);
         m_btnFull.setOnClickListener(this);
         m_btnPan.setOnClickListener(this);
         m_btnMeaArea.setOnClickListener(this);
         m_btnMeaLength.setOnClickListener(this);
         m_btnLocation.setOnClickListener(this);
         m_drawerLayout.setDrawerListener(this);
+        m_btnMapChange.setOnClickListener(this);
 //        m_btnRiskQuery.setOnClickListener(this);
 //        m_btnOpenView.setOnClickListener(this);
 //        m_btnStartQuery.setOnClickListener(this);
@@ -664,27 +707,27 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                 showMeasureTv(0);
                 break;
             //放大
-            case R.id.btnZoomOut:
-                double _scale = m_MapControl.getMap().getScale();
-//                LogUtils.i("比例尺=", String.valueOf(_scale));
-                setAllBtnBgNor();
-                m_MapControl.deleteGestureDetector();
-                m_MapControl.getMap().zoom(2);
-                double scale = m_MapControl.getMap().getScale();
-//                LogUtils.i("地图比例尺----------", String.valueOf(1/scale));
-                m_MapControl.getMap().refresh();
-                setActionPan();
-                showMeasureTv(0);
-                break;
-            //缩小
-            case R.id.btnZoomIn:
-                setAllBtnBgNor();
-                m_MapControl.deleteGestureDetector();
-                m_MapControl.getMap().zoom(0.5);
-                m_MapControl.getMap().refresh();
-                setActionPan();
-                showMeasureTv(0);
-                break;
+//            case R.id.btnZoomOut:
+//                double _scale = m_MapControl.getMap().getScale();
+////                LogUtils.i("比例尺=", String.valueOf(_scale));
+//                setAllBtnBgNor();
+//                m_MapControl.deleteGestureDetector();
+//                m_MapControl.getMap().zoom(2);
+//                double scale = m_MapControl.getMap().getScale();
+////                LogUtils.i("地图比例尺----------", String.valueOf(1/scale));
+//                m_MapControl.getMap().refresh();
+//                setActionPan();
+//                showMeasureTv(0);
+//                break;
+//            //缩小
+//            case R.id.btnZoomIn:
+//                setAllBtnBgNor();
+//                m_MapControl.deleteGestureDetector();
+//                m_MapControl.getMap().zoom(0.5);
+//                m_MapControl.getMap().refresh();
+//                setActionPan();
+//                showMeasureTv(0);
+//                break;
             //点击查询
             case R.id.btnViewEntire:
                 setAllBtnBgNor();
@@ -735,6 +778,8 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                     setBtnPanBg();
                 } else {
                     showMeasureTv(1);
+                    m_MapControl.setStrokeWidth(0.3);
+                    m_MapControl.setStrokeColor(m_MapControl.getResources().getColor(R.color.colorRed));
                     m_MapControl.addMeasureListener(this);
                     m_MapControl.setAction(Action.MEASURELENGTH);
                     m_tvStatue.setText("测量长度");
@@ -747,7 +792,6 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
             case R.id.btnArea:
                 setAllBtnBgNor();
                 m_MapControl.deleteGestureDetector();
-
                 if (m_MapControl.getAction().equals(Action.MEASUREAREA)) {
                     m_btnMeaArea.setBackgroundResource(R.mipmap.ic_btn_mea_area_nor);
                     showMeasureTv(0);
@@ -756,6 +800,8 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
 
                 } else {
                     showMeasureTv(1);
+                    m_MapControl.setStrokeWidth(0.3);
+                    m_MapControl.setStrokeColor(m_MapControl.getResources().getColor(R.color.colorRed));
                     m_MapControl.addMeasureListener(this);
                     m_MapControl.setAction(Action.MEASUREAREA);
                     m_tvStatue.setText("测量面积");
@@ -766,13 +812,19 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                 break;
             //定位
             case R.id.btnLocal:
+                if (!GpsUtils.isOPen(DrawerActivity.this)) {
+                    GpsUtils.openGPS(DrawerActivity.this);
+                    Toast.makeText(DrawerActivity.this, "打开GPS", Toast.LENGTH_LONG).show();
+                }
                 //设置定位图标是否可见
-                if (m_NavigationPanelView.getVisibility()==View.VISIBLE) {
+                if (m_GPS != null && m_NavigationPanelView.getVisibility() != View.VISIBLE) {
 //                    m_NavigationPanelView.setVisibility(View.GONE);
-                    m_GPS.onStop();
+                    m_isFirst = true;
+                    m_GPS.onStart();
                 } else {
 //                    m_NavigationPanelView.setVisibility(View.VISIBLE);
-                    m_GPS.onStart();
+                    m_isFirst = false;
+                    m_GPS.onStop();
                 }
 
              /*   setAllBtnBgNor();
@@ -840,6 +892,59 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
             //               showDialog(m_spSction,m_edtSection,"标段");
             //
             //                break;
+
+            //谷歌地图与影像的切换
+            case R.id.btnMapChange:
+
+                m_mapCon.setVisibility(View.VISIBLE);
+//                LogUtils.i("layer count total = ",m_MapControl.getMap().getLayers().getCount() + "");
+//                m_MapControl.getMap().getLayers().remove(1);
+//                if (mapIndex == 0) {
+//                    if (m_ds != null && m_ds.getDatasets().get(0).isOpen()) {
+//                        m_MapControl.getMap().getLayers().add(m_ds.getDatasets().get(1), false);
+//                        mapIndex = 1;
+////                        LogUtils.i("layer count = ", m_MapControl.getMap().getLayers().getCount() + "");
+//                        m_MapControl.getMap().refresh();
+//                    }
+//                } else if (mapIndex == 1) {
+//                    if (m_ds != null && m_ds.getDatasets().get(1).isOpen()) {
+//                        m_MapControl.getMap().getLayers().add(m_ds.getDatasets().get(0), false);
+//                        mapIndex = 0;
+//                        m_MapControl.getMap().refresh();
+////                        LogUtils.i("layer count = ", m_MapControl.getMap().getLayers().getCount() + "");
+//                    }
+//                }
+
+                break;
+
+            case R.id.imgBtnMap:
+                m_MapControl.getMap().getLayers().get(1).setVisible(true);
+                m_MapControl.getMap().getLayers().get(2).setVisible(false);
+//                m_MapControl.getMap().getLayers().remove(1);
+//                if (m_ds != null && m_ds.getDatasets().get(1).isOpen()) {
+//                    m_MapControl.getMap().getLayers().add(m_ds.getDatasets().get(0), false);
+////                    mapIndex = 1;
+////                        LogUtils.i("layer count = ", m_MapControl.getMap().getLayers().getCount() + "");
+//                    m_MapControl.getMap().refresh();
+//                }
+                m_MapControl.getMap().refresh();
+                m_mapCon.setVisibility(View.GONE);
+                break;
+
+
+            case R.id.imgBtnMapImage:
+                m_MapControl.getMap().getLayers().get(2).setVisible(true);
+                m_MapControl.getMap().getLayers().get(1).setVisible(false);
+//                m_MapControl.getMap().getLayers().remove(1);
+//                if (m_ds != null && m_ds.getDatasets().get(0).isOpen()) {
+//                    m_MapControl.getMap().getLayers().add(m_ds.getDatasets().get(1), false);
+////                    mapIndex = 0;
+//                    m_MapControl.getMap().refresh();
+////                        LogUtils.i("layer count = ", m_MapControl.getMap().getLayers().getCount() + "");
+//                }
+                m_MapControl.getMap().refresh();
+                m_mapCon.setVisibility(View.GONE);
+                break;
             default:
                 break;
         }
@@ -848,6 +953,7 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
     private void setActionPan() {
         m_tvStatue.setText("漫游");
         m_MapControl.setAction(Action.PAN);
+        m_MapControl.getMap().refresh();
     }
 
     private void setBtnPanBg() {
@@ -1133,115 +1239,134 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         if (m_section.isEmpty()) return;
-        if (m_IsFirstOpen) {
-            m_IsFirstOpen = false;
-            return;
-        }
+//        if (m_IsFirstOpen) {
+//            m_IsFirstOpen = false;
+//            return;
+//        }
         try {
             if (m_t_dInfo != null) {
                 m_t_dInfo.dispose();
             }
-            m_MapControl.getMap().close();
+            if (m_MapControl.getMap().getLayers().getCount() == 3){
+                m_MapControl.getMap().getLayers().remove(0);
+            }
+//            m_MapControl.getMap().close();
             m_t_dInfo = new DatasourceConnectionInfo();
             String section = ServerConfig.getMapMap().get(m_spSection.getSelectedItem().toString());
             if (section == null) return;
-            String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + section + "/rest/maps/" + section;
+            String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + ServerConfig.getResource(section)  + "/rest/maps/" + section;
+//            LogUtils.i("_port1 = ",_port1);
+//            String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + "RiskSource010" + "/rest/maps/" + "RiskSource0";
             m_t_dInfo.setServer(_port1);
 //            LogUtils.i("MapUrl=-------------", _port1);
             m_t_dInfo.setEngineType(EngineType.Rest);
-            m_t_dInfo.setAlias(section);  //别名  每个标段，要设置不一样的别名
+            m_t_dInfo.setAlias(ServerConfig.getResource(section));  //别名  每个标段，要设置不一样的别名
             //用别名查找，如果找不到，则用数据源连接信息类打开数据源
-            m_n_ds = m_workspace.getDatasources().get(section);
+            m_n_ds = m_workspace.getDatasources().get(ServerConfig.getResource(section));
             if (m_n_ds == null) {
-                m_n_ds = m_workspace.getDatasources().open(m_t_dInfo);
+                try {
+                    m_n_ds = m_workspace.getDatasources().open(m_t_dInfo);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
             }
             if (m_n_ds != null) {
-                m_MapControl.getMap().getLayers().add(m_ds.getDatasets().get(0), true);
                 Layer _yLayer = m_MapControl.getMap().getLayers().add(m_n_ds.getDatasets().get(0), true);
-                double _ratio = 1.0 / 1500000;
-                _yLayer.setMinVisibleScale(_ratio);
+                LayerSettingImage _additionalSetting = (LayerSettingImage) _yLayer.getAdditionalSetting();
+                _additionalSetting.setTransparent(true);
                 m_MapControl.getMap().setVisibleScalesEnabled(false);
                 m_MapControl.getMap().setViewBoundsLocked(false);
-                String mapName = m_MapControl.getMap().getName();
-//                LogUtils.i("MapName=-------------", mapName);
-                double _scale = 0.0;
-                double[] scales =  m_MapControl.getMap().getVisibleScales();
-
+                double _ratio = 1.0 / 50000;  //设置地图最小可见
+                double _scale = 0.0; //设置地图缩放比例尺
+                double[] scales = m_MapControl.getMap().getVisibleScales();
                 Point2D _point2D = new Point2D();
-                switch (m_spSection.getSelectedItem().toString()){
+                switch (m_spSection.getSelectedItem().toString()) {
                     case "全部标段":
                         _point2D.setX(12447089.920571);
                         _point2D.setY(2708852.762388);
-                         _scale = 1.0 / 437142.53;
-
+                        _scale = 1.0 / 437142.53;
+                        _ratio = 1.0 / 1500000;
                         break;
                     case "第1标段":
                         _point2D.setX(12462700.920571);
                         _point2D.setY(2746550.762388);
                         _scale = 1.0 / 44846.63;
+                        _ratio = 1.0 / 1000000;
                         break;
                     case "第2标段":
                         _point2D.setX(12457774.920571);
                         _point2D.setY(2735152.762388);
                         _scale = 1.0 / 44846.63;
+                        _ratio = 1.0 /  1000000;
                         break;
                     case "第3标段":
                         _point2D.setX(12453084.920571);
                         _point2D.setY(2726087.762388);
                         _scale = 1.0 / 44846.63;
+                        _ratio = 1.0 /  1000000;
                         break;
                     case "第4标段":
-                        _point2D.setX(12448804.920571);
-                        _point2D.setY(2717045.762388);
+                        _point2D.setX(12447341.920571);
+                        _point2D.setY(2714791.762388);
                         _scale = 1.0 / 44846.63;
+                        _ratio = 1.0 /  1000000;
                         break;
                     case "第5标段":
-                        _point2D.setX(12446756.920571);
-                        _point2D.setY(2708127.762388);
-                        _scale = 1.0 / 44846.63;
+                        _point2D.setX(12444976.920571);
+                        _point2D.setY(2703589.762388);
+                        _scale = 1.0 / 49688.68;
+                        _ratio = 1.0 /  1000000;
                         break;
                     case "第6标段":
-                        _point2D.setX(12441816.920571);
-                        _point2D.setY(2698446.762388);
+                        _point2D.setX(12439241.920571);
+                        _point2D.setY(2693385.762388);
                         _scale = 1.0 / 44846.63;
+                        _ratio = 1.0 /  1000000;
                         break;
                     case "第7标段":
-                        _point2D.setX(12436045.920571);
-                        _point2D.setY(2688389.762388);
+                        _point2D.setX(12433513.920571);
+                        _point2D.setY(2682579.762388);
                         _scale = 1.0 / 44846.63;
+                        _ratio = 1.0 /  1000000;
                         break;
                     case "第8标段":
-                        _point2D.setX(12431431.920571);
-                        _point2D.setY(2680796.762388);
+                        _point2D.setX(12428796.920571);
+                        _point2D.setY(2675840.762388);
                         _scale = 1.0 / 44846.63;
+                        _ratio = 1.0 /  1000000;
                         break;
                     case "第9标段":
-                        _point2D.setX(12426306.920571);
-                        _point2D.setY(2678240.762388);
-                        _scale = 1.0 / 44846.63;
+                        _point2D.setX(12422817.920571);
+                        _point2D.setY(2671228.762388);
+                        _scale = 1.0 / 21521.18;
+                        _ratio = 1.0 /  1000000;
                         break;
                     case "第10标段":
-                        _point2D.setX(12422166.920571);
-                        _point2D.setY(2675276.762388);
+                        _point2D.setX(12419061);
+                        _point2D.setY(2668373.762388);
                         _scale = 1.0 / 44846.63;
+                        _ratio = 1.0 / 1000000;
                         break;
                     case "第11标段":
-                        _point2D.setX(12413058.920571);
-                        _point2D.setY(2670839.762388);
+                        _point2D.setX(12410949);
+                        _point2D.setY(2665298);
                         _scale = 1.0 / 44846.63;
+                        _ratio = 1.0 / 1000000;
                         break;
                 }
-
+                _yLayer.setMinVisibleScale(_ratio);
+//                m_MapControl.getMap().viewEntire();
 //                m_MapControl.zoomTo(scales[scales.length-1], 1000);//在指定的时间内缩放到固定的比例尺
                 m_MapControl.zoomTo(_scale, 1000);//在指定的时间内缩放到固定的比例尺
                 m_MapControl.panTo(_point2D, 1); //在指定的时间内平移地图到指定的点。
                 m_MapControl.getMap().refresh();
                 hideLoading();
-                MyToast.showMyToast(DrawerActivity.this, "选择了" + m_spSection.getSelectedItem().toString(), Toast.LENGTH_SHORT);
+//                MyToast.showMyToast(DrawerActivity.this, "选择了" + m_spSection.getSelectedItem().toString(), Toast.LENGTH_SHORT);
 //                LogUtils.i("访问服务成功.....");
                 return;
             }
             hideLoading();
+            LogUtils.i("_port1  路径不对= ",_port1);
 //            openWorkSpaceListener.onOpenFailed();
 //            LogUtils.i("访问服务失败.....");
         } catch (Exception e) {
@@ -1267,10 +1392,10 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
 
     @Override
     public void onDrawerClosed(View drawerView) {
-        if (m_radioGroup2.getCheckedRadioButtonId() != R.id.rdg_btn_mea_area || m_radioGroup2.getCheckedRadioButtonId() != R.id.rdg_btn_mea_length) {
+//        if (m_radioGroup2.getCheckedRadioButtonId() != R.id.rdg_btn_mea_area || m_radioGroup2.getCheckedRadioButtonId() != R.id.rdg_btn_mea_length) {
             m_rdbtnNone.setChecked(true);
             SelectFragment(3);
-        }
+//        }
     }
 
     @Override
@@ -1312,7 +1437,7 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
     /**
      * 测量角度
      *
-     * @param v     面积
+     * @param v   面积
      * @param point 对象
      */
     @Override
@@ -1346,7 +1471,7 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                     int y = (int) e.getY();
 //                    LogUtils.i("XXXXX =", String.valueOf(e.getX()));
 //                    LogUtils.i("YYYYY =", String.valueOf(e.getY()));
-                    Point2D cachePoint = m_MapControl.getMap().pixelToMap(new Point(x, y)); // getMap().pixelToMap(new Point(x, y)将地图中指定点的像素坐标转换为地图坐标,
+                        Point2D cachePoint = m_MapControl.getMap().pixelToMap(new Point(x, y)); // getMap().pixelToMap(new Point(x, y)将地图中指定点的像素坐标转换为地图坐标,
                     // Recordset recordset = null;
                     // GeoPoint gp = new GeoPoint(cachePoint);
 //                    LogUtils.i("选中的点 " + cachePoint.toString());
@@ -1536,10 +1661,10 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
                             //弃土场E
                             case "E": {
                                 _intent = new Intent();
-                                _intent.setClass(DrawerActivity.this, TakingSoilFieldTypeActivity.class);
+                                _intent.setClass(DrawerActivity.this, TakingSoilFieldTypeFromActivity.class);
                                 _bundle.putString("_riskId", _riskId);
                                 String E_scope = (String) featureSet.getFieldValue("评分");
-                                _bundle.putString("E_scope", E_scope);
+                                _bundle.putString("E_scope", E_scope + "");
                                 String E_colorNote = (String) featureSet.getFieldValue("颜色标识");
                                 _bundle.putString("E_colorNote", E_colorNote);
                                 String E_occurPro = (String) featureSet.getFieldValue("发生可能性等级");

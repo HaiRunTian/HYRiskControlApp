@@ -21,6 +21,7 @@ import tianchi.com.risksourcecontrol2.adapter.ConstructionAdapter;
 import tianchi.com.risksourcecontrol2.adapter.ListviewItemBaseAdapter;
 import tianchi.com.risksourcecontrol2.bean.login.UsersList;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 
 /**
  * 施工方名单Fragment
@@ -189,19 +190,20 @@ public class ConstructionListFragment extends Fragment {
         //            m_listHashMap.put("施工方" + i, list);
         //        }
         //获取施工方的
-        m_listHashMap = UserSingleton.getConstructionList();
+        m_listHashMap = UserSingleton. getConstructionList();
 
         for (String key : m_listHashMap.keySet()) {
 
             m_list_left.add(key);
             Collections.sort(m_list_left);
-
+//            LogUtils.i("key = " ,key);
             for (String name : m_listHashMap.get(key)) {
 
+//                LogUtils.i("key name = ",name);
                 m_list_right.add(name);
                 m_list_rightText.add(key);
-                Collections.sort(m_list_right);
-                Collections.sort(m_list_rightText);
+//                Collections.sort(m_list_right);
+//                Collections.sort(m_list_rightText);
             }
         }
 //        m_leftAdapter = new ArrayAdapter(ConstructionListFragment.this.getActivity(), android.R.layout.simple_list_item_1, m_list_left);
