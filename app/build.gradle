@@ -4,19 +4,18 @@ android {
     signingConfigs {
         config {
             storeFile file('C:/Users/Administrator/.android/debug.keystore')
-
         }
     }
-    compileSdkVersion 22
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "26.0.3"
     defaultConfig {
         applicationId "tianchi.com.risksourcecontrol2"
         minSdkVersion 16
-        targetSdkVersion 22
-        versionCode 5
-        versionName "1.4"
+        targetSdkVersion 24
+        versionCode 7
+        versionName "2.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -39,36 +38,36 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     defaultConfig {
-        jackOptions {
-            enabled true
-        }
+//        jackOptions {
+//            enabled true
+//        }
     }
     productFlavors {
     }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile files('libs/com.supermap.mapping_v811.jar')
-    compile files('libs/com.supermap.data_v811.jar')
+    implementation files('libs/com.supermap.mapping_v811.jar')
+    implementation files('libs/com.supermap.data_v811.jar')
     //    compile files('libs/ant-1.8.2.jar')
-    compile files('libs/mysql-connector-java-5.1.39-bin.jar')
-    compile files('libs/BaiduLBS_Android.jar')
-    compile files('libs/okhttp-3.9.1.jar')
-    compile files('libs/okio-1.13.0.jar')
-
-    compile files('libs/ant-1.8.2.jar')
-    compile files('libs/com.supermap.services_v811.jar')
+//    implementation files('libs/mysql-connector-java-5.1.39-bin.jar')
+    implementation files('libs/BaiduLBS_Android.jar')
+    implementation files('libs/ant-1.8.2.jar')
+    implementation files('libs/com.supermap.services_v811.jar')
     //SpinnerEditText
-//    compile 'com.github.z2wenfa:SpinnerEditText:1.0.1'
-    compile 'com.google.code.gson:gson:2.8.0'
-    compile 'com.android.support:appcompat-v7:22.2.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
-    compile 'q.rorbin:badgeview:1.1.2'
-    testCompile 'junit:junit:4.12'
+    //    compile 'com.github.z2wenfa:SpinnerEditText:1.0.1'
+    implementation 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.android.support:appcompat-v7:26+'
+    implementation 'com.android.support:recyclerview-v7:26+'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+    implementation 'q.rorbin:badgeview:1.1.2'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.yanzhenjie:permission:2.0.0-rc3'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+
 }

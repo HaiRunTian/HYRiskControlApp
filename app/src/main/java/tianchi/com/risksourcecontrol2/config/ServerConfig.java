@@ -16,8 +16,8 @@ public class ServerConfig {
     //内网ip=192.168.0.21
     //外网ip=120.77.41.216
 //  public static final String IP = "192.168.0.21"; //罗工ip
-//    public static final String IP = "119.23.66.213"; //外网ip
-        public static final String IP = "192.168.0.53";  //依伦ip
+    public static final String IP = "119.23.66.213"; //外网ip
+//        public static final String IP = "192.168.0.53";  //依伦ip
 //        public static final String IP = "192.168.0.174"; //瑞珠ip
     public static final String URL = "http://" + IP + ":" + PORT_DATA;//外网服务器URL
     //    public static final String URL = "http://192.168.0.53" + ":" + PORT_DATA;//外网服务器URL

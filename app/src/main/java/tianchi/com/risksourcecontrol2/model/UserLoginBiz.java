@@ -166,7 +166,7 @@ public class UserLoginBiz implements IUserLoginBiz {
                             break;
                     }
                 } catch (Exception e) {
-                    listener.loadingFailed(e.getClass().getSimpleName() + " error detail:" + e.getMessage());
+//                    listener.loadingFailed(e.getClass().getSimpleName() + " error detail:" + e.getMessage());
                 }
             }
         });

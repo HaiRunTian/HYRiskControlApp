@@ -107,23 +107,18 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     //    private EditText m_edtSupervisor; //监理
     private EditText m_edtCopyer; //抄送着
     private EditText m_edtConstruction;//施工方
-
-
     private List<File> picFilesUp;             //临时图片文件数组
     private List<String> picNamesUp;           //临时图片文件名数组
     private ArrayList<HashMap<String, Object>> imageItemUp;//适配器数据
     private SimpleAdapter simpleAdapter;     //适配器
     private File takPicFileUp;//用户头像拍照文件
     private File resultImgFileUp;//最终生成的img文件
-
-
     private Uri fileUriUp;//生成拍照文件uri
     private Uri uriUp;//系统拍照或相册选取返回的uri
     //    private String downloadURL;//下载文件url
     private String pictureNameUp = "";//照片全名xx.jpg
     private int m_picIndexUp = 0;
     private boolean canUploadUp = true;
-
     private List<File> picFiles;             //临时图片文件数组
     private List<String> picNames;           //临时图片文件名数组
     private ArrayList<HashMap<String, Object>> imageItem;//适配器数据
@@ -345,7 +340,6 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
 
     private void downloadFirstPicture() {
         File picFile = new File(FoldersConfig.NOTICEFY, picNames.get(0));
-
         //本地不存在，从网上下载
         if (!picFile.exists()) {
             m_picIndex = 0;

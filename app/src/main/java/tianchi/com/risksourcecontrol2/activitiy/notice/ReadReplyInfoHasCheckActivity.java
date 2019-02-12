@@ -53,6 +53,7 @@ import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.CameraUtils;
 import tianchi.com.risksourcecontrol2.util.FileUtils;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 import tianchi.com.risksourcecontrol2.view.ILoadingNotifyView;
 import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
@@ -221,10 +222,13 @@ public class ReadReplyInfoHasCheckActivity extends BaseActivity implements View.
         if (m_oInfo != null &&m_oInfo.getHasVerify() == 1){
             m_edtOpinionOwn.setVisibility(View.VISIBLE);
             m_edtOpinionOwn.setText("审核意见："+m_oInfo.getRemark()+" ");
+            LogUtils.i("result = ",m_oInfo.getResult());
+            LogUtils.i("result = ",m_oInfo.getRemark());
+            LogUtils.i("result = ",String.valueOf(m_oInfo.getId()));
             if (m_oInfo.getResult().contains("审核")){ //业主审核通过 显示通过盖章
-                m_edtOpinionOwn.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_reject),null);
-            }else { //业主审核驳回   显示驳回盖章
                 m_edtOpinionOwn.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_pass),null);
+            }else{ //业主审核驳回   显示驳回盖章
+                m_edtOpinionOwn.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_reject),null);
             }
 
 

@@ -1,5 +1,6 @@
 package tianchi.com.risksourcecontrol2.activitiy.user;
 
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -133,6 +134,7 @@ public class RelationshipListActivity extends BaseActivity implements View.OnCli
                             switchFragment(2);
                         }
                         break;
+                    default:break;
                 }
             }
         });

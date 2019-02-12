@@ -146,6 +146,7 @@ public class MyselfRectifyReplyListActivity extends BaseActivity implements View
 
 
     //网络请求接收过的通知
+
     private void getNotice(String receiveMan, ReceiveNoticeListActivity.CallBack callBack) {
         m_progressDialog.show();
         JSONObject jsonObject = new JSONObject();
@@ -186,4 +187,6 @@ public class MyselfRectifyReplyListActivity extends BaseActivity implements View
         super.onStart();
 //        m_adapter.notifyDataSetChanged();
     }
+
+
 }

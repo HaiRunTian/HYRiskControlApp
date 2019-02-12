@@ -1,5 +1,6 @@
 package tianchi.com.risksourcecontrol2.activitiy.notice;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -114,6 +115,8 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
     private View m_conOwner;
     private String[] m_arrayPicRemark;
     private int m_picIndex; //照片下标
+
+    @SuppressLint("HandlerLeak")
     private Handler m_handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -483,7 +486,7 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
 //                    m_imgOwner.setVisibility(View.VISIBLE);
 //                    m_imgOwner.setImageResource(R.mipmap.supervisor_pass);
 //                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.owner_pass), null);
-                    m_LogState = 5;
+                    m_LogState = 3;
                 } //施工方自己审核
                 submit(m_LogState);
                 break;
@@ -501,7 +504,7 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
 //                    m_imgOwner.setVisibility(View.VISIBLE);
 //                    m_imgOwner.setImageResource(R.mipmap.supervisor_reject);
 //                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.owner_reject), null);
-                    m_LogState = 6;
+                    m_LogState = 4;
                 }
                 submit(m_LogState);
                 break;

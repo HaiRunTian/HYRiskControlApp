@@ -1,5 +1,6 @@
 package tianchi.com.risksourcecontrol2.fragment;
 
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -193,11 +194,11 @@ public class ConstructionListFragment extends Fragment {
         m_listHashMap = UserSingleton. getConstructionList();
 
         for (String key : m_listHashMap.keySet()) {
-
             m_list_left.add(key);
             Collections.sort(m_list_left);
 //            LogUtils.i("key = " ,key);
-            for (String name : m_listHashMap.get(key)) {
+            List<String> list = m_listHashMap.get(key);
+            for (String name : list) {
 
 //                LogUtils.i("key name = ",name);
                 m_list_right.add(name);

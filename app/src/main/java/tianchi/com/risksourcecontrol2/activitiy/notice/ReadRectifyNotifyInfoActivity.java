@@ -397,6 +397,7 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
                     Intent _intent = new Intent(ReadRectifyNotifyInfoActivity.this, NewRectifyReplyInfoActivity.class);
                     _intent.putExtras(_bundle);
                     startActivity(_intent);
+                    finish();
 //               }else {
 //                    Toast.makeText(this, "已回复！", Toast.LENGTH_SHORT).show();
 //                }

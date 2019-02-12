@@ -29,6 +29,7 @@ import tianchi.com.risksourcecontrol2.config.ServerConfig;
 import tianchi.com.risksourcecontrol2.custom.MyToast;
 import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 
 /**
@@ -83,11 +84,13 @@ public class CheckedListActivity extends BaseActivity implements View.OnClickLis
 //                    String _Oinfo = GsonUtils.getNodeJsonString(string,"reciversOwnerInfos");
                     try {
                         JSONArray jObj = new JSONArray(beanListUnReply);
-                        List<ReplySupervisorInfo> _sList = new ArrayList<ReplySupervisorInfo>(); //监理审批意见集合
-                        List<ReplySupervisorInfo> _oList = new ArrayList<ReplySupervisorInfo>(); //业主审批意见集合
+
 
                         for (int i = 0; i < jObj.length(); i++) {
-                            JSONObject _object = (JSONObject) jObj.get(0);
+                            List<ReplySupervisorInfo> _sList = new ArrayList<ReplySupervisorInfo>(); //监理审批意见集合
+                            List<ReplySupervisorInfo> _oList = new ArrayList<ReplySupervisorInfo>(); //业主审批意见集合
+
+                            JSONObject _object = (JSONObject) jObj.get(i);
                             JSONArray _jsonArraySInfo = _object.getJSONArray("supervisionInfos");
                             JSONArray _jsonArryOInfo = _object.getJSONArray("reciversOwnerInfos");
                             //监理审批意见
@@ -163,6 +166,7 @@ public class CheckedListActivity extends BaseActivity implements View.OnClickLis
     //点击item,携带数据跳转到通知详情界面
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//        LogUtils.i("postion = " , String.valueOf(position));
         Bundle _bundle = new Bundle();
         RectifyReplyInfo _rectifyNotifyInfo = m_list.get(position);
         List<ReplySupervisorInfo> _sInfoList = _rectifyNotifyInfo.getSupervisionInfos();
@@ -170,11 +174,12 @@ public class CheckedListActivity extends BaseActivity implements View.OnClickLis
 
         _bundle.putSerializable("data", _rectifyNotifyInfo);
         if (  _sInfoList.size() != 0 && _sInfoList != null ) {
-            _bundle.putSerializable("sInfo", _sInfoList.get(_sInfoList.size()-position-1));
+            _bundle.putSerializable("sInfo", _sInfoList.get(0));
         } else _bundle.putSerializable("sInfo", null);
 
         if ( _oInfoList.size() != 0  && _oInfoList != null ) {
-            _bundle.putSerializable("oInfo", _oInfoList.get(_oInfoList.size()-position-1));
+            _bundle.putSerializable("oInfo", _oInfoList.get(0));
+
         } else _bundle.putSerializable("oInfo", null);
 
         Intent _intent = new Intent(CheckedListActivity.this, ReadReplyInfoHasCheckActivity.class);

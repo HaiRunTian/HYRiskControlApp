@@ -32,7 +32,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import tianchi.com.risksourcecontrol2.R;
 import com.supermap.data.CoordSysTranslator;
 import com.supermap.data.Datasource;
 import com.supermap.data.DatasourceConnectionInfo;
@@ -75,7 +75,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.activitiy.message.ReceiveNoticeListActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksource.RiskResultListActivity;
 import tianchi.com.risksourcecontrol2.activitiy.risksourceformap.BridgeTypeformMapActivity;
@@ -108,7 +107,6 @@ import tianchi.com.risksourcecontrol2.util.GpsUtils;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
 import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.view.IHomeView;
-
 import static tianchi.com.risksourcecontrol2.location.BaiDuGPS.m_isFirst;
 
 /**
@@ -895,7 +893,6 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
 
             //谷歌地图与影像的切换
             case R.id.btnMapChange:
-
                 m_mapCon.setVisibility(View.VISIBLE);
 //                LogUtils.i("layer count total = ",m_MapControl.getMap().getLayers().getCount() + "");
 //                m_MapControl.getMap().getLayers().remove(1);
@@ -1830,7 +1827,7 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
     }
 
     private void setAllBtnBgNor() {
-        m_btnMeaLength.setBackgroundResource(R.mipmap.ic_btn_mea_length_nor);
+        m_btnMeaLength.setBackgroundResource(tianchi.com.risksourcecontrol2.R.mipmap.ic_btn_mea_length_nor);
         m_btnMeaArea.setBackgroundResource(R.mipmap.ic_btn_mea_area_nor);
         m_btnPan.setBackgroundResource(R.mipmap.ic_btn_pan_nor);
         m_btnFull.setBackgroundResource(R.mipmap.ic_btn_open_query_nor);
