@@ -147,7 +147,7 @@ public class HighLowTypeRiskActivity extends BaseActivity implements View.OnClic
                         MyToast.showMyToast( AppInitialization.getInstance(), "查询失败", 2);
                     }
                     HighLowTypeRiskData _highLowTypeRiskData = _list.get(0);
-                    LogUtils.i("onResponse: HighLowTypRisk " + _response);
+//                    LogUtils.i("onResponse: HighLowTypRisk " + _response);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

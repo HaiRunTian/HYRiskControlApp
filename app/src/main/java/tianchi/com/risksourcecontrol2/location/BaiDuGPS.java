@@ -1,6 +1,9 @@
 package tianchi.com.risksourcecontrol2.location;
 
 import android.app.Application;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.view.View;
@@ -16,6 +19,7 @@ import com.supermap.data.PrjCoordSys;
 import com.supermap.mapping.MapControl;
 
 import tianchi.com.risksourcecontrol2.base.AppInitialization;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 
 /**
  * Created by Los on 2018-08-23 15:23.
@@ -33,15 +37,13 @@ public class BaiDuGPS implements BaseGPS {
     private String m_district;
     private String m_street;
     private String m_ddr;
-
-    private boolean m_isFirst = true;
+    public static boolean m_isFirst = true;
     /*****
      *
      * 定位结果回调，重写onReceiveLocation方法，可以直接拷贝如下代码到自己工程中修改
      *
      */
     private BDAbstractLocationListener BaiduListener = new BDAbstractLocationListener() {
-
         @Override
         public void onReceiveLocation(BDLocation location) {
             // TODO Auto-generated method stub
@@ -113,8 +115,8 @@ public class BaiDuGPS implements BaseGPS {
                     m_mapCtrl.getMap().refresh();*/
                    //
                     double[] scales =  m_mapCtrl.getMap().getVisibleScales();
-                    m_mapCtrl.panTo(m_pos,300);
-                    boolean result = m_mapCtrl.zoomTo(scales[scales.length-1],1000);
+                    m_mapCtrl.panTo(m_pos,100);
+                    boolean result = m_mapCtrl.zoomTo(scales[scales.length-3],500);
                     m_mapCtrl.getMap().refresh();
 //                    LogUtils.i(Double.toString(scales[scales.length-3])+",result "+ result);
                     m_isFirst = false;
@@ -208,7 +210,7 @@ public class BaiDuGPS implements BaseGPS {
 
 
     @Override
-    public SensorListener getSensorListener() {
+    public SensorEventListener getSensorListener() {
         return m_BaiDuSensor;
     }
 
@@ -227,19 +229,36 @@ public class BaiDuGPS implements BaseGPS {
         return m_pos;
     }
 
-    public final SensorListener m_BaiDuSensor = new SensorListener() {
+    public final SensorEventListener m_BaiDuSensor = new SensorEventListener() {
+
+
 
         @Override
-        public void onSensorChanged(int sensor, float[] values) {
-            synchronized (this) {
-                m_NavigationPanel.setValue(values);
-                if (Math.abs(values[0] - 0.0f) < 1)   return;
-                if (m_NavigationPanel != null) {
-                    m_NavigationPanel.invalidate();
+        public void onSensorChanged(SensorEvent event) {
+            if (event.sensor.getType() == Sensor.TYPE_ORIENTATION) {
+                synchronized (this) {
+                    m_NavigationPanel.setValue(event.values);
+                    if (Math.abs(event.values[0] - 0.0f) < 1) return;
+                    if (m_NavigationPanel != null) {
+                        m_NavigationPanel.invalidate();
+                    }
                 }
+//                // 获取当前传感器获取到的角度
+//                float degree = -event.values[0];
+//                // 通过补间动画旋转角度 从上次的角度旋转
+//                RotateAnimation ra = new RotateAnimation(startDegree, degree,
+//                        Animation.RELATIVE_TO_SELF, 0.5f,
+//                        Animation.RELATIVE_TO_SELF, 0.5f);
+//                ra.setDuration(200);
+////                iv_compass.startAnimation(ra);
+//                // 记录当前旋转后的角度
+//                startDegree = degree;
             }
         }
-        public void onAccuracyChanged(int sensor, int accuracy) {
+
+        @Override
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
         }
     };
 }

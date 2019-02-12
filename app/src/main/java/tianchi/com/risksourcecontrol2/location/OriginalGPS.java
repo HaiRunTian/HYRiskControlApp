@@ -1,6 +1,7 @@
 package tianchi.com.risksourcecontrol2.location;
 
 import android.app.Application;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorListener;
 
 import com.supermap.data.Point2D;
@@ -53,7 +54,7 @@ public class OriginalGPS implements BaseGPS {
     }
 
     @Override
-    public SensorListener getSensorListener() {
+    public SensorEventListener getSensorListener() {
         return null;
     }
 }

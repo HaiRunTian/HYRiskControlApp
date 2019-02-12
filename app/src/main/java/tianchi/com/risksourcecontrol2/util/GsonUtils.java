@@ -224,8 +224,8 @@ public class GsonUtils {
                 bean = parseJson2Bean2(_js, beanClazz);
             } catch (Exception e) {
                 e.printStackTrace();
-                LogUtils.i("jsonObject error", e.toString());
-                LogUtils.i("jsonObject error", _js.toString());
+//                LogUtils.i("jsonObject error", e.toString());
+//                LogUtils.i("jsonObject error", _js.toString());
             }
             beans.add(bean);
         }
@@ -283,7 +283,7 @@ public class GsonUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtils.i("field count:" + fields.length);
+//        LogUtils.i("field count:" + fields.length);
         for (int i = 0; i < fields.length; i++) {
             String name = fields[i].getName();
             // LogUtils.i("field "+i +" name:"+ name);
@@ -294,16 +294,16 @@ public class GsonUtils {
                 // String jsonName = name.replaceFirst(name.substring(0, 1), name.substring(0, 1).toUpperCase());
                 // LogUtils.i("type:" + _type + ", Name " + name);
                 if (!object.has(name)) {//jsonobject 没有包含这个属性名，则跳过
-                    LogUtils.i("gson", "jsonstring lost the field: " + name);
+//                    LogUtils.i("gson", "jsonstring lost the field: " + name);
                     continue;
                 } else {
 //                    LogUtils.i("gson", "type:" + _type + ", Name " + name + ", value: " + object.get(name).getAsString());
                     if (_type.equals("class java.util.Date")) {
                         String time = object.get(name).getAsString();
                         fields[i].set(newInstance, DateTimeUtils.stringToDate(object.get(name).getAsString(), "yyyy-MM-dd"));
-                        LogUtils.i("json对应键值对时间 = ", name + "-----------" + DateTimeUtils.stringToDate(object.get(name).getAsString(), "yyyy-MM-dd"));
+//                        LogUtils.i("json对应键值对时间 = ", name + "-----------" + DateTimeUtils.stringToDate(object.get(name).getAsString(), "yyyy-MM-dd"));
                     } else {
-                        LogUtils.i("json对应键值对 = ", name + "-----------" + object.get(name));
+//                        LogUtils.i("json对应键值对 = ", name + "-----------" + object.get(name));
 //                        fields[i].set(newInstance, object.getAsJsonPrimitive(name));
 //                        fields[i].set(newInstance, object.get(name).getAsString());
                         switch (_type) {
@@ -314,9 +314,9 @@ public class GsonUtils {
                             case "int":
                             case "class java.lang.Integer": {
 
-                                LogUtils.i("int类型", name + "==" + String.valueOf(object.get(name).getAsInt()));
+//                                LogUtils.i("int类型", name + "==" + String.valueOf(object.get(name).getAsInt()));
                                 fields[i].set(newInstance, object.get(name).getAsInt());
-                                LogUtils.i("int类型", name + "=====" + String.valueOf(object.get(name).getAsBigInteger()));
+//                                LogUtils.i("int类型", name + "=====" + String.valueOf(object.get(name).getAsBigInteger()));
                             }
                             break;
                             case "class java.lang.Double": {
@@ -339,13 +339,13 @@ public class GsonUtils {
                             default:
                                 break;
                         }
-                        LogUtils.i("json对应键值对 = ", name + "-----------" + object.getAsJsonPrimitive(name));
+//                        LogUtils.i("json对应键值对 = ", name + "-----------" + object.getAsJsonPrimitive(name));
                     }
                 }
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-                LogUtils.i("typeError:" + e.getMessage().toString());
+//                LogUtils.i("typeError:" + e.getMessage().toString());
             }
         }
 
@@ -370,7 +370,7 @@ public class GsonUtils {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtils.i("field count:" + fields.length);
+//        LogUtils.i("field count:" + fields.length);
         for (int i = 0; i < fields.length; i++) {
             String name = fields[i].getName();
             // Logs.i("field "+i +" name:"+ name);
@@ -379,7 +379,7 @@ public class GsonUtils {
                 String _type = fields[i].getGenericType().toString();
                 // class java.lang
                 // String jsonName = name.replaceFirst(name.substring(0, 1), name.substring(0, 1).toUpperCase());
-                LogUtils.i("type:" + _type + ", Name " + name);
+//                LogUtils.i("type:" + _type + ", Name " + name);
                 if (!object.has(name)) {//jsonobject 没有包含这个属性名，则跳过
                     continue;
                 } else {
@@ -417,7 +417,7 @@ public class GsonUtils {
             } catch (Exception e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
-                LogUtils.i("typeError: parseJson2Bean" + e.getMessage().toString());
+//                LogUtils.i("typeError: parseJson2Bean" + e.getMessage().toString());
             }
         }
 

@@ -81,22 +81,22 @@
             </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="0dp">
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_marginTop="0dp">-->
 
-                <TextView
-                    android:id="@+id/tvColorIdentity"
-                    style="@style/CustomLayoutLeftText"
-                    android:text="@string/string_color"/>
+                <!--<TextView-->
+                    <!--android:id="@+id/tvColorIdentity"-->
+                    <!--style="@style/CustomLayoutLeftText"-->
+                    <!--android:text="@string/string_color"/>-->
 
-                <EditText
-                    android:id="@+id/edtColorIdentity"
-                    style="@style/CustomLayoutEditText1"
-                    />
+                <!--<EditText-->
+                    <!--android:id="@+id/edtColorIdentity"-->
+                    <!--style="@style/CustomLayoutEditText1"-->
+                    <!--/>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -148,6 +148,7 @@
                     android:focusable="false"/>
 
             </LinearLayout>
+            <include layout="@layout/layout_risksource_item_bottom_disable"/>
 
             <include layout="@layout/layout_query_log_btn"/>
         </LinearLayout>
@@ -163,7 +164,7 @@
 
         <include layout="@layout/separate_line_h"></include>
 
-        <include layout="@layout/layout_risk_item_bottom"></include>
+        <include layout="@layout/layout_risksource_item_bottom"></include>
 
     </LinearLayout>
 

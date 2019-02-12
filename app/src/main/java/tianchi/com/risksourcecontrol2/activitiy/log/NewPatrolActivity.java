@@ -37,6 +37,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import tianchi.com.risksourcecontrol2.R;
+import tianchi.com.risksourcecontrol2.activitiy.notice.NewRectifyReplyInfoActivity;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.config.FoldersConfig;
 import tianchi.com.risksourcecontrol2.custom.MyAlertDialog;
@@ -598,7 +599,13 @@ public class NewPatrolActivity extends BaseActivity implements MyTakePicDialog.O
     @Override
     public void showSubmitSucceed(String msg) {
         hideInSubmiting();
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(NewPatrolActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         //        runOnUiThread(new Runnable() {
         //            @Override
         //            public void run() {
@@ -612,7 +619,12 @@ public class NewPatrolActivity extends BaseActivity implements MyTakePicDialog.O
     public void showSubmitFailed(String msg) {
         hideInSubmiting();
         uploadImgIndex = 0;
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(NewPatrolActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         finish();
     }
 
@@ -650,7 +662,12 @@ public class NewPatrolActivity extends BaseActivity implements MyTakePicDialog.O
     public void uploadFileFailed(String msg) {
         hideInSubmiting();
         uploadImgIndex = 0;
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(NewPatrolActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         picBitmap = null;
     }
 

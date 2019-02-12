@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,13 +15,18 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -41,6 +48,8 @@ import okhttp3.Request;
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.activitiy.user.RelationshipListActivity;
 import tianchi.com.risksourcecontrol2.activitiy.user.UserPermission;
+import tianchi.com.risksourcecontrol2.adapter.BeAdapter;
+import tianchi.com.risksourcecontrol2.adapter.InputAdapter;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.login.UserInfo;
 import tianchi.com.risksourcecontrol2.bean.login.UsersList;
@@ -69,7 +78,7 @@ import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
  * 权限:业主、监理、施工方都可以创建
  */
 
-public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.OnClickListener, IRectifyNotifyView, MyTakePicDialog.OnItemClickListener, ILoadingNotifyView {
+public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.OnClickListener, IRectifyNotifyView, MyTakePicDialog.OnItemClickListener, ILoadingNotifyView, InputAdapter.OnItemClickListener, BeAdapter.OnItemClickListener {
     private static final int GET_SUPERVISOR = 0;
     private static final int GET_CHECKMAN = 7;
     private static final int GET_COPYER = 8;
@@ -95,26 +104,21 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     private Button m_btnDraft; //草稿
     //    private EditText m_receiveMans; //接收人  @弃用
     private TextView m_tvBack; //返回
-//    private EditText m_edtSupervisor; //监理
+    //    private EditText m_edtSupervisor; //监理
     private EditText m_edtCopyer; //抄送着
     private EditText m_edtConstruction;//施工方
-
-
     private List<File> picFilesUp;             //临时图片文件数组
     private List<String> picNamesUp;           //临时图片文件名数组
     private ArrayList<HashMap<String, Object>> imageItemUp;//适配器数据
     private SimpleAdapter simpleAdapter;     //适配器
     private File takPicFileUp;//用户头像拍照文件
     private File resultImgFileUp;//最终生成的img文件
-
-
     private Uri fileUriUp;//生成拍照文件uri
     private Uri uriUp;//系统拍照或相册选取返回的uri
     //    private String downloadURL;//下载文件url
     private String pictureNameUp = "";//照片全名xx.jpg
     private int m_picIndexUp = 0;
     private boolean canUploadUp = true;
-
     private List<File> picFiles;             //临时图片文件数组
     private List<String> picNames;           //临时图片文件名数组
     private ArrayList<HashMap<String, Object>> imageItem;//适配器数据
@@ -136,6 +140,32 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     private String m_imgInfo;
     LoadingNotifyInfoPresenter m_presenter = new LoadingNotifyInfoPresenter(this);
     RectifyNotifyInfoPresenter mReNoticePresenter = new RectifyNotifyInfoPresenter(this);
+    private LinearLayout be_ll;
+    private LinearLayout inspect_ll;
+    private InputAdapter m_inputAdapter;
+    private BeAdapter m_beAdapter;
+    private PopupWindow mSelectWindow;
+    private ImageButton be_arrow;
+    private ImageButton input_arrow;
+//    private String[] inspect_Title = {
+//            "中铁十四局集团第二工程有限公司",
+//            "中铁十二局集团第一工程有限公司",
+//            "中交二公局第三工程有限公司",
+//            "中铁太桥局集团有限公司",
+//            "龙建路桥股份有限公司",
+//            "中铁二十局集团有限公司",
+//            "广东省长大公路工程有限公司",
+//            "中交路桥建设有限公司"
+//    };
+//
+//    private String[] be_Title = {
+//            "广东翔飞公路工程监理有限公司",
+//            "江苏交通工程咨询监理有限公司",
+//            "北京路桥通国际工程咨询有限公司",
+//            "深圳高速工程检测有限公司",
+//            "苏交科集团股份有限公司",
+//            "山西省交通建设工程质量检测中心"
+//    };
 
     private Handler m_handler = new Handler(new Handler.Callback() {
         @Override
@@ -161,6 +191,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
         }
     });
     private RectifyNotifyDraftInfo m_info;
+
     private void downloadPictures() {
         for (int i = 0; i < picNames.size(); i++) {
             if (picNames.get(i).equals("")) {
@@ -181,9 +212,9 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                 Bitmap _bitmap = CameraUtils.getimage(FoldersConfig.NOTICEFY + picNames.get(i));
                 HashMap<String, Object> _map = new HashMap<>();
                 _map.put("itemImage", _bitmap);
-                if (!m_imgInfo.isEmpty()){
-                    _map.put("remark",m_arrayPicRemark[i]);
-                }else  _map.put("remark","");
+                if (!m_imgInfo.isEmpty()) {
+                    _map.put("remark", m_arrayPicRemark[i]);
+                } else _map.put("remark", "");
                 imageItem.add(_map);
                 //                picFiles.add(picFile);
                 refreshGridviewAdapter();
@@ -245,9 +276,9 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
             try {
                 m_imgInfo = m_info.getImageInfos();
 //                LogUtils.i("_imgInfo", m_imgInfo +"");
-                if (m_imgInfo.contains("#")){
+                if (m_imgInfo.contains("#")) {
                     m_arrayPicRemark = m_imgInfo.split("#");
-                }else m_arrayPicRemark = new String[]{m_imgInfo};
+                } else m_arrayPicRemark = new String[]{m_imgInfo};
                 dbID = m_info.getId();
 //                m_logID = _draftInfo.getLogId();
                 m_checkUnit = m_info.getInspectUnit();
@@ -257,7 +288,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                 m_edtBecheckUnit.setText(m_info.getBeCheckedUnit() + "");
 //                m_edtSection.setText(_draftInfo.getSection()+"");
                 m_edtCheckMan.setText(m_info.getInspectorSign() + "");
-                if (m_info.getInspectorSigns()!=null) {
+                if (m_info.getInspectorSigns() != null) {
                     m_edtCheckMans.setText(m_info.getInspectorSigns() + "");
                 }
                 m_edtContent.setText(m_info.getInspectContent() + "");
@@ -268,11 +299,11 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                 m_edtCheckDate.setText(m_info.getCheckTime().substring(0, 10) + "");
                 m_edtLogRectifyDate.setText(m_info.getRectifyPeriod().substring(0, 10) + "");
                 String _receive = m_info.getReceiverMans();
-                if (_receive.contains("#")){
-                    String _s = _receive.substring(0,_receive.indexOf("#"));
+                if (_receive.contains("#")) {
+                    String _s = _receive.substring(0, _receive.indexOf("#"));
                     m_edtConstruction.setText(_s);
-                    m_edtCopyer.setText(_receive.substring(_receive.indexOf("#")+1));
-                }else m_edtConstruction.setText(_receive);
+                    m_edtCopyer.setText(_receive.substring(_receive.indexOf("#") + 1));
+                } else m_edtConstruction.setText(_receive);
 //                userRealName = UserSingleton.getUserInfo().getRealName(); //检查人
             } catch (Exception e) {
                 String s = e.getMessage();
@@ -309,7 +340,6 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
 
     private void downloadFirstPicture() {
         File picFile = new File(FoldersConfig.NOTICEFY, picNames.get(0));
-
         //本地不存在，从网上下载
         if (!picFile.exists()) {
             m_picIndex = 0;
@@ -323,9 +353,9 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
             Bitmap _bitmap = CameraUtils.getimage(FoldersConfig.NOTICEFY + picNames.get(0));
             HashMap<String, Object> _map = new HashMap<>();
             _map.put("itemImage", _bitmap);
-            if (!m_imgInfo.isEmpty()){
-                _map.put("remark",m_arrayPicRemark[0]);
-            }else  _map.put("remark","");
+            if (!m_imgInfo.isEmpty()) {
+                _map.put("remark", m_arrayPicRemark[0]);
+            } else _map.put("remark", "");
             imageItem.add(_map);
             refreshGridviewAdapter();
             picNames.set(0, "");
@@ -347,6 +377,8 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
 //        m_edtSupervisor.setOnClickListener(this);
         m_edtCopyer.setOnClickListener(this);
         m_edtConstruction.setOnClickListener(this);
+        be_arrow.setOnClickListener(this);
+        input_arrow.setOnClickListener(this);
     }
 
     private void initView() {
@@ -377,6 +409,10 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
         m_progressDialog = new ProgressDialog(this);
         m_progressDialog.setMessage("通知发送中...");
         m_progressDialog.setCancelable(true);
+        be_arrow = $(R.id.be);
+        input_arrow = $(R.id.inspect);
+        be_ll = $(R.id.be_ll);
+        inspect_ll = $(R.id.inspect_ll);
         m_spSection.setAdapter(new ArrayAdapter<String>(ReadDraftNotifyInfoActivity2.this, android.R.layout.simple_spinner_dropdown_item, getResources().getStringArray(R.array.section2)));
 //       long time = System.currentTimeMillis();
 //        m_edtCheckDate.setText(DateTimeUtils.setCurrentTime());
@@ -509,14 +545,57 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                 startActivityForResult(new Intent(this, RelationshipListActivity.class).putExtra("Type", UserPermission.CONSTRU_SECOND), GET_CONSTRUCTION);
                 break;
 
+            case R.id.inspect: {
+                View view = LayoutInflater.from(this).inflate(R.layout.down_account, null, false);
+                LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
+                ListView listView = (ListView) view.findViewById(R.id.input_select_list);
+                listView.setDividerHeight(0);
+                m_inputAdapter = new InputAdapter(this, ServerConfig.getInspectedUnit());
+                m_inputAdapter.setOnItemClickListener(this);
+                listView.setAdapter(m_inputAdapter);
+                initSpinnerEditText(contentview, inspect_ll);
+
+            }
+            break;
+            case R.id.be: {
+                View view = LayoutInflater.from(this).inflate(R.layout.down_account, null, false);
+                LinearLayout contentview = (LinearLayout) view.findViewById(R.id.input_select_listlayout);
+                ListView listView = (ListView) view.findViewById(R.id.input_select_list);
+                listView.setDividerHeight(0);
+                m_beAdapter = new BeAdapter(this, ServerConfig.getBelogUnit());
+                m_beAdapter.setOnBeClickListener(this);
+                listView.setAdapter(m_beAdapter);
+                initSpinnerEditText(contentview, be_ll);
+            }
+            break;
             default:
                 break;
-
         }
-
-
     }
 
+    private void initSpinnerEditText(LinearLayout contentview, LinearLayout mInputLayout) {
+        mSelectWindow = new PopupWindow(contentview, mInputLayout.getMeasuredWidth(), LinearLayout.LayoutParams.WRAP_CONTENT, true);
+        mSelectWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        mSelectWindow.setOutsideTouchable(true);
+        mSelectWindow.showAsDropDown(mInputLayout, 0, 0);
+    }
+
+    @Override
+    public void onItemClicked(int position) {
+        closePopWindow();
+        m_edtCheckUnit.setText(ServerConfig.getInspectedUnit()[position].toString());
+    }
+
+    @Override
+    public void onBeClicked(int position) {
+        closePopWindow();
+        m_edtBecheckUnit.setText(ServerConfig.getBelogUnit()[position].toString());
+    }
+
+    private void closePopWindow() {
+        mSelectWindow.dismiss();
+        mSelectWindow = null;
+    }
 
     //上传第一张照片
     private void uploadFirstPicture() {
@@ -618,7 +697,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
 
     @Override
     public String getCheckMans() {
-        return null;
+        return m_edtCheckMans.getText().toString().trim();
     }
 
     /**
@@ -705,9 +784,9 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                     FoldersConfig.NOTICEFY, itemPicName));
             HashMap<String, Object> _map = new HashMap<>();
             _map.put("itemImage", picBitmap);
-            if (!m_imgInfo.isEmpty()){
-                _map.put("remark",m_arrayPicRemark[m_picIndex]);
-            }else  _map.put("remark","");
+            if (!m_imgInfo.isEmpty()) {
+                _map.put("remark", m_arrayPicRemark[m_picIndex]);
+            } else _map.put("remark", "");
             imageItem.add(_map);
             refreshGridviewAdapter();
             //            MyToast.showMyToast(this, "成功加载" + itemPicName, Toast.LENGTH_SHORT);
@@ -733,7 +812,13 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
 
     @Override
     public void showLoadingFailed(String msg) {
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReadDraftNotifyInfoActivity2.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
+
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);
@@ -819,7 +904,12 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     @Override
     public void showSubmitSucceed(String msg) {
         hideInSubmiting();
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReadDraftNotifyInfoActivity2.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         //删除草稿
         deleteDraft(m_info.getId());
         finish();
@@ -829,8 +919,12 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     @Override
     public void showSubmitFailed(String msg) {
         hideInSubmiting();
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
-        //        finish();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReadDraftNotifyInfoActivity2.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override
@@ -861,8 +955,14 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     @Override
     public void uploadFileFailed(String msg) {
         hideInSubmiting();
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+//        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
         //        resetParams();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReadDraftNotifyInfoActivity2.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override
@@ -985,7 +1085,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-         Bitmap picBitmapUp = null; //存储用户修改头像
+        Bitmap picBitmapUp = null; //存储用户修改头像
         try {
             switch (requestCode) {  //拍照
                 case CameraUtils.PHOTO_REQUEST_TAKEPHOTO:
@@ -1060,7 +1160,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                         String allNameList = "";
                         for (String name : UsersList.getList()) {
                             String _s = name.toString();
-                            String _s1 = _s.substring(_s.lastIndexOf("#")+1);
+                            String _s1 = _s.substring(_s.lastIndexOf("#") + 1);
                             allNameList += _s1 + "#";
                         }
                         m_edtCheckMans.setText("");
@@ -1125,7 +1225,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
     //刷新图片区域gridview
     private void refreshGridviewAdapter() {
         simpleAdapter = new SimpleAdapter(this, imageItem,
-                R.layout.layout_griditem_addpic2, new String[]{"itemImage","remark"}, new int[]{R.id.imageView1,R.id.tv1});
+                R.layout.layout_griditem_addpic2, new String[]{"itemImage", "remark"}, new int[]{R.id.imageView1, R.id.tv1});
         simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -1138,7 +1238,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                         }
                     });
                     return true;
-                }else if (view instanceof  TextView ){
+                } else if (view instanceof TextView) {
                     TextView _textView = (TextView) view;
                     _textView.setText(textRepresentation);
                 }
@@ -1216,6 +1316,7 @@ public class ReadDraftNotifyInfoActivity2 extends BaseActivity implements View.O
                 public void requestFailure(Request request, IOException e) {
 
                 }
+
                 @Override
                 public void requestSuccess(String result) throws Exception {
                     int status = GsonUtils.getIntNoteJsonString(result, "status");

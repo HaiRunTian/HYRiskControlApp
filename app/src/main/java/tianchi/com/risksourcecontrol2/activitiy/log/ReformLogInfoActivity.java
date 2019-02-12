@@ -192,16 +192,22 @@ public class ReformLogInfoActivity extends BaseActivity implements ILoadingLogVi
     public void showLoadingSucceed(Bitmap bitmap) {
         if (bitmap != null)
             picBitmap = bitmap;
-        MyToast.showMyToast(this, "初始化图片成功", Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReformLogInfoActivity.this, "初始化图片成功", Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override
     public void showLoadingFailed(String msg) {
-        MyToast.showMyToast(this, "初始化图片失败", Toast.LENGTH_SHORT);
+
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 imgvPicture.setImageResource(R.mipmap.ic_image_disable);
+                MyToast.showMyToast(ReformLogInfoActivity.this, "初始化图片失败", Toast.LENGTH_SHORT);
             }
         });
     }

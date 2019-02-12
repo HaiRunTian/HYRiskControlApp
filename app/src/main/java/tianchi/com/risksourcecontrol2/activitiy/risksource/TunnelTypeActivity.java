@@ -56,7 +56,6 @@ public class TunnelTypeActivity extends BaseActivity implements View.OnClickList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tunnel_type);
         initView();
-
         findViewById(R.id.btnBack).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +145,7 @@ public class TunnelTypeActivity extends BaseActivity implements View.OnClickList
                         MyToast.showMyToast( AppInitialization.getInstance(), "查询失败", 2);
                     }
                     TunnelRiskData _data = _list.get(0);
-                    LogUtils.i("onResponse: TunnelRiskData " + _response);
+//                    LogUtils.i("onResponse: TunnelRiskData " + _response);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

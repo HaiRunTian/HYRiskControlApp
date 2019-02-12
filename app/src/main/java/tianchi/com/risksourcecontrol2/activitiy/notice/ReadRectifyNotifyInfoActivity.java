@@ -42,11 +42,10 @@ import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
 
 /**
  * Created by hairun.tian on 2018/6/21 0021.
- * 查看整改通知类
+ * 查看隐患整改通知类
  */
 
 public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.OnClickListener, ILoadingNotifyView {
-
     private EditText m_edtLogId; //日志编号
     private EditText m_edtCheckUnit; //检查单位
     private EditText m_edtBecheckUnit; //受检单位
@@ -398,6 +397,7 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
                     Intent _intent = new Intent(ReadRectifyNotifyInfoActivity.this, NewRectifyReplyInfoActivity.class);
                     _intent.putExtras(_bundle);
                     startActivity(_intent);
+                    finish();
 //               }else {
 //                    Toast.makeText(this, "已回复！", Toast.LENGTH_SHORT).show();
 //                }
@@ -513,7 +513,12 @@ public class ReadRectifyNotifyInfoActivity extends BaseActivity implements View.
      */
     @Override
     public void showLoadingFailed(String msg) {
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReadRectifyNotifyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);

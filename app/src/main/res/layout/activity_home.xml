@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     android:focusable="true"
-    android:focusableInTouchMode="true"
-    android:orientation="vertical">
+    android:focusableInTouchMode="true">
 
     <RelativeLayout
         android:id="@+id/layoutTop"
@@ -59,11 +58,9 @@
     <RelativeLayout
         android:id="@+id/layoutMiddle"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/layoutBottom"
         android:layout_below="@id/layoutTop"
-        android:layout_weight="1"
         android:paddingTop="2dp">
 
         <com.supermap.mapping.MapView
@@ -81,54 +78,128 @@
             android:textSize="@dimen/textsize_small"
             />
 
+        <ImageButton
+            android:id="@+id/btnMapChange"
+            android:background="@drawable/ic_map"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="20dp"/>
+
+
+        <RelativeLayout
+
+            android:visibility="gone"
+            android:id="@+id/imgBtnCon"
+            android:layout_width="160dp"
+            android:layout_height="100dp"
+            android:layout_alignParentRight="true"
+            android:background="@color/colorFontDefault">
+
+
+            <ImageButton
+                android:background="@drawable/ic_img_map"
+                android:id="@+id/imgBtnMap"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"/>
+
+            <TextView
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:id="@+id/text1"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgBtnMap"
+                android:text="标准地图"
+                android:textColor="@drawable/selector_img_textcolor"
+                android:textSize="@dimen/textsize_small"/>
+
+
+            <ImageButton
+                android:background="@drawable/ic_img_image"
+                android:id="@+id/imgBtnMapImage"
+                android:layout_width="70dp"
+                android:layout_height="50dp"
+                android:layout_margin="5dp"
+                android:layout_toRightOf="@+id/imgBtnMap"/>
+
+            <TextView
+                android:layout_toRightOf="@id/text1"
+                android:gravity="center"
+                android:layout_margin="5dp"
+                android:id="@+id/text2"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imgBtnMapImage"
+                android:textColor="@drawable/selector_img_textcolor"
+                android:text="影像地图"
+                android:textSize="@dimen/textsize_small"/>
+
+
+
+
+        </RelativeLayout>
+
+
         <LinearLayout
             android:id="@+id/layoutBtn"
-            android:layout_width="40dp"
+            android:layout_width="38dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:orientation="vertical">
 
-            <RadioGroup
-                android:id="@+id/rdg_btn_measure"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone">
 
-                <RadioButton
-                    android:id="@+id/rdg_btn_mea_length"
-                    style="@style/HomeBtnOutIn"
-                    android:background="@drawable/selector_btn_measure_distance"/>
+            <!--<RadioGroup-->
+            <!--android:id="@+id/rdg_btn_measure"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:visibility="gone">-->
 
-                <RadioButton
-                    android:id="@+id/rdg_btn_mea_area"
-                    style="@style/HomeBtnOutIn"
-                    android:background="@drawable/selector_btn_measure_area"/>
+            <!--<RadioButton-->
+            <!--android:id="@+id/rdg_btn_mea_length"-->
+            <!--style="@style/HomeBtnOutIn"-->
+            <!--android:background="@drawable/selector_btn_measure_distance"/>-->
 
-            </RadioGroup>
+            <!--<RadioButton-->
+            <!--android:id="@+id/rdg_btn_mea_area"-->
+            <!--style="@style/HomeBtnOutIn"-->
+            <!--android:background="@drawable/selector_btn_measure_area"/>-->
 
-
-            <Button
-                android:id="@+id/btnLength"
-                style="@style/HomeBtnOutIn"
-                android:background="@drawable/selector_btn_measure_distance"/>
-
-            <include layout="@layout/seperate_line_b"/>
+            <!--</RadioGroup>-->
 
 
-            <Button
-                android:id="@+id/btnArea"
-                style="@style/HomeBtnOutIn"
-                android:background="@drawable/selector_btn_measure_area"/>
+            <!--<Button-->
+            <!--android:id="@+id/btnLength"-->
+            <!--style="@style/HomeBtnOutIn"-->
+            <!--android:background="@drawable/selector_btn_measure_distance"/>-->
 
-            <include layout="@layout/seperate_line_b"/>
+            <!--<include layout="@layout/seperate_line_b"/>-->
+
+
+            <!--<Button-->
+            <!--android:id="@+id/btnArea"-->
+            <!--style="@style/HomeBtnOutIn"-->
+            <!--android:background="@drawable/selector_btn_measure_area"/>-->
+
+            <!--<include layout="@layout/seperate_line_b"/>-->
+
+            <!--<Button-->
+            <!--android:id="@+id/btnChange"-->
+            <!--style="@style/HomeBtnOutIn"-->
+            <!--android:background="@drawable/selector_btn_change"/>-->
+
+            <!--<include layout="@layout/seperate_line_b"/>-->
+
 
             <Button
                 android:id="@+id/btnLocal"
                 style="@style/HomeBtnOutIn"
                 android:background="@drawable/selector_btn_location"/>
 
-            <include layout="@layout/seperate_line_b"/>
+            <!--<include layout="@layout/seperate_line_b"/>-->
 
 
             <Button
@@ -136,63 +207,77 @@
                 style="@style/HomeBtnOutIn"
                 android:background="@drawable/selector_btn_pan"/>
 
-            <include layout="@layout/seperate_line_b"/>
-
-
-            <Button
-                android:id="@+id/btnZoomOut"
-                style="@style/HomeBtnOutIn"
-                android:background="@drawable/selector_btn_zoom_out"/>
-
-            <include layout="@layout/seperate_line_b"/>
-
-
-            <Button
-                android:id="@+id/btnZoomIn"
-                style="@style/HomeBtnOutIn"
-                android:background="@drawable/selector_btn_zoom_in"/>
-
-            <include layout="@layout/seperate_line_b"/>
-
-
+            <!--<include layout="@layout/seperate_line_b"/>-->
             <Button
                 android:id="@+id/btnViewEntire"
                 style="@style/HomeBtnOutIn"
                 android:background="@drawable/selector_btn_full_screen"/>
 
-            <include layout="@layout/seperate_line_b"/>
+            <!--<include layout="@layout/seperate_line_b"/>-->
 
+            <Button
+                android:id="@+id/btnLength"
+                style="@style/HomeBtnOutIn"
+                android:background="@drawable/selector_btn_measure_distance"/>
+
+            <!--<include layout="@layout/seperate_line_b"/>-->
+
+
+            <Button
+                android:id="@+id/btnArea"
+                style="@style/HomeBtnOutIn"
+                android:background="@drawable/selector_btn_measure_area"/>
+
+            <!--<include layout="@layout/seperate_line_b"/>-->
+
+
+            <!--<Button-->
+            <!--android:id="@+id/btnZoomOut"-->
+            <!--style="@style/HomeBtnOutIn"-->
+            <!--android:background="@drawable/selector_btn_zoom_out"/>-->
+
+            <!--<include layout="@layout/seperate_line_b"/>-->
+
+
+            <!--<Button-->
+            <!--android:id="@+id/btnZoomIn"-->
+            <!--style="@style/HomeBtnOutIn"-->
+            <!--android:background="@drawable/selector_btn_zoom_in"/>-->
+
+            <!--<include layout="@layout/seperate_line_b"/>-->
 
         </LinearLayout>
 
     </RelativeLayout>
 
-    <include layout="@layout/separate_line_h"></include>
+    <!--<include layout="@layout/separate_line_h"></include>-->
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/tvMeasure"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="长度："
-            android:textColor="@color/colorGray"
-            android:visibility="gone"/>
+    <TextView
+        android:id="@+id/tvMeasure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvScale"
+        android:text="长度："
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/textsize_small"
+        android:visibility="gone"/>
 
-    </LinearLayout>
 
     <TextView
         android:id="@+id/tvScale"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="比例尺："/>
+        android:layout_above="@+id/layoutBottom"
+        android:text="比例尺："
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/textsize_small"/>
 
     <LinearLayout
         android:id="@+id/layoutBottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:orientation="vertical">
 
         <include layout="@layout/separate_line_h"></include>
@@ -226,7 +311,6 @@
                 <RadioButton
                     android:id="@+id/rdbtnOther"
                     style="@style/HomeBottomMenuItemStyle"
-                    android:layout_marginTop="2dp"
                     android:drawableTop="@drawable/selector_home_bottom_item0"
                     android:text="@string/string_other"
                     android:textSize="@dimen/textsize_small"/>
@@ -258,46 +342,46 @@
             </RadioGroup>
 
 
-            <LinearLayout
-                android:id="@+id/btn_con"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="#00000000"
-                android:orientation="horizontal"
-                android:rating="1">
+            <!--<LinearLayout-->
+            <!--android:id="@+id/btn_con"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="50dp"-->
+            <!--android:background="#00000000"-->
+            <!--android:orientation="horizontal"-->
+            <!--android:rating="1">-->
 
-                <Button
-                    android:id="@+id/btn_number"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="#00000000"
-                    android:visibility="invisible"/>
-                <!-- 占位置的button，以便适应不同分辨率手机 -->
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="fill_parent"
-                    android:layout_weight="1"
-                    android:visibility="invisible"
-                    />
-                <!-- 占位置的button，以便适应不同分辨率手机 -->
-                <Button
+            <!--<Button-->
+            <!--android:id="@+id/btn_number"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="#00000000"-->
+            <!--android:visibility="invisible"/>-->
+            <!--&lt;!&ndash; 占位置的button，以便适应不同分辨率手机 &ndash;&gt;-->
+            <!--<Button-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="fill_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="invisible"-->
+            <!--/>-->
+            <!--&lt;!&ndash; 占位置的button，以便适应不同分辨率手机 &ndash;&gt;-->
+            <!--<Button-->
 
-                    android:id="@+id/button"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:visibility="invisible"/>
+            <!--android:id="@+id/button"-->
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="invisible"/>-->
 
-                <Button
+            <!--<Button-->
 
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:visibility="invisible"
-                    />
+            <!--android:layout_width="0dp"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_weight="1"-->
+            <!--android:visibility="invisible"-->
+            <!--/>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
         </RelativeLayout>
     </LinearLayout>
-</LinearLayout>
+</RelativeLayout>

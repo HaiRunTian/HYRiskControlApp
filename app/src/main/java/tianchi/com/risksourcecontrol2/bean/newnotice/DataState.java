@@ -8,12 +8,34 @@ package tianchi.com.risksourcecontrol2.bean.newnotice;
 public class DataState {
     public int status;
     public String msg;
-    public int draft;
-    public int recify;
-    public int UnChecked;
-    public int checked;
-    public int unReadMsg;
+    public int draft; //草稿
+    public int recify; // 个人收到
+    public int UnChecked; //未审核
+    public int checked; //已审核
+    public int unReadMsg; //未读消息
+    public int rectify1; //个人下达
+    public int Replys; //个人回复
+
+
+
+
     public DataState() {
+    }
+
+    public int getRecify1() {
+        return rectify1;
+    }
+
+    public void setRecify1(int recify1) {
+        this.rectify1 = recify1;
+    }
+
+    public int getReplys() {
+        return Replys;
+    }
+
+    public void setReplys(int replys) {
+        Replys = replys;
     }
 
     public int getStatus() {

@@ -1,5 +1,6 @@
 package tianchi.com.risksourcecontrol2.activitiy.notice;
 
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -53,6 +54,7 @@ import tianchi.com.risksourcecontrol2.singleton.UserSingleton;
 import tianchi.com.risksourcecontrol2.util.CameraUtils;
 import tianchi.com.risksourcecontrol2.util.FileUtils;
 import tianchi.com.risksourcecontrol2.util.GsonUtils;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
 import tianchi.com.risksourcecontrol2.view.ILoadingNotifyView;
 import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
@@ -113,6 +115,8 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
     private View m_conOwner;
     private String[] m_arrayPicRemark;
     private int m_picIndex; //照片下标
+
+    @SuppressLint("HandlerLeak")
     private Handler m_handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -133,6 +137,29 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
 //                    /*提交修改代码片*/
 //                    m_logInfoPresenter.submitModifyLog(ServerConfig.URL_SUBMIT_MODIFY_PRO_SAFETY_LOG,getModifyLogMap());
 //                    break;
+                case 3:
+                case 5:
+                    if (!UserSingleton.getUserInfo().getManagerSection().equals("J0")) {
+                        //监理审核通过
+                        m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.ic_pervisor_pass), null);
+                    } else {
+                        //业主审核通过
+                        m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.owner_pass), null);
+                    }
+                    finish();
+                    break;
+                case 4:
+                case 6:
+                    if (!UserSingleton.getUserInfo().getManagerSection().equals("J0")) {
+                        //监理审核驳回
+                        m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.ic_supervisor_reject), null);
+
+                    } else {
+                        //业主审核驳回
+                        m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.owner_reject), null);
+                    }
+                    finish();
+                    break;
                 default:
                     break;
             }
@@ -161,9 +188,9 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
                 Bitmap _bitmap = CameraUtils.getimage(FoldersConfig.NOTICEFY + picNames.get(i));
                 HashMap<String, Object> _map = new HashMap<>();
                 _map.put("itemImage", _bitmap);
-                if (!m_imgInfo.isEmpty()){
-                    _map.put("remark",m_arrayPicRemark[i]);
-                }else  _map.put("remark","");
+                if (!m_imgInfo.isEmpty()) {
+                    _map.put("remark", m_arrayPicRemark[i]);
+                } else _map.put("remark", "");
                 imageItem.add(_map);
                 //                picFiles.add(picFile);
                 refreshGridviewAdapter();
@@ -214,9 +241,9 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
         m_notifyInfo = (RectifyReplyInfo) getIntent().getSerializableExtra("data");
         if (m_notifyInfo.getNotifyType() != 17) m_conOwner.setVisibility(View.GONE);
         m_imgInfo = m_notifyInfo.getImageInfos();
-        if (m_imgInfo.contains("#")){
+        if (m_imgInfo.contains("#")) {
             m_arrayPicRemark = m_imgInfo.split("#");
-        }else m_arrayPicRemark = new String[]{m_imgInfo};
+        } else m_arrayPicRemark = new String[]{m_imgInfo};
         if (m_notifyInfo != null) {
             m_edtLogId.setText(m_notifyInfo.getLogId());
             m_edtRectifyId.setText(m_notifyInfo.getRectifyLogID());
@@ -236,7 +263,6 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
                     userId = userInfo.getUserId();
                     userLoginName = userInfo.getLoginName();
                     pictureName = m_notifyInfo.getImages();
-
                     if (pictureName != null && pictureName.length() > 0) {
                         _list = new ArrayList<>();
                         _list.addAll(Arrays.asList(pictureName.split("#")));
@@ -274,6 +300,7 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
                     public void requestFailure(Request request, IOException e) {
                         MyToast.showMyToast(ReadRectifyReplyInfoActivity.this, "失败", Toast.LENGTH_SHORT);
                     }
+
                     @Override
                     public void requestSuccess(String result) throws Exception {
                         int status = GsonUtils.getIntNoteJsonString(result, "status");
@@ -287,7 +314,6 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
                         }
                     }
                 });
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -308,9 +334,9 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
             Bitmap _bitmap = CameraUtils.getimage(FoldersConfig.NOTICEFY + picNames.get(0));
             HashMap<String, Object> _map = new HashMap<>();
             _map.put("itemImage", _bitmap);
-            if (!m_imgInfo.isEmpty()){
-                _map.put("remark",m_arrayPicRemark[0]);
-            }else  _map.put("remark","");
+            if (!m_imgInfo.isEmpty()) {
+                _map.put("remark", m_arrayPicRemark[0]);
+            } else _map.put("remark", "");
             imageItem.add(_map);
             refreshGridviewAdapter();
             picNames.set(0, "");
@@ -350,9 +376,7 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
     private boolean canUpload = true;
 
     private void initEvent() {
-
         m_btnBack.setOnClickListener(this);
-
     }
 
     private void initView() {
@@ -385,7 +409,7 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
         m_conOwner = $(R.id.layoutCon);
 
         //如果审批的用户是施工方和业主，就不会显示下一步审核人
-        if (UserSingleton.getUserRoid() == 17 || UserSingleton.getUserRoid() == 20){
+        if (UserSingleton.getUserRoid() == 17 || UserSingleton.getUserRoid() == 20) {
             m_conOwner.setVisibility(View.GONE);
         }
 
@@ -450,20 +474,19 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
             //通过
             case R.id.btnPass:
 //                int result = 0;
-
                 if (!UserSingleton.getUserInfo().getManagerSection().equals("J0")) {
 //                    m_imgSupervisor.setVisibility(View.VISIBLE);
 //                    m_imgSupervisor.setImageResource(R.mipmap.owner_pass);
                     //监理审核通过
-                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.supervisor_pass),null);
-                    m_LogState = 4;
+//                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.ic_pervisor_pass), null);
+                    m_LogState = 3;
 
-                } else{
+                } else {
                     //业主审核通过
 //                    m_imgOwner.setVisibility(View.VISIBLE);
 //                    m_imgOwner.setImageResource(R.mipmap.supervisor_pass);
-                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_pass),null);
-                    m_LogState = 4;
+//                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.owner_pass), null);
+                    m_LogState = 3;
                 } //施工方自己审核
                 submit(m_LogState);
                 break;
@@ -474,14 +497,14 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
 //                    m_imgSupervisor.setImageResource(R.mipmap.owner_reject);
 //                    m_imgSupervisor.setVisibility(View.VISIBLE);
                     //监理审核驳回
-                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.supervisor_reject),null);
-                    m_LogState = 1;
+//                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.ic_supervisor_reject), null);
+                    m_LogState = 4;
                 } else {
                     //业主审核驳回
 //                    m_imgOwner.setVisibility(View.VISIBLE);
 //                    m_imgOwner.setImageResource(R.mipmap.supervisor_reject);
-                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null,null, getResources().getDrawable(R.mipmap.owner_reject),null);
-                    m_LogState = 2;
+//                    m_edtOpinion.setCompoundDrawablesWithIntrinsicBounds(null, null, getResources().getDrawable(R.mipmap.owner_reject), null);
+                    m_LogState = 4;
                 }
                 submit(m_LogState);
                 break;
@@ -519,9 +542,11 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
                     MyToast.showMyToast(ReadRectifyReplyInfoActivity.this, msg, Toast.LENGTH_SHORT);
                 } else if (status == 0) {
 //                    LogUtils.i("msg", msg);
+                    MyToast.showMyToast(ReadRectifyReplyInfoActivity.this, msg, Toast.LENGTH_SHORT);
                 } else {
 //                    LogUtils.i("msg", msg);
                     MyToast.showMyToast(ReadRectifyReplyInfoActivity.this, msg, Toast.LENGTH_SHORT);
+                    m_handler.sendEmptyMessage(m_LogState);
                     finish();
                 }
             }
@@ -635,7 +660,7 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
     //刷新图片区域gridview
     private void refreshGridviewAdapter() {
         simpleAdapter = new SimpleAdapter(this, imageItem,
-                R.layout.layout_griditem_addpic2, new String[]{"itemImage","remark"}, new int[]{R.id.imageView1,R.id.tv1});
+                R.layout.layout_griditem_addpic2, new String[]{"itemImage", "remark"}, new int[]{R.id.imageView1, R.id.tv1});
         simpleAdapter.setViewBinder(new SimpleAdapter.ViewBinder() {
             @Override
             public boolean setViewValue(View view, Object data, String textRepresentation) {
@@ -648,7 +673,7 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
                         }
                     });
                     return true;
-                }else if (view instanceof TextView){
+                } else if (view instanceof TextView) {
                     TextView _textView = (TextView) view;
                     _textView.setText(textRepresentation);
                     return true;
@@ -732,9 +757,9 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
             //                    FoldersConfig.PRO_SAFETY_PIC_PATH, itemPicName));
             HashMap<String, Object> _map = new HashMap<>();
             _map.put("itemImage", picBitmap);
-            if (!m_imgInfo.isEmpty()){
-                _map.put("remark",m_arrayPicRemark[m_picIndex]);
-            }else  _map.put("remark","");
+            if (!m_imgInfo.isEmpty()) {
+                _map.put("remark", m_arrayPicRemark[m_picIndex]);
+            } else _map.put("remark", "");
             imageItem.add(_map);
             refreshGridviewAdapter();
             //   MyToast.showMyToast(this, "成功加载" + itemPicName, Toast.LENGTH_SHORT);
@@ -764,7 +789,13 @@ public class ReadRectifyReplyInfoActivity extends BaseActivity implements View.O
      */
     @Override
     public void showLoadingFailed(String msg) {
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+//        LogUtils.i("错误信息=",msg + "11111");
+        this.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReadRectifyReplyInfoActivity.this, msg, Toast.LENGTH_SHORT);
+            }
+        });
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);

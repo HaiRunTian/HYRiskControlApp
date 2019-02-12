@@ -357,7 +357,12 @@ public class QueryPatrolLogActivity extends BaseActivity implements IQueryLogVie
                 hideQuerying();
             }
         });
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(QueryPatrolLogActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
     }
 
     @Override

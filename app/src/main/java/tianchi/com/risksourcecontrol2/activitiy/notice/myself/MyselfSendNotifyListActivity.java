@@ -21,6 +21,7 @@ import java.util.List;
 import okhttp3.Request;
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.activitiy.message.ReceiveNoticeListActivity;
+import tianchi.com.risksourcecontrol2.activitiy.notice.QueryNotfiyReplyActivity;
 import tianchi.com.risksourcecontrol2.adapter.ReceviceNoticeAdapter;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyNotifyInfo;
@@ -39,7 +40,8 @@ import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
  * 整改通知单列表
  * 查询自己发出去的整改通知单列表
  * 发起人是自己
- * 下达
+ * 个人下达
+ * 列表
  */
 
 public class MyselfSendNotifyListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener ,AdapterView.OnItemLongClickListener{
@@ -98,7 +100,7 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
                             for (int i = _unReplyDatas.size() - 1; i >= 0; i--) {
                                 int _logState = _unReplyDatas.get(i).getLogState();
 
-                                if (_logState!=6) {
+                                if (_logState!= 5) { //5 已经删除
                                     m_list.add(_unReplyDatas.get(i));
                                 }
 
@@ -127,16 +129,20 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle _bundle = new Bundle();
         RectifyNotifyInfo _rectifyNotifyInfo = m_list.get(position);
-        String _inspectorSigns = _rectifyNotifyInfo.getInspectorSigns();
-        LogUtils.i("_inspectorSigns"+_inspectorSigns);
-        String time = _rectifyNotifyInfo.getCheckedTime();
-//        LogUtils.i("time", time);
-        _bundle.putSerializable("data", _rectifyNotifyInfo);
-        Intent _intent = new Intent(MyselfSendNotifyListActivity.this, ReadMyselfNotifyInfoActivity.class);
+        _bundle.putInt("id",_rectifyNotifyInfo.getId());
+//        String _inspectorSigns = _rectifyNotifyInfo.getInspectorSigns();
+//        LogUtils.i("_inspectorSigns"+_inspectorSigns);
+//        String time = _rectifyNotifyInfo.getCheckedTime();
+//
+////        LogUtils.i("time", time);
+//        _bundle.putSerializable("data", _rectifyNotifyInfo);
+//        Intent _intent = new Intent(MyselfSendNotifyListActivity.this, ReadMyselfNotifyInfoActivity.class);
+        Intent _intent = new Intent(MyselfSendNotifyListActivity.this, ReadMyselfNotifyInfoActivity2.class);
         _intent.putExtras(_bundle);
         startActivity(_intent);
 
     }
+
 
     //网络请求接收过的通知
     private void getNotice(String receiveMan, ReceiveNoticeListActivity.CallBack callBack) {
@@ -165,7 +171,7 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
 
             @Override
             public void requestSuccess(String result) throws Exception {
-                LogUtils.i("...接收通知", result);
+//                LogUtils.i("...接收通知", result);
                 if (result == null) {
                     m_progressDialog.setMessage("加载失败");
                     m_progressDialog.dismiss();
@@ -185,7 +191,7 @@ public class MyselfSendNotifyListActivity extends BaseActivity implements View.O
 
                 String _time = m_list.get(position).getSubmitTime();
                 String _tme1 = MyTime.getTime();
-                LogUtils.i("i=" + _time + "---" + _tme1);
+//                LogUtils.i("i=" + _time + "---" + _tme1);
                 boolean _b = MyTime.getTimeDifference(_time, _tme1);
                 String m_time = "0:0:30";
                 if (_logState != 1) {

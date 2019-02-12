@@ -33,7 +33,7 @@ public class MyToast extends Toast {
         if (s_toast == null) {
             s_toast = Toast.makeText(context, message, duration);
         } else {
-            s_toast.setText(message+"");
+            s_toast.setText(message);
         }
         s_toast.show();
     }

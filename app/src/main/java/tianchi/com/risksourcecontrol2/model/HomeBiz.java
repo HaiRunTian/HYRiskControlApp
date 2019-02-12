@@ -55,7 +55,7 @@ public class HomeBiz implements IHomeBiz {
         } catch (Exception e) {
             e.printStackTrace();
             riskQueryListener.onQueryFailed();
-            LogUtils.i("RiskQueryError", "查询失败" + e.getMessage());
+//            LogUtils.i("RiskQueryError", "查询失败" + e.getMessage());
         }
 
     }
@@ -81,14 +81,14 @@ public class HomeBiz implements IHomeBiz {
             @Override
             public void requestSuccess(String _response) throws Exception {
                 try {
-                    LogUtils.i("getRiskAsynByOkHttp3: " + _response);
+//                    LogUtils.i("getRiskAsynByOkHttp3: " + _response);
                     if (!_response.contains("status")) {
                         MyToast.showMyToast( AppInitialization.getInstance(), "服务器解析错误_jsonString:" + _response, 2);
                         riskQueryListener.onQueryFailed();
                         return;
                     }
                     int status = GsonUtils.getIntNoteJsonString(_response, "status");
-                    LogUtils.i("status =" + status);
+//                    LogUtils.i("status =" + status);
                     if (status == 0 || _response == null) {
                         MyToast.showMyToast( AppInitialization.getInstance(), "查询失败", 2);
                         riskQueryListener.onQueryFailed();
@@ -154,7 +154,7 @@ public class HomeBiz implements IHomeBiz {
                             break;
                     }
 
-                    LogUtils.i("onResponse: HomeBiz " + list.size() + "____________________" + _response);
+//                    LogUtils.i("onResponse: HomeBiz " + list.size() + "____________________" + _response);
                     riskQueryListener.onQuerySucceed(list);
 
                 } catch (Exception e) {

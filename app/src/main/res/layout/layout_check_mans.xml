@@ -10,6 +10,8 @@
 
     <EditText
         android:id="@+id/edtLogCheckMans"
+        android:editable="false"
+        android:focusableInTouchMode="false"
         style="@style/CustomLayoutEditText1"
         android:hint="请输入检查人"/>
 

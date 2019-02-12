@@ -35,7 +35,7 @@ public class LoadingNotifyInfoPresenter {
                     @Override
                     public void downloadFailed(String msg) {
                         //                m_loadingLogView.hideLoadingPicture();
-                        m_loadingLogView.showLoadingFailed(msg+"");
+                        m_loadingLogView.showLoadingFailed(msg);
                     }
                 });
     }

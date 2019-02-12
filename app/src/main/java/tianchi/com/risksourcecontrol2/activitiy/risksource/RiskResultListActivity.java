@@ -121,16 +121,16 @@ public class RiskResultListActivity extends BaseActivity implements AdapterView.
                     int statue = _highLowTypRisk.getStatus();
                     String msg = _highLowTypRisk.getMsg();
                     if (statue != 1) {
-                        MyToast.showMyToast( AppInitialization.getInstance(), msg, 2);
+                        MyToast.showMyToast( AppInitialization.getInstance(), msg, 1);
                         return;
                     }
                     //
                     List<HighLowTypeRiskData> _list = _highLowTypRisk.getData();
                     if (_list.size() == 0) {
-                        MyToast.showMyToast( AppInitialization.getInstance(), "查询失败", 2);
+                        MyToast.showMyToast( AppInitialization.getInstance(), "查询失败", 1);
                     }
                     HighLowTypeRiskData _highLowTypeRiskData = _list.get(0);
-                    LogUtils.i("onResponse: HighLowTypRisk " + _response);
+//                    LogUtils.i("onResponse: HighLowTypRisk " + _response);
 
                     float X = _highLowTypeRiskData.getX();
                     float Y = _highLowTypeRiskData.getY();
@@ -165,8 +165,8 @@ public class RiskResultListActivity extends BaseActivity implements AdapterView.
 //
 //                    }
 
-                    LogUtils.i("XXXXX=", String.valueOf(X));
-                    LogUtils.i("YYYYY=", String.valueOf(Y));
+//                    LogUtils.i("XXXXX=", String.valueOf(X));
+//                    LogUtils.i("YYYYY=", String.valueOf(Y));
 
                 } catch (Exception e) {
                     e.printStackTrace();

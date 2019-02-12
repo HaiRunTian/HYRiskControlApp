@@ -29,7 +29,7 @@ import tianchi.com.risksourcecontrol2.util.QueryLogForMapUtils;
 /**
  * 弃土场
  */
-public class TakingSoilFieldTypeFromActivity extends BaseActivity implements View.OnClickListener{
+public class TakingSoilFieldTypeFromActivity extends BaseActivity implements View.OnClickListener {
     private TextView stakeNum;
 
     private EditText m_edtSmid;  //smid
@@ -37,7 +37,7 @@ public class TakingSoilFieldTypeFromActivity extends BaseActivity implements Vie
     private EditText m_edtSection;  //  标段
     private EditText m_edtStakeNum; //(起讫)桩号
     private EditText m_edtRiskIdentity;  //风险源标识
-        private EditText m_edtGrade;  //评分
+    private EditText m_edtGrade;  //评分
     private EditText m_edtColorIdenity;  //颜色标识
     private EditText m_edtPlaceName;  //地名
     private EditText m_edtType;  //类型6
@@ -51,12 +51,14 @@ public class TakingSoilFieldTypeFromActivity extends BaseActivity implements Vie
     private Button m_btnQuerySafePatLog;//查询最新安全巡查日志
     private Button m_btnQUeryProSafeLog; //查询最新生产安全日志
     private TextView m_tvSignIn;
+    private EditText m_edtPosibilityLevel;  //发生可能性等级
+    private EditText m_edtSeriousesLevel;  //后果严重性等级
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_taking_soil_field_type2);
-        getWindow().setSoftInputMode( WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
         setWindowsSize();
         m_bundle = getIntent().getExtras();
         initView();
@@ -73,38 +75,43 @@ public class TakingSoilFieldTypeFromActivity extends BaseActivity implements Vie
     private void initDatas() {
 
         String riskId = m_bundle.getString("_riskId");
-        String riskName = riskId.substring(2,3);
-        m_edtServerNum.setText(riskId);
-        m_edtSection.setText("TJ"+riskId.substring(0,2)); //标段
+        String riskName = riskId.substring(2, 3);
+        m_edtServerNum.setText(riskId + "");
+        m_edtSection.setText("TJ" + riskId.substring(0, 2) + ""); //标段
         m_edtStakeNum.setText(m_bundle.getString("E_pileNo"));//桩号
-        m_edtGrade.setText(m_bundle.getString("E_scope"));
-        m_edtColorIdenity.setText(m_bundle.getString("E_colorNote"));
+        m_edtGrade.setText(m_bundle.getString("E_scope")+"");
+        m_edtColorIdenity.setText(m_bundle.getString("E_colorNote") + "");
 
 
-
-        String color = m_bundle.getString("I_colorNote");
+        String color = m_bundle.getString("E_colorNote");
 
         switch (color) {
             case "1.0":
+            case "1":
                 colorName = "蓝色";
                 break;
 
             case "2.0":
+            case "2":
                 colorName = "黄色";
                 break;
             case "3.0":
+            case "3":
                 colorName = "橙色";
                 break;
             case "4.0":
+            case "4":
                 colorName = "红色";
                 break;
             default:
                 break;
         }
-        m_edtColorIdenity.setText(colorName);//颜色标识
-        m_edtPlaceName.setText(m_bundle.getString("I_placeName"));//地名
-        m_edtType.setText(m_bundle.getString("I_soilType"));//类型
-        m_edtSoilCount.setText(m_bundle.getString("I_soilQuantity"));//取土数
+        m_edtColorIdenity.setText(colorName + "");//颜色标识
+        m_edtPosibilityLevel.setText(m_bundle.getString("E_occurPro")+"");
+        m_edtSeriousesLevel.setText(m_bundle.getString("E_resultGrade")+"");
+        m_edtPlaceName.setText(m_bundle.getString("E_localName") + "");//地名
+        m_edtType.setText(m_bundle.getString("E_type") + "");//类型
+        m_edtSoilCount.setText(m_bundle.getString("E_stone") + "");//取土数
 
     }
 
@@ -131,7 +138,8 @@ public class TakingSoilFieldTypeFromActivity extends BaseActivity implements Vie
 
         m_btnChange = (Button) findViewById(R.id.btnchange);
         m_btnClose = (Button) findViewById(R.id.btnclose);
-
+        m_edtPosibilityLevel = (EditText) findViewById(R.id.edtPosibilityLevel);
+        m_edtSeriousesLevel = (EditText) findViewById(R.id.edtSeriousnesLevel);
         m_btnQuerySafePatLog = $(R.id.btn_query_safe_pat);
         m_btnQUeryProSafeLog = $(R.id.btn_query_pro_safe);
 
@@ -143,8 +151,6 @@ public class TakingSoilFieldTypeFromActivity extends BaseActivity implements Vie
         m_tvSignIn.setOnClickListener(this);
 
     }
-
-
 
 
     private void setWindowsSize() {
@@ -173,7 +179,7 @@ public class TakingSoilFieldTypeFromActivity extends BaseActivity implements Vie
         switch (v.getId()) {
 
             case R.id.tvActionbarRight:
-                MyPopupWindowMap _popupWindowMap = new MyPopupWindowMap(this,riskIndex);
+                MyPopupWindowMap _popupWindowMap = new MyPopupWindowMap(this, riskIndex);
                 _popupWindowMap.showPopupWindow(findViewById(R.id.tvActionbarRight));
                 break;
 
@@ -227,6 +233,7 @@ public class TakingSoilFieldTypeFromActivity extends BaseActivity implements Vie
                             }
                         }
                     }
+
                     @Override
                     public void onQueryFailed() {
 

@@ -30,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import tianchi.com.risksourcecontrol2.R;
+import tianchi.com.risksourcecontrol2.activitiy.log.SafetyLogInfoActivity;
 import tianchi.com.risksourcecontrol2.activitiy.user.RelationshipListActivity;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
 import tianchi.com.risksourcecontrol2.bean.login.UsersList;
@@ -193,7 +194,12 @@ public class AddNoticeActivity extends BaseActivity implements View.OnClickListe
             @Override
             public void uploadSucceed(String msg) {
 //                m_progressDialog.setMessage(msg);
-                MyToast.showMyToast(AddNoticeActivity.this, msg, Toast.LENGTH_SHORT);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MyToast.showMyToast(AddNoticeActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+                    }
+                });
                 sendNotice();
                 m_progressDialog.dismiss();
                 Message _message = new Message();
@@ -203,8 +209,14 @@ public class AddNoticeActivity extends BaseActivity implements View.OnClickListe
 
             @Override
             public void uploadFailed(String msg) {
-                MyToast.showMyToast(AddNoticeActivity.this, msg, Toast.LENGTH_SHORT);
-                m_progressDialog.setMessage(msg);
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        MyToast.showMyToast(AddNoticeActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+                        m_progressDialog.setMessage(msg);
+                    }
+                });
+
                 Message _message = new Message();
                 _message.what = 2;
                 m_handler.sendMessageDelayed(_message, 500);

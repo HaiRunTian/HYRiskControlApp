@@ -103,34 +103,33 @@ public class UserLoginWork {
     public static void distributeRelationshipList(Map<String, List<String>> map) {
         for (String key : map.keySet()) {
             if (key.equals("J0")) {//业主
-
                 List<String> _list = new ArrayList<>();
                 if (map.get(key) != null) {
                     try {
                         _list = map.get(key);
                     }catch (Exception e){
-                        LogUtils.i(e.toString());
+//                        LogUtils.i(e.toString());
                     }
                 }
                 if (_list.size() != 0) {
                     UserSingleton.setOwnerList(_list);
                 }
             } else if (key.equals("J1") || key.equals("J2") || key.equals("J3") || key.equals("J4")) {//监理方
-                if (map.get(key) != null){
+                if (map.get(key) != null && map.get(key).size() > 0){
                     try {
                         UserSingleton.getSupervisorList().put(key, map.get(key));
                     }catch (Exception e){
-                        LogUtils.i(e.toString());
+//                        LogUtils.i(e.toString());
                     }
 
                 }
 
             } else {//施工方
-                if (map.get(key) != null){
+                if (map.get(key) != null && map.get(key).size() > 0){
                     try{
                         UserSingleton.getConstructionList().put(key, map.get(key));
                     }catch (Exception e){
-                        LogUtils.i(e.toString());
+//                        LogUtils.i(e.toString());
                     }
                 }
 

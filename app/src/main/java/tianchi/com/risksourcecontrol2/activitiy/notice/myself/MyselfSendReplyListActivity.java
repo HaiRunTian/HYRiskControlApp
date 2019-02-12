@@ -40,6 +40,7 @@ import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
  * 查询自己发出去的整改回复单
  * 发起人是自己
  * 个人回复
+ * 列表
  */
 
 public class MyselfSendReplyListActivity extends BaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener ,AdapterView.OnItemLongClickListener {
@@ -91,7 +92,7 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
 
                     String jsonString = GsonUtils.getNodeJsonString(string, "data");//解析数据
 //                    String beanListStrReply = GsonUtils.getNodeJsonString(string, "Replys");//解析数据
-                    LogUtils.i("未读——————————————————————————————" + jsonString);
+//                    LogUtils.i("未读——————————————————————————————" + jsonString);
                     try {
                         List<RectifyReplyInfo> _infoList = GsonUtils.parserJsonToArrayBeans(jsonString, RectifyReplyInfo.class);
                         //如果两个为空，提示没有接收到任何消息
@@ -106,7 +107,7 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
                                 for (int i = _infoList.size() - 1; i >= 0; i--) {
                                     //状态不为5的就加载
                                     int _logState = _infoList.get(i).getLogState();
-                                    if (_logState!=5) {
+                                    if (_logState!=2) {
                                         m_list.add(_infoList.get(i));
                                     }
                                 }
@@ -124,7 +125,6 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
                             m_lvReceive.setAdapter(m_adapter);
                             m_progressDialog.dismiss();
                         }
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -212,10 +212,10 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
                 String _time = m_list.get(position).getCheckedTime();
 
                 String _tme1 = MyTime.getTime();
-                LogUtils.i("i=" + _time + "---" + _tme1);
+//                LogUtils.i("i=" + _time + "---" + _tme1);
                 boolean _b = MyTime.getTimeDifference(_time, _tme1);
 
-                String m_time = "0:0:30";
+//                String m_time = "0:0:30";
                 if (_logState != 1) {
                     Toast.makeText(MyselfSendReplyListActivity.this, "通知单已受理不可删除", Toast.LENGTH_SHORT).show();
 
@@ -229,7 +229,9 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
                     }else {
                         Toast.makeText(MyselfSendReplyListActivity.this, "时间已超过半小时不可删除", Toast.LENGTH_SHORT).show();
                     }
+                    dialog.dismiss();
                 }
+
 
             }
 
@@ -237,6 +239,7 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //取消删除
+                dialog.dismiss();
             }
         });
         return true;
@@ -256,7 +259,7 @@ public class MyselfSendReplyListActivity extends BaseActivity implements View.On
                 public void requestSuccess(String result) throws Exception {
                     int status = GsonUtils.getIntNoteJsonString(result, "status");
                     String msg = GsonUtils.getStringNodeJsonString(result, "msg");
-                    LogUtils.i("msg ="+msg);
+//                    LogUtils.i("msg ="+msg);
                     if (status == -1 || status == 0) {
                         MyToast.showMyToast(MyselfSendReplyListActivity.this, msg, Toast.LENGTH_SHORT);
                     } else {

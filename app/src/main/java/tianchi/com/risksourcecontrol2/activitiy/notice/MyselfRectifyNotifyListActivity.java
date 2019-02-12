@@ -35,7 +35,8 @@ import tianchi.com.risksourcecontrol2.util.OkHttpUtils;
  * Created by hairun.tian on 2018/6/19 0019.
  * <p>
  * 整改通知单列表
- * /未读整改通知单 个人收到
+ * /未读整改通知单
+ * 个人收到
  * 接收人是自己
  */
 
@@ -46,6 +47,7 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
     public List<RectifyNotifyInfo> m_list;
     private ProgressDialog m_progressDialog;
     private ReceviceNoticeAdapter m_receviceNoticeAdapter;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,13 +69,12 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
 
         //依据接收者名字
         getNotice(UserSingleton.getUserInfo().getRealName(), new ReceiveNoticeListActivity.CallBack() {
-
             @Override
             public void getData(String string) {
 //                LogUtils.i("回调回来的数据", string);
                 String msg = GsonUtils.getNodeJsonString(string, "msg");
                 int status = GsonUtils.getIntNoteJsonString(string, "status");
-                m_progressDialog.setMessage(msg);
+//                m_progressDialog.setMessage(msg);
                 if (status == 0) {
                     MyToast.showMyToast(MyselfRectifyNotifyListActivity.this, msg, Toast.LENGTH_SHORT);
                 } else if (status == -1) {
@@ -96,13 +97,12 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
                             for (int i = _unReplyDatas.size() - 1; i >= 0; i--) {
                                 int _logState = _unReplyDatas.get(i).getLogState();
 
-                                if (_logState!=6){
+                                if (_logState != 5) {
                                     m_list.add(_unReplyDatas.get(i));
                                 }
 
                             }
                         }
-
 //                        LogUtils.i("length = ", String.valueOf(m_list.size()));
                         m_receviceNoticeAdapter = new ReceviceNoticeAdapter(MyselfRectifyNotifyListActivity.this, m_list);
                         m_lvReceive.setAdapter(m_receviceNoticeAdapter);
@@ -132,13 +132,12 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
 //        _bundle.putSerializable("data", _rectifyNotifyInfo);
 //        Intent _intent = new Intent(MyselfRectifyNotifyListActivity.this, ReadRectifyNotifyInfoActivity.class);
         int _id = _rectifyNotifyInfo.getId();
-        _bundle.putInt("id",_id);
+        _bundle.putInt("id", _id);
         Intent _intent = new Intent(MyselfRectifyNotifyListActivity.this, QueryNotfiyReplyActivity.class);
         _intent.putExtras(_bundle);
         startActivity(_intent);
 
     }
-
 
 
     //网络请求接收过的通知
@@ -148,24 +147,27 @@ public class MyselfRectifyNotifyListActivity extends BaseActivity implements Vie
         try {
             jsonObject.put("realName", receiveMan);
 //            jsonObject.put("replyState",1);
+
+            String str = jsonObject.toString();
+            OkHttpUtils.postAsync(ServerConfig.URL_QUERYRECTIFYNOTIFY, str, new OkHttpUtils.InsertDataCallBack() {
+                @Override
+                public void requestFailure(Request request, IOException e) {
+//                LogUtils.i("接收通知失败", request.body().toString());
+                    m_progressDialog.setMessage("加载失败");
+                    m_progressDialog.dismiss();
+                }
+
+                @Override
+                public void requestSuccess(String result) throws Exception {
+//                    LogUtils.i("接收通知", result);
+                    callBack.getData(result);
+
+                }
+            });
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        String str = jsonObject.toString();
-        OkHttpUtils.postAsync(ServerConfig.URL_QUERYRECTIFYNOTIFY, str, new OkHttpUtils.InsertDataCallBack() {
-            @Override
-            public void requestFailure(Request request, IOException e) {
-//                LogUtils.i("接收通知失败", request.body().toString());
-                m_progressDialog.setMessage("加载失败");
-                m_progressDialog.dismiss();
-            }
-            @Override
-            public void requestSuccess(String result) throws Exception {
-                LogUtils.i("接收通知", result);
-                callBack.getData(result);
-
-            }
-        });
     }
 
     @Override

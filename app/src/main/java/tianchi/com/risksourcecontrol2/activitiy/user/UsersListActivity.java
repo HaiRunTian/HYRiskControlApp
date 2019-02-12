@@ -34,16 +34,16 @@ public class UsersListActivity extends BaseActivity {
             e.printStackTrace();
         }
         String json = _jsonObject.toString();
-        LogUtils.i("jsonString ==" ,json);
+//        LogUtils.i("jsonString ==" ,json);
         OkHttpUtils.postAsync(ServerConfig.URL_QUERY_REPLY_FOR_ID,json , new OkHttpUtils.QueryDataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
-                LogUtils.i("jsonString ==" ,"请求失败");
+//                LogUtils.i("jsonString ==" ,"请求失败");
             }
             @Override
             public void requestSuccess(String jsonString) throws Exception {
                 String s = new String("2");
-                LogUtils.i("jsonString ==" ,jsonString);
+//                LogUtils.i("jsonString ==" ,jsonString);
 
             }
         });

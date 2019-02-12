@@ -140,8 +140,10 @@
 
     <!--自定义首页右边放大缩小按钮-->
     <style name="HomeBtnOutIn">
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginBottom">5dp</item>
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_height">30dp</item>
         <item name="android:gravity">center</item>
         <item name="android:button">@drawable/shape_bg_rect_transparent</item>
         <item name="android:paddingTop">1dp</item>

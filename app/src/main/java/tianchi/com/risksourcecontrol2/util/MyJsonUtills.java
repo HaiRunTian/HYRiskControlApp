@@ -54,7 +54,7 @@ public class MyJsonUtills {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtils.i("field count:"+fields.length);
+//        LogUtils.i("field count:"+fields.length);
         for (int i = 0; i < fields.length; i++) {
             String name = fields[i].getName();
             // Logs.i("field "+i +" name:"+ name);
@@ -113,7 +113,7 @@ public class MyJsonUtills {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtils.i("field count:"+fields.length);
+//        LogUtils.i("field count:"+fields.length);
         for (int i = 0; i < fields.length; i++) {
             String name = fields[i].getName();
            // Logs.i("field "+i +" name:"+ name);
@@ -122,7 +122,7 @@ public class MyJsonUtills {
                 String _type = fields[i].getGenericType().toString();
                 // class java.lang
                 // String jsonName = name.replaceFirst(name.substring(0, 1), name.substring(0, 1).toUpperCase());
-                LogUtils.i("type:" + _type+", Name "+name);
+//                LogUtils.i("type:" + _type+", Name "+name);
                 if (!object.has(name)) continue;//jsonobject 没有包含这个属性名，则跳过
                 switch (_type) {
                     case "class java.lang.String":{
@@ -223,17 +223,17 @@ public class MyJsonUtills {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        LogUtils.i("field count:"+fields.length);
+//        LogUtils.i("field count:"+fields.length);
         for (int i = 0; i < fields.length; i++) {
             String name = fields[i].getName();
-            LogUtils.i("field "+i +" name:"+ name);
+//            LogUtils.i("field "+i +" name:"+ name);
             //不可能发生的异常
 
             try {
                 String _type = fields[i].getGenericType().toString();
                 // class java.lang
                 // String jsonName = name.replaceFirst(name.substring(0, 1), name.substring(0, 1).toUpperCase());
-                LogUtils.i("type:" + _type+", Name "+name);
+//                LogUtils.i("type:" + _type+", Name "+name);
                 if (!object.has(name)) continue;//jsonobject 没有包含这个属性名，则跳过
                 switch (_type) {
                     case "class java.lang.String":{

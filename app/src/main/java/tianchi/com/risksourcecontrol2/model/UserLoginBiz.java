@@ -146,7 +146,7 @@ public class UserLoginBiz implements IUserLoginBiz {
                         case 1: ////人员列表
 
                             String beanString = GsonUtils.getNodeJsonString(jsonString, "Data");//解析数据
-                            LogUtils.i("人员列表",beanString);
+//                            LogUtils.i("人员列表",beanString);
 //                            UserBean _userBeen = GsonUtils.jsonToBean(beanString,UserBean.class);
 //
 //                            if (_userBeen!=null){
@@ -166,7 +166,7 @@ public class UserLoginBiz implements IUserLoginBiz {
                             break;
                     }
                 } catch (Exception e) {
-                    listener.loadingFailed(e.getClass().getSimpleName() + " error detail:" + e.getMessage());
+//                    listener.loadingFailed(e.getClass().getSimpleName() + " error detail:" + e.getMessage());
                 }
             }
         });

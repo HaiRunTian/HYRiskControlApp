@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -133,16 +134,16 @@ public class TakingSoilFieldTypeActivity extends BaseActivity implements View.On
 
                     int statue = _takingRisk.getStatus();
                     if (statue != 1) {
-                        MyToast.showMyToast( AppInitialization.getInstance(), "查询失败", 2);
+                        MyToast.showMyToast( AppInitialization.getInstance(), "查询失败", Toast.LENGTH_SHORT);
                         return;
                     }
                     //获取全部风险源桩号，存进list中
                     List<TakingRiskData> _list = _takingRisk.getData();
                     if (_list.size() == 0) {
-                        MyToast.showMyToast( AppInitialization.getInstance(), "查询失败", 2);
+                        MyToast.showMyToast( AppInitialization.getInstance(), "查询失败", Toast.LENGTH_SHORT);
                     }
                     TakingRiskData _data = _list.get(0);
-                    LogUtils.i("onResponse: TunnelRiskData " + _response);
+//                    LogUtils.i("onResponse: TunnelRiskData " + _response);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {

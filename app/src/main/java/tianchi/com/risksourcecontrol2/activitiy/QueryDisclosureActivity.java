@@ -235,7 +235,7 @@ public class QueryDisclosureActivity extends BaseActivity implements View.OnClic
 
             @Override
             public void requestSuccess(String _response) throws Exception {
-                LogUtils.i("数组长度", _response);
+//                LogUtils.i("数组长度", _response);
                 int status = GsonUtils.getIntNoteJsonString(_response, "status");
                 String msg = GsonUtils.getStringNodeJsonString(_response, "msg");
                 try {
@@ -248,7 +248,7 @@ public class QueryDisclosureActivity extends BaseActivity implements View.OnClic
                     } else if (status == 1) {
 
                         m_data = GsonUtils.jsonToArrayBeans(_response, "data", DisclosureInfoData.class);
-                        LogUtils.i("数组长度", String.valueOf(m_data.size()));
+//                        LogUtils.i("数组长度", String.valueOf(m_data.size()));
                         callBack.getData(m_data);
                     }
                 } catch (Exception e) {

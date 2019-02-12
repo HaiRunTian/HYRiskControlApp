@@ -1,6 +1,7 @@
 package tianchi.com.risksourcecontrol2.location;
 
 import android.app.Application;
+import android.hardware.SensorEventListener;
 import android.hardware.SensorListener;
 
 import com.supermap.data.Point2D;
@@ -21,5 +22,5 @@ public interface BaseGPS {
      void setPrjCoordSys(PrjCoordSys sys);
      void setMap(MapControl map);
      Point2D getPoint2D();
-     SensorListener getSensorListener();
+     SensorEventListener getSensorListener();
 }

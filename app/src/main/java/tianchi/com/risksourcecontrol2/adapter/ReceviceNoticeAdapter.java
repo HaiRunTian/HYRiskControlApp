@@ -12,6 +12,7 @@ import java.util.List;
 
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.bean.newnotice.RectifyNotifyInfo;
+import tianchi.com.risksourcecontrol2.util.LogUtils;
 
 import static tianchi.com.risksourcecontrol2.R.id.RLDelete;
 
@@ -50,6 +51,7 @@ public class ReceviceNoticeAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder _viewHolder =null;
+        try{
         if (convertView == null) {
             _viewHolder = new ViewHolder();
             convertView = LayoutInflater.from(m_context).inflate(R.layout.list_view_item_notice, null);
@@ -82,14 +84,19 @@ public class ReceviceNoticeAdapter extends BaseAdapter {
 //
 //        }
 
-        _viewHolder.m_tvAuther.setText("发送人:" + m_readDataList.get(position).getInspectorSign());
-        _viewHolder.m_tvTitle.setText(m_readDataList.get(position).getLogId());
 
-        if (m_readDataList.get(position).getCheckedTime().length()>10) {
-            _viewHolder.m_tvTime.setText(m_readDataList.get(position).getCheckedTime().substring(0,10));
-        }else {
-            _viewHolder.m_tvTime.setText(m_readDataList.get(position).getCheckedTime());
+            _viewHolder.m_tvAuther.setText("发送人:" + m_readDataList.get(position).getInspectorSign()+"");
+            _viewHolder.m_tvTitle.setText(m_readDataList.get(position).getLogId()+"");
+
+            if (m_readDataList.get(position).getCheckedTime().length()>10) {
+                _viewHolder.m_tvTime.setText(m_readDataList.get(position).getCheckedTime().substring(0,10)+"");
+            }else {
+                _viewHolder.m_tvTime.setText(m_readDataList.get(position).getCheckedTime()+"");
+            }
+        }catch (Exception e){
+//            LogUtils.i("错误 = ",e.toString());
         }
+
         return convertView;
     }
 

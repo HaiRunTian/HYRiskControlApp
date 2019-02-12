@@ -467,7 +467,13 @@ public class SafetyLogInfoActivity extends BaseActivity implements ILoadingLogVi
 
     @Override
     public void showLoadingFailed(String msg) {
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(SafetyLogInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
+
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);
@@ -475,7 +481,12 @@ public class SafetyLogInfoActivity extends BaseActivity implements ILoadingLogVi
 
     @Override
     public void showSubmitSucceedOrFailed(String msg) {
-        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(SafetyLogInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);

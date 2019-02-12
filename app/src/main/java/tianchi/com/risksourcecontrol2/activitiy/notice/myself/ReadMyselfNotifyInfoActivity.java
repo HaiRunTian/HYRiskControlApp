@@ -18,13 +18,11 @@ import android.widget.ImageView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
 import tianchi.com.risksourcecontrol2.R;
 import tianchi.com.risksourcecontrol2.activitiy.notice.NewRectifyReplyInfoActivity;
 import tianchi.com.risksourcecontrol2.base.BaseActivity;
@@ -81,8 +79,8 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
     private String m_checkUnit;
     private String m_beCheckUnit;
     private boolean canDownLoad;
-    private SimpleAdapter simpleAdapter;     //适配器
 
+    private SimpleAdapter simpleAdapter;     //适配器
     private String[] m_arrayPicRemark;
     private int m_picIndex; //照片下标
     private String m_imgInfo;
@@ -144,7 +142,7 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
         } else {
             _firstName = _receiverMans;
         }
-        if (!_firstName.equals(UserSingleton.getUserInfo().getRealName())) m_tvReply.setVisibility(View.GONE    );
+        if (!_firstName.equals(UserSingleton.getUserInfo().getRealName())) m_tvReply.setVisibility(View.GONE);
 
         //如果是业主或者监理查看整改单，不可以回复
         if (UserSingleton.getUserRoid() == 19 || UserSingleton.getUserRoid() == 17) {
@@ -164,7 +162,7 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
                 String _inspectorSign = _rectifyNotifyInfo.getInspectorSign();
 
                 String _inspectorSigns = _rectifyNotifyInfo.getInspectorSigns();
-                LogUtils.i("查看 = "+_inspectorSign+_inspectorSigns);
+//                LogUtils.i("查看 = "+_inspectorSign+_inspectorSigns);
                 if (_rectifyNotifyInfo.getInspectorSigns()!=null){
                     m_edtCheckMan.setText(_rectifyNotifyInfo.getInspectorSign()+"#"+_rectifyNotifyInfo.getInspectorSigns());
                 }else {
@@ -233,14 +231,14 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
                 _map.put("itemImage", _bitmap);
                 if (!m_imgInfo.isEmpty()){
                     _map.put("remark",m_arrayPicRemark[i]);
-                }else  _map.put("remark","");
+                }else  _map.put("remark","照片备注为空");
                 imageItem.add(_map);
                 //                picFiles.add(picFile);
                 refreshGridviewAdapter();
                 picNames.set(i, "");
                 canDownLoad = true;
                 Message msg = new Message();
-                m_handler.sendMessage(msg);
+                 m_handler.sendMessage(msg);
                 break;
                 //                                m_lock.unlock();
             }
@@ -262,7 +260,7 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
             _map.put("itemImage", _bitmap);
             if (!m_imgInfo.isEmpty()){
                 _map.put("remark",m_arrayPicRemark[0]);
-            }else  _map.put("remark","");
+            }else  _map.put("remark","照片备注为空");
             imageItem.add(_map);
 
             refreshGridviewAdapter();
@@ -470,7 +468,7 @@ public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.O
             _map.put("itemImage", picBitmap);
             if (!m_imgInfo.isEmpty()){
                 _map.put("remark",m_arrayPicRemark[m_picIndex]);
-            }else  _map.put("remark","");
+            }else  _map.put("remark","照片备注为空");
             imageItem.add(_map);
             refreshGridviewAdapter();
             //            MyToast.showMyToast(this, "成功加载" + itemPicName, Toast.LENGTH_SHORT);

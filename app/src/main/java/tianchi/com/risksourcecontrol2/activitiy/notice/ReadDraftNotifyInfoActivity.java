@@ -53,7 +53,7 @@ import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
 
 /**
  * Created by hairun.tian on 2018/6/21 0021.
- * 查看草稿类
+ * 查看草稿类 弃用
  */
 
 public class ReadDraftNotifyInfoActivity extends BaseActivity implements View.OnClickListener, ILoadingNotifyView, IRectifyNotifyView {
@@ -252,7 +252,8 @@ public class ReadDraftNotifyInfoActivity extends BaseActivity implements View.On
                 Message msg = new Message();
                 m_handler.sendMessage(msg);
                 break;
-                //                                m_lock.unlock();
+                //
+                //     m_lock.unlock();
             }
         }
     }

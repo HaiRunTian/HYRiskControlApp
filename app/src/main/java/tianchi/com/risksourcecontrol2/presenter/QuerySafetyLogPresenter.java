@@ -86,6 +86,10 @@ public class QuerySafetyLogPresenter {
         return _map;
     }
 
+    /**
+     *
+     * @return 返回全部用户人员名单
+     */
     public Map<String, Object> getQueryAll() {
         Map<String, Object> _map = new HashMap<String, Object>();
         _map.put("recorders", UserLoginWork.resolveRelationshipList());
@@ -98,5 +102,4 @@ public class QuerySafetyLogPresenter {
         _map.put("endDate", "");
         return _map;
     }
-
 }

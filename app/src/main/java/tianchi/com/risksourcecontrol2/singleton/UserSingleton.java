@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import tianchi.com.risksourcecontrol2.bean.login.UserInfo;
 import tianchi.com.risksourcecontrol2.config.ServerConfig;
@@ -29,6 +30,9 @@ public class UserSingleton {
 
     }
 
+    /**
+     * 单例
+     */
     public static void getInstance() {
         if (!isInited) {
             m_Instance = new UserSingleton();
@@ -39,14 +43,26 @@ public class UserSingleton {
         }
     }
 
+    /**
+     * 获取用户bean
+     * @return
+     */
     public static UserInfo getUserInfo() {
         return m_user;
     }
 
+    /**
+     * 获取用户id
+     * @return
+     */
     public static int getUserRoid(){
         return m_user.getRoleId();
     }
 
+    /**
+     * 设置用户
+     * @param userInfo
+     */
     public static void setUserInfo(UserInfo userInfo) {
         m_user = userInfo;
     }
@@ -97,7 +113,7 @@ public class UserSingleton {
     public static Map<String, List<String>> getSupervisorList() {
 
         if (s_supervisorList == null)
-            s_supervisorList = new HashMap<>();
+            s_supervisorList = new TreeMap<>();
         return s_supervisorList;
     }
 
@@ -115,7 +131,7 @@ public class UserSingleton {
      */
     public static Map<String, List<String>> getConstructionList() {
         if (s_constructionList == null)
-            s_constructionList = new HashMap<>();
+            s_constructionList = new TreeMap<>();
         return s_constructionList;
     }
 

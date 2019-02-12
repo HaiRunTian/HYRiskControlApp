@@ -179,7 +179,6 @@ public class ReadMyselfReplyInfoActivity extends BaseActivity implements View.On
 
 
     LoadingNotifyInfoPresenter m_presenter = new LoadingNotifyInfoPresenter(this);
-
     private void uploadPictures() {
         for (int i = 0; i < picNames.size(); i++) {
             if (picNames.get(i).equals("")) {
@@ -767,7 +766,13 @@ public class ReadMyselfReplyInfoActivity extends BaseActivity implements View.On
      */
     @Override
     public void showLoadingFailed(String msg) {
-//        MyToast.showMyToast(this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                MyToast.showMyToast(ReadMyselfReplyInfoActivity.this, msg.replace("\"", ""), Toast.LENGTH_SHORT);
+            }
+        });
+
         Message _message = new Message();
         _message.what = 1;
         m_handler.sendMessage(_message);
