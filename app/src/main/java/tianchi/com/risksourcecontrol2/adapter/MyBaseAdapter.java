@@ -37,6 +37,8 @@ public class MyBaseAdapter extends BaseAdapter implements View.OnClickListener {
         m_callBack = callBack;
     }
 
+
+
     @Override
     public int getCount() {
         return m_list.size();
