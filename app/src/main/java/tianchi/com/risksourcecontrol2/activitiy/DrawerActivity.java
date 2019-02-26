@@ -435,7 +435,7 @@ public class DrawerActivity extends BaseActivity implements IHomeView, View.OnCl
 
 //            _section ="RiskSource00";
 //            String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + _section + "/rest/maps/" + _section;
-            String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + "RiskSource012" + "/rest/maps/" + "RiskSource01";
+//            String _port1 = "http://119.23.66.213:8090/iserver/services/map-ugcv5-" + "RiskSource012" + "/rest/maps/" + "RiskSource01";
 //            m_t_dInfo = new DatasourceConnectionInfo();
 //            m_t_dInfo.setServer(_port1);
 //            m_t_dInfo.setEngineType(EngineType.Rest);

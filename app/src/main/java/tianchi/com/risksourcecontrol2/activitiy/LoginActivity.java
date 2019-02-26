@@ -185,7 +185,6 @@ public class LoginActivity extends BaseActivity implements IUserLoginView, View.
             new OkHttpClient().newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-
                     listener.downloadFail();
                     // 下载失败
                     e.printStackTrace();

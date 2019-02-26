@@ -44,7 +44,7 @@ import tianchi.com.risksourcecontrol2.work.QueryUserListWork;
  * 查看我自己的发起的整改通知单
  */
 
-public class ReadMyselfNotifyInfoActivity extends BaseActivity implements View.OnClickListener, ILoadingNotifyView {
+public class  ReadMyselfNotifyInfoActivity extends BaseActivity implements View.OnClickListener, ILoadingNotifyView {
 
     private EditText m_edtLogId; //日志编号
     private EditText m_edtCheckUnit; //检查单位
